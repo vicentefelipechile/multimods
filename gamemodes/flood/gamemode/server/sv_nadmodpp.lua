@@ -574,4 +574,4 @@ function metaent:CPPICanPhysgun(ply) return NADMOD.PlayerCanTouchSafe(ply,self) 
 function metaent:CPPICanPickup(ply) return NADMOD.GravGunPickup(ply, self) != false end
 function metaent:CPPICanPunt(ply) return NADMOD.GravGunPickup(ply, self) != false end
 
-print("[NADMOD PP - NADMOD Prop Protection Module v"..NADMOD.PPVersion.." Loaded]")
+print("-> [NADMOD PP - NADMOD Prop Protection Module v"..NADMOD.PPVersion.." Loaded]")
