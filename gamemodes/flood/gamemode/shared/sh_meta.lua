@@ -4,6 +4,11 @@ local Donators = {
 	["vip"] = true
 }
 
+local q = sql.Query
+local qS = sql.SQLStr
+local TTJ = util.TableToJSON
+local JTT = util.JSONToTable
+
 function MetaPlayer:IsDonator()
 	return Donators[self:GetUserGroup()] or false
 end
@@ -69,18 +74,15 @@ function MetaPlayer:CanAfford(price)
 end
 
 function MetaPlayer:Save()
+	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. self:SteamID64() .. ";")
+end
 
+function MetaPlayer:SaveWeapons()
+	
 	if not self.Weapons then
 		self.Weapons = {}
 		table.insert(self.Weapons, "weapon_pistol")
 	end
 
-	print(self.Weapons)
-	print(self:SteamID64())
-
-	local q = sql.Query
-	local qS = sql.SQLStr
-
-	q("UPDATE flood SET weapons = " .. qS(util.TableToJSON(self.Weapons)) .. " WHERE steamid = " .. self:SteamID64() .. ";")
-	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. self:SteamID64() .. ";")
+	q("UPDATE flood SET weapons = " .. qS(TTJ(self.Weapons)) .. " WHERE steamid = " .. self:SteamID64() .. ";")
 end

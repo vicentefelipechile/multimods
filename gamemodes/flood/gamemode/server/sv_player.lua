@@ -334,6 +334,7 @@ function GM:PurchaseWeapon(ply, cmd, args)
 					ply:SubCash(Weapon.Price)
 					table.insert(ply.Weapons, Weapon.Class)
 					ply:Save()
+					ply:SaveWeapons()
 
 					ct:AddText("[Flood] ", Color(132, 199, 29, 255))
 					ct:AddText("You have purchased a(n) "..Weapon.Name..".")
