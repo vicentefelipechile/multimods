@@ -91,6 +91,7 @@ local function addWeapon(model, group, class, name, price, ammo, ammoclass, dama
     table.insert(Weapons, tbl)
 end
 
+--        "Modelo del arma"                     Grupo, "nombre_entidad",    "Nombre Arma", Precio, Ammo, Tipo de Ammo, Daño, Vip?
 addWeapon("models/weapons/w_crossbow.mdl",          1, "weapon_crossbow",   "Crossbow",     25000, 1000, "XBowBolt",    10, false)
 addWeapon("models/weapons/w_rocket_launcher.mdl",   1, "weapon_rpg",        "RPG",          37500,    3, "RPG_Round",   50, false)
 addWeapon("models/weapons/W_357.mdl",               1, "weapon_357",        "357 Magnum",   10000, 1000, "357",          4, false)
