@@ -1,39 +1,37 @@
--- Nebual 2012 (nebual@nebtown.info) presents:
--- NADMOD Prop Protection
--- Inspired by Spacetech's Simple Prop Protection, <3's
--- Bugs? Feature requests? "why are you using JSON?!"? Email me or poke the Facepunch http://www.facepunch.com/showthread.php?t=1221183
+
+------------------------------
+------ Database Creation -----
+------------------------------
 
 if not sql.TableExists("nadmod") then
 	sql.Query([[CREATE TABLE IF NOT EXISTS nadmod (
 		Users TEXT,
 		Groups TEXT,
 		Bans TEXT,
-		PPConfig
+		PPConfig TEXT
 	)]])
 end
+
+local q = sql.Query
+local JTT = util.JSONToTable
+local TTJ = util.TableToJSON
+
+------------------------------
+------- Core Settings -------
+------------------------------
 
 if not NADMOD then
 	------------------------------
 	------- Setting Nadmod -------
 	------------------------------
+	NADMOD = {}
 	
-	concommand.Add("nadmod_reload", function(ply,cmd,args)
-
-		if args[1] == "full" then
-			NADMOD = nil
-		end
-	
-		include("autorun/server/nadmod_pp.lua")
+	concommand.Add("nadmod_reload", function(ply,cmd,args)	
+		NADMOD.Save()
+		NADMOD.Load()
 	end)
 
-	NADMOD = util.JSONToTable(file.Read("nadmod_config.txt","DATA") or "") or {Users = {}, Groups = {}, Bans = {}, PPConfig = {}}
-
 	function NADMOD.Load()
-
-		------------------------------
-		------- Query Function -------
-		------------------------------
-		local q = sql.Query
 
 		local config = q("SELECT * FROM nadmod")[1]
 
@@ -43,19 +41,29 @@ if not NADMOD then
 			q("UPDATE nadmod SET Bans = '[]';")
 			q("UPDATE nadmod SET PPConfig = '[]';")
 
-			config = q("SELECT * FROM nadmod")[1]
+			config = JTT(q("SELECT * FROM nadmod")[1])
 		end
 
+		PrintTable(config)
 
+		NADMOD = config
 
 	end
 
-	NADMOD = sql.Query("SELECT * FROM nadmod")[1]
 	function NADMOD.Save()
-		file.Write("nadmod_config.txt", util.TableToJSON({Users = NADMOD.Users, Groups = NADMOD.Groups, Bans = NADMOD.Bans, PPConfig = NADMOD.PPConfig}))
-		sql.Query("")
+		local Users		= TTJ(NADMOD.Users)
+		local Groups	= TTJ(NADMOD.Groups)
+		local Bans		= TTJ(NADMOD.Bans)
+		local PPConfig	= TTJ(NADMOD.PPConfig)
+
+		q("UPDATE nadmod SET Users = " .. Users)
+		q("UPDATE nadmod SET Groups = " .. Groups)
+		q("UPDATE nadmod SET Bans = " .. Bans)
+		q("UPDATE nadmod SET PPConfig = " .. PPConfig)
+
+		print("Ok!")
 	end
-	hook.Add("Shutdown","NADMOD.Save",NADMOD.Save)
+	hook.Add("Shutdown", "NADMOD.Save", NADMOD.Save)
 	function NADMOD.FindPlayer(nick) 
 		if not nick or nick == "" then return end 
 		nick = string.lower(nick)
