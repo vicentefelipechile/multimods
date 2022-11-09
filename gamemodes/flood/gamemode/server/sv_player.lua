@@ -234,7 +234,7 @@ function GM:PurchaseProp(ply, cmd, args)
 	if not ply.PropSpawnDelay then ply.PropSpawnDelay = 0 end
 	if not IsValid(ply) or not args[1] then return end
 	
-	local Prop = Props[args[1]]
+	local Prop = Props[math.floor(args[1])]
 	local tr = util.TraceLine(util.GetPlayerTrace(ply))
 	local ct = ChatText()
 
@@ -292,7 +292,7 @@ function GM:PurchaseProp(ply, cmd, args)
 					ply:AddCount("flood_props", ent)
 				else
 					ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-					ct:AddText("You do not have enough cash to purchase a(n) "..Prop.Description..".")
+					ct:AddText("You do not have enough cash to purchase a(n) ".. Prop["Description"] ..".")
 					ct:Send(ply)
 				end
 			else
@@ -304,7 +304,7 @@ function GM:PurchaseProp(ply, cmd, args)
 		end
 	else
 		ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-		ct:AddText("You can not purcahse a(n) "..Prop.Description.." at this time.")
+		ct:AddText("You can not purcahse a(n) ".. Prop["Description"] .." at this time.")
 		ct:Send(ply)
 	end
 end
