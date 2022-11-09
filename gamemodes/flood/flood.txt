@@ -5,7 +5,7 @@
     "base"      "base"
     "menusystem"	"1"
 
-    "author_name"   "Mythikos"
+    "author_name"   "Mythikos & Vicentefelipechile & Lugent"
     "author_email"  "n/a"
-    "author_url"    "www.mythicservers.com"
+    "author_url"    "www.mapping-latam.cl/multimods"
 }
