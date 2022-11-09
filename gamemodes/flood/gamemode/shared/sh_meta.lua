@@ -73,7 +73,7 @@ function MetaPlayer:Save()
 	local q = sql.Query
 
 	if not q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";") then
-		q("INSERT INTO flood ( steamid, name ) VALUES( " .. self:SteamID() .. ", " .. self:Nick() .. " )" )
+		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES( " .. self:SteamID() .. ", " .. self:Nick() .. ", " .. 5000 .. ", " .. util.TableToJSON(self.Weapons) .. ", " .. 0 .. " )" )
 	end
 
 	if not self.Weapons then
