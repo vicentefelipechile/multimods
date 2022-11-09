@@ -10,6 +10,7 @@ local function addCsLuaRecursive( folder )
 		local fullpath = folder .. "/" .. filename
 		if SERVER and ( realmPrefix == "sh" or realmPrefix == "cl" ) then
 			AddCSLuaFile( fullpath )
+			print("[" .. GM_Name .. "] Adding: " .. string.sub(fullpath, 23, -1))
 		end
 	end
 
@@ -17,8 +18,8 @@ local function addCsLuaRecursive( folder )
 		addCsLuaRecursive( folder .. "/" .. v )
 	end
 end
-addCsLuaRecursive( GM_Path .. "ps2/modules" )
-LibK.AddCSLuaDir( GM_Path .. "kinv/items" )
+addCsLuaRecursive( GM_Path .. "pointshop2/ps2/modules" )
+LibK.AddCSLuaDir( GM_Path .. "pointshop2/kinv/items" )
 
 LibK.InitializeAddon{
 	addonName = "Pointshop2",             --Name of the addon
@@ -29,5 +30,5 @@ LibK.InitializeAddon{
 	requires = { "KInventory" }
 }
 
-LibK.addReloadFile( GM_Path .. "autorun/pointshop2_init.lua" )
+LibK.addReloadFile( GM_Path .. "pointshop2/autorun/pointshop2_init.lua" )
 print( Format( "Pointshop2 Version %s : %s loaded", "{{ script_id }}", "{{ user_id }}" ) )
