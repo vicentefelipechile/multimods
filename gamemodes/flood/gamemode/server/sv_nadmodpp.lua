@@ -368,7 +368,7 @@ function NADMOD.EntityRemoved(ent)
 end
 hook.Add("EntityRemoved", "NADMOD.EntityRemoved", NADMOD.EntityRemoved)
 -- AutoCDP timer removal
-function NADMOD.ClearAutoCDP( ply, steamid, uniqueid )
+function NADMOD.ClearAutoCDP( ply, steamid )
 	timer.Remove("NADMOD.AutoCDP_"..steamid)
 end
 hook.Add( "PlayerAuthed", "NADMOD.ClearAutoCDP", NADMOD.ClearAutoCDP ) -- This occurs at PlayerInitialSpawn, late

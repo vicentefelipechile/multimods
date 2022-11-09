@@ -20,8 +20,8 @@ function CheckAFK()
     end
 
     if LocalPlayer():GetNWInt("flood_afkticks") > 0 then
-        if not timer.Exists("AFKCountDecay:"..LocalPlayer():UniqueID()) then 
-            timer.Create("AFKCountDecay:"..LocalPlayer():UniqueID(), 600, 1, function()
+        if not timer.Exists("AFKCountDecay:"..LocalPlayer():SteamID64()) then 
+            timer.Create("AFKCountDecay:"..LocalPlayer():SteamID64(), 600, 1, function()
                 LocalPlayer():SetNWInt("flood_afkticks", 0)
                 chat.AddText(Color(255, 140, 0), "[AFK System] ", color_white, "AFK count before kick has been reset.")
             end)
@@ -50,8 +50,8 @@ function CheckAFK()
             end
         elseif CurTime() > (afkinfo.t + (afk_timer / 2)) then
             chat.AddText(Color(255, 140, 0), "[AFK System] ", color_white, "You will be slain if you do not regain activity.")
-            if timer.Exists("AFKCountDecay:"..LocalPlayer():UniqueID()) then 
-                timer.Destroy("AFKCountDecay:"..LocalPlayer():UniqueID())
+            if timer.Exists("AFKCountDecay:"..LocalPlayer():SteamID64()) then 
+                timer.Destroy("AFKCountDecay:"..LocalPlayer():SteamID64())
             end
         end
     end
