@@ -77,7 +77,6 @@ function MetaPlayer:Save()
 
 	local q = sql.Query
 
-	q("UPDATE flood SET name = " .. sql.SQLStr(self:Nick())		.. " WHERE steamid = " .. self:SteamID64() .. ";")
 	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. self:SteamID64() .. ";")
 	q("UPDATE flood SET weapons = " .. util.TableToJSON(self.Weapons) .. " WHERE steamid = " .. self:SteamID64() .. ";")
 end
