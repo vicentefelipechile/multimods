@@ -189,15 +189,15 @@ end
 function PlayerMeta:LoadData()
 	local data = {}
 
-	local query = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64() .. ";")
+	local query = sql.Query("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")
 
 	if query then
-		data = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64() .. ";")[1]
+		data = sql.Query("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
 		self.Allow = true
 		return data
 	else
 		self:Save()
-		data = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64() .. ";")[1]
+		data = sql.Query("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
 
 		data["cash"] = 5000
 
