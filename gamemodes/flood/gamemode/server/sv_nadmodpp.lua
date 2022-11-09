@@ -33,7 +33,7 @@ if not NADMOD then
 
 	function NADMOD.Load()
 
-		local config = q("SELECT * FROM nadmod")[1]
+		local config = q("SELECT * FROM nadmod")
 
 		if not config then
 			q("UPDATE nadmod SET Users = '[]';")
@@ -42,6 +42,8 @@ if not NADMOD then
 			q("UPDATE nadmod SET PPConfig = '[]';")
 
 			config = JTT(q("SELECT * FROM nadmod")[1])
+		else
+			config = config[1]
 		end
 
 		PrintTable(config)
