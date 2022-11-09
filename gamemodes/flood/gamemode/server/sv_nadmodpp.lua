@@ -70,7 +70,21 @@ if not NADMOD then
 	
 	concommand.Add("nadmod_reload", function(ply,cmd,args)	
 		NADMOD.Save()
-		NADMOD.Load()
+
+		local config = {}
+
+		local cfg1 = q("SELECT * FROM nadmod_users")
+		local cfg2 = q("SELECT * FROM nadmod_groups")
+		local cfg3 = q("SELECT * FROM nadmod_bans")
+		local cfg4 = q("SELECT * FROM nadmod_ppconfig")
+
+		config["Users"]		= JTT(cfg1[1]["Users"])		or {}
+		config["Groups"]	= JTT(cfg2[1]["Groups"])	or {}
+		config["Bans"]		= JTT(cfg3[1]["Bans"])		or {}
+		config["PPConfig"]	= JTT(cfg4[1]["PPConfig"])	or {}
+
+		NADMOD = config
+
 	end)
 
 	hook.Add("Shutdown", "NADMOD.Save", NADMOD.Save)

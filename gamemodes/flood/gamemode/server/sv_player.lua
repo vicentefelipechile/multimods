@@ -1,7 +1,22 @@
 local PlayerMeta = FindMetaTable("Player")
 
+local q = sql.Query
+
 function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
+
+	local query = sql.Query("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
+
+	if not query then
+
+		local wpns = {}
+
+		if not ply.Weapons then
+			table.insert(wpns, "weapon_pistol")
+		end
+
+		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. self:SteamID64() .. ", " .. sql.SQLStr(self:Nick()) .. ", " .. 5000 .. ", " .. util.TableToJSON(wpns) .. ", " .. 0 .. " )" )
+	end
  
 	local data = ply:LoadData()
 
@@ -35,11 +50,11 @@ function GM:PlayerSpawn( ply )
 end
 
 function GM:ForcePlayerSpawn()
-	for _, v in pairs(player.GetAll()) do
-		if v:CanRespawn() then
-			if v.NextSpawnTime && v.NextSpawnTime > CurTime() then return end
-			if not v:Alive() and IsValid(v) then
-				v:Spawn()	
+	for _, ply in pairs(player.GetAll()) do
+		if ply:CanRespawn() then
+			if ply.NextSpawnTime && ply.NextSpawnTime > CurTime() then return end
+			if not ply:Alive() and IsValid(ply) then
+				ply:Spawn()	
 			end
 		end
 	end
