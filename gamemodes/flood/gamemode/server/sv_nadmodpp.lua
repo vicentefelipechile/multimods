@@ -9,6 +9,7 @@ sql.Query("CREATE TABLE IF NOT EXISTS nadmod_bans ( Bans TEXT )")
 sql.Query("CREATE TABLE IF NOT EXISTS nadmod_ppconfig ( PPConfig TEXT )")
 
 local q = sql.Query
+local qS = sql.SQLStr
 local JTT = util.JSONToTable
 local TTJ = util.TableToJSON
 
@@ -60,10 +61,10 @@ if not NADMOD then
 		local Bans		= TTJ(NADMOD["Bans"])
 		local PPConfig	= TTJ(NADMOD["PPConfig"])
 
-		q("UPDATE nadmod_users SET Users = " .. Users)
-		q("UPDATE nadmod_groups SET Groups = " .. Groups)
-		q("UPDATE nadmod_bans SET Bans = " .. Bans)
-		q("UPDATE nadmod_ppconfig SET PPConfig = " .. PPConfig)
+		q("UPDATE nadmod_users SET Users = " .. qS(Users))
+		q("UPDATE nadmod_groups SET Groups = " .. qS(Groups))
+		q("UPDATE nadmod_bans SET Bans = " .. qS(Bans))
+		q("UPDATE nadmod_ppconfig SET PPConfig = " .. qS(PPConfig))
 
 		print("Ok!")
 	end

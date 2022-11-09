@@ -5,17 +5,10 @@ local q = sql.Query
 function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
 
-	local query = sql.Query("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
+	local query = q("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
 
 	if not query then
-
-		local wpns = {}
-
-		if not ply.Weapons then
-			table.insert(wpns, "weapon_pistol")
-		end
-
-		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. ply:SteamID64() .. ", " .. sql.SQLStr(ply:Nick()) .. ", " .. 5000 .. ", " .. util.TableToJSON(wpns) .. ", " .. 0 .. " )" )
+		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. ply:SteamID64() .. ", " .. ply:Nick() .. ", " .. 5000 .. ", " .. sql.SQLStr("[\"weapon_pistol\"]") .. ", " .. 0 .. " )" )
 	end
  
 	local data = ply:LoadData()
