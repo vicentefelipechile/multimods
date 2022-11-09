@@ -6,7 +6,7 @@ local files = file.Find( luaroot .."/shared/*.lua", "LUA" )
 table.sort( files )
 if #files > 0 then
 	for _, file in pairs( files ) do
-		Msg( "[LibK] Loading SHARED file: " .. file .. "\n" )
+		Msg( "[LibK] Loading SHARED file: " .. luaroot .."/shared/" .. file .. "\n" )
 		include( luaroot .."/shared/" .. file )
 		if SERVER then
 			AddCSLuaFile( luaroot .."/shared/" .. file )
@@ -32,7 +32,7 @@ if SERVER then
 	local files = file.Find( luaroot .."/server/*.lua", "LUA" )
 	if #files > 0 then
 		for _, file in ipairs( files ) do
-			Msg( "[LibK] Loading SERVER file: " .. file .. "\n" )
+			Msg( "[LibK] Loading SERVER file: " .. luaroot .."/server/" .. file .. "\n" )
 			include( luaroot .."/server/" .. file )
 		end
 	end
@@ -49,7 +49,7 @@ if CLIENT then
 	local files = file.Find( luaroot .."/client/*.lua", "LUA" )
 	if #files > 0 then
 		for _, file in ipairs( files ) do
-			Msg( "[LibK] Loading CLIENT file: " .. file .. "\n" )
+			Msg( "[LibK] Loading CLIENT file: " .. luaroot .."/client/" .. file .. "\n" )
 			include( luaroot .."/client/" .. file )
 		end
 	end
