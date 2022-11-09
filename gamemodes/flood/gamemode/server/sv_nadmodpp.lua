@@ -40,15 +40,15 @@ if not NADMOD then
 			q("INSERT INTO nadmod_bans ( Bans ) VALUES ( '[]' ) ")
 			q("INSERT INTO nadmod_ppconfig ( PPConfig ) VALUES ( '[]' ) ")
 
-			config["Users"] = JTT(q("SELECT * FROM nadmod_users")[1])
-			config["Groups"] = JTT(q("SELECT * FROM nadmod_groups")[1])
-			config["Bans"] = JTT(q("SELECT * FROM nadmod_bans")[1])
-			config["PPConfig"] = JTT(q("SELECT * FROM nadmod_ppconfig")[1])
+			config["Users"]		= JTT(q("SELECT * FROM nadmod_users")[1]["Users"])
+			config["Groups"]	= JTT(q("SELECT * FROM nadmod_groups")[1]["Groups"])
+			config["Bans"]		= JTT(q("SELECT * FROM nadmod_bans")[1]["Bans"])
+			config["PPConfig"]	= JTT(q("SELECT * FROM nadmod_ppconfig")[1]["PPConfig"])
 		else
-			config["Users"]		= JTT(cfg1[1])
-			config["Groups"]	= JTT(cfg2[1])
-			config["Bans"]		= JTT(cfg3[1])
-			config["PPConfig"]	= JTT(cfg4[1])
+			config["Users"]		= JTT(cfg1[1]["Users"])
+			config["Groups"]	= JTT(cfg2[1]["Groups"])
+			config["Bans"]		= JTT(cfg3[1]["Bans"])
+			config["PPConfig"]	= JTT(cfg4[1]["PPConfig"])
 		end
 
 		PrintTable(config)
