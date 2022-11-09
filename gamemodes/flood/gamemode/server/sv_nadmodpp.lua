@@ -82,7 +82,7 @@ end
 if not NADMOD.Props then
 	-- NADMOD PP Initialization
 	NADMOD.PPVersion = "1.2.6p"
-	NADMOD.Props = {} // {entid = {Ent = ent, Owner = ply, SteamID = ply:SteamID(), Name = ply:Nick() or "W" or "O"}}
+	NADMOD.Props = {} // {entid = {Ent = ent, Owner = ply, SteamID = ply:SteamID64(), Name = ply:Nick() or "W" or "O"}}
 	NADMOD.PropOwnersSmall = {} // A smaller buffer of PropOwner names to send to current players
 	NADMOD.AutoCDPTimers = {}
 	
@@ -123,7 +123,7 @@ function NADMOD.IsPPAdmin(ply)
 end
 
 function NADMOD.PPInitPlayer(ply)
-	local steamid = ply:SteamID()
+	local steamid = ply:SteamID64()
 	for _,v in pairs(NADMOD.Props) do
 		if v.SteamID == steamid then 
 			v.Owner = ply
@@ -161,7 +161,7 @@ function NADMOD.IsFriendProp(ply, ent)
 		local ownerSteamID = NADMOD.Props[ent:EntIndex()].SteamID
 		if NADMOD.Users[ownerSteamID] then
 			local friends = NADMOD.Users[ownerSteamID].Friends
-			return friends && friends[ply:SteamID()]
+			return friends && friends[ply:SteamID64()]
 		end
 	end
 	return false
@@ -188,7 +188,7 @@ function NADMOD.PlayerCanTouch(ply, ent)
 	-- Admins can touch anyones props + world
 	if NADMOD.PPConfig["adminall"] and NADMOD.IsPPAdmin(ply) then return true end
 	-- Players can touch their own props and friends
-	if NADMOD.Props[ent:EntIndex()].SteamID == ply:SteamID() or NADMOD.IsFriendProp(ply, ent) then return true end
+	if NADMOD.Props[ent:EntIndex()].SteamID64 == ply:SteamID64() or NADMOD.IsFriendProp(ply, ent) then return true end
 	
 	return false
 end
@@ -277,7 +277,7 @@ function NADMOD.PlayerMakePropOwner(ply,ent)
 	NADMOD.Props[ent:EntIndex()] = {
 		Ent = ent,
 		Owner = ply,
-		SteamID = ply:SteamID(),
+		SteamID = ply:SteamID64(),
 		Name = ply:Nick()
 	}
 	NADMOD.PropOwnersSmall[ent:EntIndex()] = ply:Nick()
@@ -356,7 +356,7 @@ function NADMOD.EntityRemoved(ent)
 	NADMOD.PropOwnersSmall[ent:EntIndex()] = "-"
 	if ent:IsValid() and ent:IsPlayer() and not ent:IsBot() then
 		-- This is more reliable than PlayerDisconnect
-		local steamid, nick = ent:SteamID(), ent:Nick()
+		local steamid, nick = ent:SteamID64(), ent:Nick()
 		if NADMOD.PPConfig.autocdp > 0 and (NADMOD.PPConfig.autocdpadmins or not NADMOD.IsPPAdmin(ent)) then 
 			timer.Create("NADMOD.AutoCDP_"..steamid, NADMOD.PPConfig.autocdp, 1, function() 
 				local count = NADMOD.CleanupPlayerProps(steamid)
@@ -399,7 +399,7 @@ end
 
 function NADMOD.CleanPlayer(tar)
 	if IsValid(tar) and tar:IsPlayer() then 
-		local count = NADMOD.CleanupPlayerProps(tar:SteamID())
+		local count = NADMOD.CleanupPlayerProps(tar:SteamID64())
 		NADMOD.Notify(tar:Nick().."'s props have been cleaned up ("..count..")")
 	end
 end
@@ -407,7 +407,7 @@ end
 function NADMOD.CleanupProps(ply, cmd, args)
 	local EntIndex = args[1]
 	if not EntIndex or EntIndex == "" then
-		local count = NADMOD.CleanupPlayerProps(ply:SteamID())
+		local count = NADMOD.CleanupPlayerProps(ply:SteamID64())
 		NADMOD.Notify(ply,"Your props have been cleaned up ("..count..")")
 	elseif !ply:IsValid() or NADMOD.IsPPAdmin(ply) then
 		NADMOD.CleanPlayer(Entity(EntIndex))
@@ -519,10 +519,10 @@ end)
 concommand.Add("npp_refreshfriends",function(ply,cmd,args)
 	if not ply:IsValid() then return end
 	local friends = {}
-	if NADMOD.Users[ply:SteamID()] then friends = table.Copy(NADMOD.Users[ply:SteamID()].Friends) or {} end
+	if NADMOD.Users[ply:SteamID64()] then friends = table.Copy(NADMOD.Users[ply:SteamID64()].Friends) or {} end
 	if NADMOD.PPConfig["adminall"] then
 		for _,v in pairs(player.GetAll()) do
-			if NADMOD.IsPPAdmin(v) then friends[v:SteamID()] = true end
+			if NADMOD.IsPPAdmin(v) then friends[v:SteamID64()] = true end
 		end
 	end
 	net.Start("nadmod_ppfriends")
@@ -531,12 +531,12 @@ concommand.Add("npp_refreshfriends",function(ply,cmd,args)
 end)
 net.Receive("nadmod_ppfriends",function(len,ply)
 	if not ply:IsValid() then return end
-	if !NADMOD.Users[ply:SteamID()] then NADMOD.Users[ply:SteamID()] = {Rank = 1} end
-	NADMOD.Users[ply:SteamID()].Friends = NADMOD.Users[ply:SteamID()].Friends or {}
-	local outtab = NADMOD.Users[ply:SteamID()].Friends
+	if !NADMOD.Users[ply:SteamID64()] then NADMOD.Users[ply:SteamID64()] = {Rank = 1} end
+	NADMOD.Users[ply:SteamID64()].Friends = NADMOD.Users[ply:SteamID64()].Friends or {}
+	local outtab = NADMOD.Users[ply:SteamID64()].Friends
 	
 	local players = {}
-	for _,v in pairs(player.GetAll()) do players[v:SteamID()] = v end
+	for _,v in pairs(player.GetAll()) do players[v:SteamID64()] = v end
 	
 	for steamid,bool in pairs(net.ReadTable()) do
 		if players[steamid] and (not bool or not (NADMOD.IsPPAdmin(players[steamid]) and NADMOD.PPConfig["adminall"])) then -- Users may not add admins to their friends list
@@ -552,9 +552,9 @@ function CPPI:GetVersion() return NADMOD.PPVersion end
 function metaply:CPPIGetFriends()
 	if not self:IsValid() then return {} end
 	local ret = {}
-	local friends = (NADMOD.Users[self:SteamID()] or {Friends={}}).Friends or {}
+	local friends = (NADMOD.Users[self:SteamID64()] or {Friends={}}).Friends or {}
 	for _,v in pairs(player.GetAll()) do
-		if NADMOD.IsPPAdmin(v) or friends[v:SteamID()] then table.insert(ret,v) end
+		if NADMOD.IsPPAdmin(v) or friends[v:SteamID64()] then table.insert(ret,v) end
 	end
 	return ret
 end

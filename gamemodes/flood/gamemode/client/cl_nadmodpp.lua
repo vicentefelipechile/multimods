@@ -137,14 +137,14 @@ end
 net.Receive("nadmod_ppfriends",function(len)
 	NADMOD.Friends = net.ReadTable()
 	for _,tar in pairs(player.GetAll()) do
-		CreateClientConVar("npp_friend_"..tar:SteamID64(),NADMOD.Friends[tar:SteamID()] and "1" or "0", false, false)
-		RunConsoleCommand("npp_friend_"..tar:SteamID64(),NADMOD.Friends[tar:SteamID()] and "1" or "0")
+		CreateClientConVar("npp_friend_"..tar:SteamID64(),NADMOD.Friends[tar:SteamID64()] and "1" or "0", false, false)
+		RunConsoleCommand("npp_friend_"..tar:SteamID64(),NADMOD.Friends[tar:SteamID64()] and "1" or "0")
 	end
 end)
 
 concommand.Add("npp_applyfriends",function(ply,cmd,args)
 	for _,tar in pairs(player.GetAll()) do
-		NADMOD.Friends[tar:SteamID()] = GetConVar("npp_friend_"..tar:SteamID64()):GetBool()
+		NADMOD.Friends[tar:SteamID64()] = GetConVar("npp_friend_"..tar:SteamID64()):GetBool()
 	end
 	net.Start("nadmod_ppfriends")
 		net.WriteTable(NADMOD.Friends)
