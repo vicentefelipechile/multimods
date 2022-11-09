@@ -68,6 +68,8 @@ function MetaPlayer:CanAfford(price)
 	return tonumber(self:GetNetworkedInt("flood_cash")) >= tonumber(price)
 end
 
+if SERVER then
+
 function MetaPlayer:Save()
 
 	local q = sql.Query
@@ -80,10 +82,12 @@ function MetaPlayer:Save()
 	end
 
 	if data == nil then
-		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES( " .. self:SteamID64() .. ", " .. sql.SQLStr(self:Nick()) .. ", " .. 5000 .. ", " .. util.TableToJSON(self.Weapons) .. ", " .. 0 .. " )" )
+		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. self:SteamID64() .. ", " .. sql.SQLStr(self:Nick()) .. ", " .. 5000 .. ", " .. util.TableToJSON(self.Weapons) .. ", " .. 0 .. " )" )
 	end
 
 	q("UPDATE flood SET name = " .. self:Nick()					.. " WHERE steamid = " .. self:SteamID64() .. ";")
 	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. self:SteamID64() .. ";")
 	q("UPDATE flood SET weapons = " .. util.TableToJSON(self.Weapons) .. " WHERE steamid = " .. self:SteamID64() .. ";")
+end
+
 end

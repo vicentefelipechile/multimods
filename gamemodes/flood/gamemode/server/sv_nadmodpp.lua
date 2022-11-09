@@ -55,15 +55,15 @@ if not NADMOD then
 	NADMOD.Load()
 
 	function NADMOD.Save()
-		local Users		= TTJ(NADMOD.Users)
-		local Groups	= TTJ(NADMOD.Groups)
-		local Bans		= TTJ(NADMOD.Bans)
-		local PPConfig	= TTJ(NADMOD.PPConfig)
+		local Users		= TTJ(NADMOD["Users"])
+		local Groups	= TTJ(NADMOD["Groups"])
+		local Bans		= TTJ(NADMOD["Bans"])
+		local PPConfig	= TTJ(NADMOD["PPConfig"])
 
-		q("UPDATE nadmod SET Users = " .. Users)
-		q("UPDATE nadmod SET Groups = " .. Groups)
-		q("UPDATE nadmod SET Bans = " .. Bans)
-		q("UPDATE nadmod SET PPConfig = " .. PPConfig)
+		q("UPDATE nadmod_users SET Users = " .. Users)
+		q("UPDATE nadmod_groups SET Groups = " .. Groups)
+		q("UPDATE nadmod_bans SET Bans = " .. Bans)
+		q("UPDATE nadmod_ppconfig SET PPConfig = " .. PPConfig)
 
 		print("Ok!")
 	end
