@@ -7,7 +7,7 @@ TEXTABLE LAYOUT
 */
 
 surface.CreateFont( "TEXREND", {
-	font = "Tehoma",
+	font = "Tahoma",
 	size = 70,
 	weight = 900,
 	blursize = 0,
@@ -24,7 +24,7 @@ surface.CreateFont( "TEXREND", {
 } )
 
 surface.CreateFont( "TEXREND_SMALL", {
-	font = "Tehoma",
+	font = "Tahoma",
 	size = 35,
 	weight = 900,
 	blursize = 0,
@@ -44,7 +44,7 @@ surface.CreateFont( "TEXREND_SMALL", {
 for I=0,20 do
 
 surface.CreateFont( "TEXREND" .. I, {
-	font = "Tehoma",
+	font = "Tahoma",
 	size = 70 + I*1.5,
 	weight = 900,
 	blursize = 0,

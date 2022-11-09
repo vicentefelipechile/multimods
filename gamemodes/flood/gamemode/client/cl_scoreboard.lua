@@ -2,7 +2,7 @@ local x = ScrW()
 local y = ScrH()
 
 surface.CreateFont( "ScoreboardFont", {
-	font = "Tehoma",
+	font = "Tahoma",
 	size = 15,
 	weight = 600,
 	antialias = true,

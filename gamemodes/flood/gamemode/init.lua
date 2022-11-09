@@ -160,3 +160,7 @@ function GM:KeyPress(ply, key)
  		end 
  	end
 end
+
+
+include("flood/gamemode/custom/autorun.lua")
+AddCSLuaFile("flood/gamemode/custom/autorun.lua")

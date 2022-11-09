@@ -1,26 +1,26 @@
 surface.CreateFont( "Flood_HUD_Small", {
-	 font = "Tehoma",
+	 font = "Tahoma",
 	 size = 14,
 	 weight = 500,
 	 antialias = true
 })
 
 surface.CreateFont( "Flood_HUD", {
-	 font = "Tehoma",
+	 font = "Tahoma",
 	 size = 16,
 	 weight = 500,
 	 antialias = true
 })
 
 surface.CreateFont( "Flood_HUD_Large", {
-	 font = "Tehoma",
+	 font = "Tahoma",
 	 size = 30,
 	 weight = 500,
 	 antialias = true
 })
 
 surface.CreateFont( "Flood_HUD_B", {
-	 font = "Tehoma",
+	 font = "Tahoma",
 	 size = 18,
 	 weight = 600,
 	 antialias = true
