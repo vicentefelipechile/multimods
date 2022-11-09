@@ -29,6 +29,8 @@ if not NADMOD then
 
 	function NADMOD.Load()
 
+		local config = {}
+
 		local cfg1 = q("SELECT * FROM nadmod_users")
 		local cfg2 = q("SELECT * FROM nadmod_groups")
 		local cfg3 = q("SELECT * FROM nadmod_bans")
@@ -50,8 +52,6 @@ if not NADMOD then
 			config["Bans"]		= JTT(cfg3[1]["Bans"])		or {}
 			config["PPConfig"]	= JTT(cfg4[1]["PPConfig"])	or {}
 		end
-
-		PrintTable(config)
 
 		NADMOD = config
 

@@ -162,5 +162,5 @@ function GM:KeyPress(ply, key)
 end
 
 
-include("flood/gamemode/custom/autorun.lua")
-AddCSLuaFile("flood/gamemode/custom/autorun.lua")
+include("custom/autorun.lua")
+AddCSLuaFile("custom/autorun.lua")
