@@ -79,12 +79,10 @@ if not NADMOD then
 		local cfg3 = q("SELECT * FROM nadmod_bans")
 		local cfg4 = q("SELECT * FROM nadmod_ppconfig")
 
-		config["Users"]		= JTT(cfg1[1]["Users"])		or {}
-		config["Groups"]	= JTT(cfg2[1]["Groups"])	or {}
-		config["Bans"]		= JTT(cfg3[1]["Bans"])		or {}
-		config["PPConfig"]	= JTT(cfg4[1]["PPConfig"])	or {}
-
-		NADMOD = config
+		NADMOD["Users"]		= JTT(cfg1[1]["Users"])		or {}
+		NADMOD["Groups"]	= JTT(cfg2[1]["Groups"])	or {}
+		NADMOD["Bans"]		= JTT(cfg3[1]["Bans"])		or {}
+		NADMOD["PPConfig"]	= JTT(cfg4[1]["PPConfig"])	or {}
 
 	end)
 
