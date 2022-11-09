@@ -7,7 +7,7 @@ GM_Path = GM_Name .. "/gamemode/custom/"
 
 local prefix = "[GM-Custom]"
 
-local m {
+local m = {
     SV = function(s)
         MsgC( Color(56, 228, 255, 200), prefix, " ", Color(184, 246, 255, 200), tostring(s).."\n")
     end,

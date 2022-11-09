@@ -46,7 +46,7 @@ addProp("models/props_c17/gravestone_coffinpiece002a.mdl",      2, 160,  80, fal
 addProp("models/props_c17/display_cooler01a.mdl",               2, 260, 130, false, "Display Case")
 addProp("models/props_c17/bench01a.mdl",                        1,  40,  20, false, "Wooden Bench")
 addProp("models/props_c17/FurnitureCouch001a.mdl",              2, 400, 200, false, "Red Couch")
-addProp("models/Combine_Helicopter/helicopter_bomb01.mdl"       1,  30,  15, false, "HeliBomb")
+addProp("models/Combine_Helicopter/helicopter_bomb01.mdl",      1,  30,  15, false, "HeliBomb")
 addProp("models/props_c17/shelfunit01a.mdl",                    1, 180,  90, false, "Wooden Shelf 1")
 addProp("models/props_c17/shelfunit01a.mdl",                    1, 180,  90, false, "Wooden Shelf 1")
 addProp("models/props_c17/FurnitureShelf001a.mdl",              1, 200, 100, false, "Wooden Shelf 2")

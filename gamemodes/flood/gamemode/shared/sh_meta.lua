@@ -79,5 +79,5 @@ function MetaPlayer:Save()
 
 	q("UPDATE flood SET name = " .. self:Nick()					.. " WHERE steamid = " .. ply:SteamID64() .. ";")
 	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. ply:SteamID64() .. ";")
-	q("UPDATE flood SET weapons = " .. util.TableToJSON(self.Weapons) .. " WHERE steamid = " ply:SteamID64() .. ";")
+	q("UPDATE flood SET weapons = " .. util.TableToJSON(self.Weapons) .. " WHERE steamid = " .. ply:SteamID64() .. ";")
 end

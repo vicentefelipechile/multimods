@@ -50,6 +50,8 @@ if not NADMOD then
 
 	end
 
+	NADMOD.Load()
+
 	function NADMOD.Save()
 		local Users		= TTJ(NADMOD.Users)
 		local Groups	= TTJ(NADMOD.Groups)
