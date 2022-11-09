@@ -1,6 +1,7 @@
 local PlayerMeta = FindMetaTable("Player")
 
 local q = sql.Query
+local qS = sql.SQLStr
 
 function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
@@ -8,7 +9,9 @@ function GM:PlayerInitialSpawn(ply)
 	local query = q("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
 
 	if not query then
-		q("INSERT INTO flood ( steamid, name ) VALUES ( " .. ply:SteamID64() .. ", " .. sql.SQLStr(ply:Nick()) .. " );")
+		q("INSERT INTO flood ( steamid, name ) VALUES ( " .. ply:SteamID64() .. ", " .. qS(ply:Nick()) .. " );")
+	else
+		q("UPDATE flood SET name = " .. qS(ply:Nick()) .. " ;")
 	end
  
 	local data = ply:LoadData()
