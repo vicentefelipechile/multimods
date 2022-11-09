@@ -2,9 +2,8 @@ DeriveGamemode("sandbox")
 
 GM.Name 	= "Flood"
 GM.Author 	= "Mythikos & Freezebug"
-GM.Version  = "2.0.0"
-GM.Email 	= "n/a"
-GM.Website 	= "n/a"
+GM.Version  = "2.0.1"
+GM.Website 	= "www.mapping-latam.cl"
 
 -- Include Shared files
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do

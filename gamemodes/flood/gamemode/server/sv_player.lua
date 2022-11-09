@@ -199,6 +199,18 @@ function PlayerMeta:LoadData()
 	end
 end
 
+function PlayerMeta:LoadData()
+	local data = {}
+
+	local query = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64()";")
+
+	if query then
+		self:Save()
+
+		data = sql.QueryValue("SELECT ")
+	end
+end
+
 function PlayerLeft(ply)
 	ply:Save()
 end
