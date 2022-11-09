@@ -69,13 +69,17 @@ function MetaPlayer:CanAfford(price)
 end
 
 function MetaPlayer:Save()
-	
+
+	local q = sql.Query
+
+	if not q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";") then
+		q("INSERT INTO flood ( steamid, name ) VALUES( " .. self:SteamID() .. ", " .. self:Nick() .. " )" )
+	end
+
 	if not self.Weapons then
 		self.Weapons = {}
 		table.insert(self.Weapons, "weapon_pistol")
 	end
-
-	local q = sql.Query
 
 	q("UPDATE flood SET name = " .. self:Nick()					.. " WHERE steamid = " .. self:SteamID64() .. ";")
 	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. self:SteamID64() .. ";")
