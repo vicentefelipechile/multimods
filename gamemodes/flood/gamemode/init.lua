@@ -60,11 +60,11 @@ function GM:Initialize()
 	if not sql.TableExists("flood") then
 		sql.Query([[CREATE TABLE IF NOT EXISTS flood (
 			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-			steamid INTEGER,
+			steamid TEXT,
 			name TEXT,
 			cash INTEGER,
 			weapons TEXT,
-			wins INTEGER DEFAULT 0
+			wins INTEGER
 		)]])
 	end
 end

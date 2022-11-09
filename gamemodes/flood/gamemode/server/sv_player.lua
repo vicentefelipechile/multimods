@@ -8,7 +8,7 @@ function GM:PlayerInitialSpawn(ply)
 	local query = q("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
 
 	if not query then
-		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. ply:SteamID64() .. ", " .. ply:Nick() .. ", " .. 5000 .. ", " .. sql.SQLStr("[\"weapon_pistol\"]") .. ", " .. 0 .. " )" )
+		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. ply:SteamID64() .. ", " .. ply:Nick() .. ", " .. 5000 .. ", " .. util.JSONToTable({"weapon_pistol"}) .. ", " .. 0 .. " )" )
 	end
  
 	local data = ply:LoadData()
@@ -31,7 +31,7 @@ function GM:PlayerInitialSpawn(ply)
 	end
 	ply.SpawnTime = CurTime()
 	
-	PrintMessage(HUD_PRINTCENTER, ply:Nick().." has joined the server!")
+	PrintMessage(HUD_PRINTCENTER, ply:Nick().." ha entrado al servidor!")
 end
 
 function GM:PlayerSpawn( ply )
