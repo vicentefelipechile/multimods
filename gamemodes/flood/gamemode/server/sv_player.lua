@@ -3,11 +3,10 @@ local PlayerMeta = FindMetaTable("Player")
 function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
  
-	local data = { }
-	data = ply:LoadData()
+	local data = ply:LoadData()
 
-	ply:SetCash(data.cash)
-	ply.Weapons = string.Explode("\n", data.weapons)
+	ply:SetCash(data["cash"])
+	ply.Weapons = data["weapons"]
 	
 	ply:SetTeam(TEAM_PLAYER)
 
@@ -181,34 +180,24 @@ end
 -----------------------------------------------------------------------------------------------
 function PlayerMeta:LoadData()
 	local data = {}
-	if file.Exists("flood/"..self:UniqueID()..".txt", "DATA") then
-		data = util.KeyValuesToTable(file.Read("flood/"..self:UniqueID()..".txt", "DATA"))
-		self.Allow = true
-		return data
-	else
-		self:Save()
-		data = util.KeyValuesToTable(file.Read("flood/"..self:UniqueID()..".txt", "DATA"))
-		
-		-- Initialize cash to a value
-		data.cash = 5000
-		-- Weapons are initialized elsewhere
-
-		self:Save()
-		self.Allow = true
-		return data
-	end
-end
-
-function PlayerMeta:LoadData()
-	local data = {}
 
 	local query = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64()";")
 
 	if query then
+		data = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64()";")[1]
+		self.Allow = true
+		return data
+	else
 		self:Save()
+		data = sql.Query("SELECT * FROM flood WHERE ply = " .. self:SteamID64()";")[1]
 
-		data = sql.QueryValue("SELECT ")
+		data["cash"] = 5000
+
+		self:Save()
+		self.Allow = true
+		return data
 	end
+
 end
 
 function PlayerLeft(ply)
@@ -230,12 +219,12 @@ function GM:PurchaseProp(ply, cmd, args)
 	if not ply.PropSpawnDelay then ply.PropSpawnDelay = 0 end
 	if not IsValid(ply) or not args[1] then return end
 	
-	local Prop = Props[math.floor(args[1])]
+	local Prop = Props[args[1]]
 	local tr = util.TraceLine(util.GetPlayerTrace(ply))
 	local ct = ChatText()
 
 	if ply.Allow and Prop and self:GetGameState() <= 1 then
-		if Prop.DonatorOnly == true and not ply:IsDonator() then 
+		if Prop.DonatorOnly and not ply:IsDonator() then 
 			ct:AddText("[Flood] ", Color(158, 49, 49, 255))
 			ct:AddText(Prop.Description.." is a donator only item!")
 			ct:Send(ply)
@@ -304,7 +293,9 @@ function GM:PurchaseProp(ply, cmd, args)
 		ct:Send(ply)
 	end
 end
-concommand.Add("FloodPurchaseProp", function(ply, cmd, args) hook.Call("PurchaseProp", GAMEMODE, ply, cmd, args) end)
+concommand.Add("FloodPurchaseProp", function(ply, cmd, args)
+	hook.Call("PurchaseProp", GAMEMODE, ply, cmd, args)
+end)
 
 function GM:PurchaseWeapon(ply, cmd, args)
 	if not ply.PropSpawnDelay then ply.PropSpawnDelay = 0 end

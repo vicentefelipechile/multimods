@@ -65,31 +65,7 @@ function MetaPlayer:GetCash()
 end
 
 function MetaPlayer:CanAfford(price)
-	if tonumber(self:GetNetworkedInt("flood_cash")) >= tonumber(price) then
-		return true
-	else
-		return false
-	end
-end
-
--- Save Data
-function MetaPlayer:Save()
-	if not file.IsDir("flood","DATA") then 
-		file.CreateDir("flood") 
-	end
-
-	if not self.Weapons then
-		self.Weapons = { }
-		table.insert(self.Weapons, "weapon_pistol")
-	end
-
-	local data = { 
-		name =  string.gsub(self:Nick(), "\"", " ") or "bob",
-		cash = self:GetNWInt("flood_cash"),
-		weapons = string.Implode("\n", self.Weapons)
-	}
-	
-	file.Write("flood/"..self:UniqueID()..".txt", util.TableToKeyValues(data))
+	return tonumber(self:GetNetworkedInt("flood_cash")) >= tonumber(price)
 end
 
 function MetaPlayer:Save()
@@ -98,4 +74,10 @@ function MetaPlayer:Save()
 		self.Weapons = {}
 		table.insert(self.Weapons, "weapon_pistol")
 	end
+
+	local q = sql.Query
+
+	q("UPDATE flood SET name = " .. self:Nick()					.. " WHERE steamid = " .. ply:SteamID64() .. ";")
+	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. ply:SteamID64() .. ";")
+	q("UPDATE flood SET weapons = " .. util.TableToJSON(self.Weapons) .. " WHERE steamid = " ply:SteamID64() .. ";")
 end
