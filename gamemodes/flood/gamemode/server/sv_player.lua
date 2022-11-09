@@ -6,6 +6,8 @@ local qS = sql.SQLStr
 function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
 
+	ply.Weapons = {}
+
 	local query = q("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
 
 	if not query then
@@ -19,7 +21,7 @@ function GM:PlayerInitialSpawn(ply)
 	PrintTable(data)
 
 	ply:SetCash(data["cash"])
-	ply.Weapons = data["weapons"]
+	ply.Weapons = util.JSONToTable(data["weapons"])
 	
 	ply:SetTeam(TEAM_PLAYER)
 
@@ -194,15 +196,15 @@ end
 function PlayerMeta:LoadData()
 	local data = {}
 
-	local query = sql.Query("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")
+	local query = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")
 
 	if query then
-		data = sql.Query("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
+		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
 		self.Allow = true
 		return data
 	else
 		self:Save()
-		data = sql.Query("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
+		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
 
 		data["cash"] = 5000
 
