@@ -63,7 +63,7 @@ function GM:Initialize()
 			steamid INTEGER NOT NULL,
 			name TEXT NOT NULL,
 			cash INTEGER NOT NULL DEFAULT 5000,
-			weapons TEXT NOT NULL DEFAULT '["weapon_pistol"]',
+			weapons TEXT NOT NULL,
 			wins INTEGER NOT NULL DEFAULT 0
 		)]])
 	end
