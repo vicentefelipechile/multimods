@@ -24,7 +24,7 @@ WeaponCategories[1] = "Basic Weapons"
 -----------------------------
 
 local function addProp(model, group, price, health, donator, desc)
-    if not desc then return end
+    if desc == nil then return end
 
     local tbl = {
         ["Model"] = model,
@@ -74,7 +74,7 @@ addProp("models/props_borealis/bluebarrel001.mdl",              1,  50,  25, fal
 -----------------------------
 
 local function addWeapon(model, group, class, name, price, ammo, ammoclass, damage, donator)
-    if not donator then return end
+    if donator == nil then return end
 
     local tbl = {
         ["Model"] = model,
@@ -88,16 +88,15 @@ local function addWeapon(model, group, class, name, price, ammo, ammoclass, dama
         ["DonatorOnly"] = donator
     }
     
-    table.insert(Props, tbl)
+    table.insert(Weapons, tbl)
 end
 
-
-Weapons[1] = {Model = "models/weapons/w_crossbow.mdl", Group = 1, Class = "weapon_crossbow", Name = "Crossbow", 25000, Ammo = 1000, AmmoClass = "XBowBolt", Damage = 10, false}
-Weapons[2] = {Model = "models/weapons/w_rocket_launcher.mdl", Group = 1, Class = "weapon_rpg", Name = "RPG", 37500, Ammo = 3, AmmoClass = "RPG_Round", Damage = 50, false}
-Weapons[3] = {Model = "models/weapons/W_357.mdl", Group = 1, Class = "weapon_357", Name = "357 Magnum", 10000, Ammo = 1000, AmmoClass = "357", Damage = 4, false}
-Weapons[4] = {Model = "models/weapons/w_grenade.mdl", Group = 1, Class = "weapon_frag", Name = "Frag Grenade", 11250, Ammo = 3, AmmoClass = "Grenade", Damage = 15, false}
-Weapons[6] = {Model = "models/weapons/w_crowbar.mdl", Group = 1, Class = "weapon_crowbar", Name = "Crowbar", 5000, Ammo = 0, AmmoClass = "Pistol", Damage = 20, false}
-Weapons[7] = {Model = "models/weapons/w_shotgun.mdl", Group = 1, Class = "weapon_shotgun", Name = "Shotgun", 200000, Ammo = 100, AmmoClass = "Buckshot", Damage = 8, false}
-Weapons[8] = {Model = "models/weapons/w_slam.mdl", Group = 1, Class = "weapon_slam", Name = "SLAM", 12500, Ammo = 2, AmmoClass = "slam", Damage = 25, false}
-Weapons[9] = {Model = "models/weapons/w_smg1.mdl", Group = 1, Class = "weapon_smg1", Name = "SMG", 250000, Ammo = 500, AmmoClass = "SMG1", Damage = 2, false}
-Weapons[10] = {Model = "models/weapons/w_irifle.mdl", Group = 1, Class = "weapon_ar2", Name = "AR2", 750000, Ammo = 1000, AmmoClass = "AR2", Damage = 3, false}
+addWeapon("models/weapons/w_crossbow.mdl",          1, "weapon_crossbow",   "Crossbow",     25000, 1000, "XBowBolt",    10, false)
+addWeapon("models/weapons/w_rocket_launcher.mdl",   1, "weapon_rpg",        "RPG",          37500,    3, "RPG_Round",   50, false)
+addWeapon("models/weapons/W_357.mdl",               1, "weapon_357",        "357 Magnum",   10000, 1000, "357",          4, false)
+addWeapon("models/weapons/w_grenade.mdl",           1, "weapon_frag",       "Frag Grenade", 11250,    3, "Grenade",     15, false)
+addWeapon("models/weapons/w_crowbar.mdl",           1, "weapon_crowbar",    "Crowbar",       5000,    0, "Pistol",      20, false)
+addWeapon("models/weapons/w_shotgun.mdl",           1, "weapon_shotgun",    "Shotgun",      20000,  100, "Buckshot",     8, false)
+addWeapon("models/weapons/w_slam.mdl",              1, "weapon_slam",       "SLAM",         12500,    2, "slam",        25, false)
+addWeapon("models/weapons/w_smg1.mdl",              1, "weapon_smg1",       "SMG",         250000,  500, "SMG1",         2, false)
+addWeapon("models/weapons/w_irifle.mdl",            1, "weapon_ar2",        "AR2",         750000, 1000, "AR2",          3, false)
