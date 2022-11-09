@@ -79,7 +79,7 @@ local function addWeapon(model, group, class, name, price, ammo, ammoclass, dama
     local tbl = {
         ["Model"] = model,
         ["Group"] = group,
-        ["Class"] = class
+        ["Class"] = class,
         ["Name"] = name,
         ["Price"] = price,
         ["Ammo"] = ammo,
