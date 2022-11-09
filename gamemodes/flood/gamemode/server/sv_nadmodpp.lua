@@ -10,20 +10,47 @@ if not sql.TableExists("nadmod") then
 		Bans TEXT,
 		PPConfig
 	)]])
-
-	sql.Query("UPDATE nadmod SET Users = '[]';")
-	sql.Query("UPDATE nadmod SET Groups = '[]';")
-	sql.Query("UPDATE nadmod SET Bans = '[]';")
-	sql.Query("UPDATE nadmod SET PPConfig = '[]';")
 end
 
 if not NADMOD then
-	-- User is running without my Admin mod NADMOD, lets just copy some required initialization stuff over here
-	concommand.Add("nadmod_reload", function(ply,cmd,args) 
-		if args[1] == "full" then NADMOD = nil end
+	------------------------------
+	------- Setting Nadmod -------
+	------------------------------
+	
+	concommand.Add("nadmod_reload", function(ply,cmd,args)
+
+		if args[1] == "full" then
+			NADMOD = nil
+		end
+	
 		include("autorun/server/nadmod_pp.lua")
 	end)
+
 	NADMOD = util.JSONToTable(file.Read("nadmod_config.txt","DATA") or "") or {Users = {}, Groups = {}, Bans = {}, PPConfig = {}}
+
+	function NADMOD.Load()
+
+		------------------------------
+		------- Query Function -------
+		------------------------------
+		local q = sql.Query
+
+		local config = q("SELECT * FROM nadmod")[1]
+
+		if not config then
+			q("UPDATE nadmod SET Users = '[]';")
+			q("UPDATE nadmod SET Groups = '[]';")
+			q("UPDATE nadmod SET Bans = '[]';")
+			q("UPDATE nadmod SET PPConfig = '[]';")
+
+			config = q("SELECT * FROM nadmod")[1]
+		end
+
+
+
+	end
+
+	NADMOD = sql.Query("SELECT * FROM nadmod")[1]
 	function NADMOD.Save()
 		file.Write("nadmod_config.txt", util.TableToJSON({Users = NADMOD.Users, Groups = NADMOD.Groups, Bans = NADMOD.Bans, PPConfig = NADMOD.PPConfig}))
 		sql.Query("")
@@ -55,11 +82,10 @@ if not NADMOD.Props then
 	CPPI = {}
 	
 	-- Copy over default settings if they aren't present in the disk's PPConfig
-	for k,v in pairs({toggle=true,use=true,adminall=true,autocdp=0,autocdpadmins=false}) do
+	for k,v in pairs({toggle = true, use = true, adminall = true, autocdp = 0, autocdpadmins = false}) do
 		if NADMOD.PPConfig[k] == nil then NADMOD.PPConfig[k] = v end
 	end
-	
-	--AddCSLuaFile("autorun/client/cl_nadmodpp.lua")
+
 	util.AddNetworkString("nadmod_propowners")
 	util.AddNetworkString("nadmod_ppfriends")
 	util.AddNetworkString("nadmod_ppconfig")
