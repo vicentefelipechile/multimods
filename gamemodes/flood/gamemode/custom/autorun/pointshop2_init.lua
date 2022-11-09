@@ -18,7 +18,7 @@ local function addCsLuaRecursive( folder )
 	end
 end
 addCsLuaRecursive( GM_Path .. "ps2/modules" )
-LibK.AddCSLuaDir( "kinv/items" )
+LibK.AddCSLuaDir( GM_Path .. "kinv/items" )
 
 LibK.InitializeAddon{
 	addonName = "Pointshop2",             --Name of the addon

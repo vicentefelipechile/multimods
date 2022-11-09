@@ -27,7 +27,7 @@ local function AddDir(dir)
     local files, directories = file.Find(GM_Name .. dir .. "*", "LUA")
     for _, v in ipairs(files) do
         if string.EndsWith(v, ".lua") then
-            include()
+            include(v)
         end
     end
 end
