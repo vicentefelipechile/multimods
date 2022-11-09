@@ -28,6 +28,7 @@ local function AddDir(dir)
     for _, v in ipairs(files) do
         if string.EndsWith(v, ".lua") then
             include(v)
+            m.SV("RUNNING: " .. v)
         end
     end
 end
