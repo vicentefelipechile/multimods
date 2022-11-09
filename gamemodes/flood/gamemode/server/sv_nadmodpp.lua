@@ -3,14 +3,10 @@
 ------ Database Creation -----
 ------------------------------
 
-if not sql.TableExists("nadmod") then
-	sql.Query([[CREATE TABLE IF NOT EXISTS nadmod (
-		Users TEXT,
-		Groups TEXT,
-		Bans TEXT,
-		PPConfig TEXT
-	)]])
-end
+sql.Query("CREATE TABLE IF NOT EXISTS nadmod_users ( Users TEXT )")
+sql.Query("CREATE TABLE IF NOT EXISTS nadmod_groups ( Groups TEXT )")
+sql.Query("CREATE TABLE IF NOT EXISTS nadmod_bans ( Bans TEXT )")
+sql.Query("CREATE TABLE IF NOT EXISTS nadmod_ppconfig ( PPConfig TEXT )")
 
 local q = sql.Query
 local JTT = util.JSONToTable
@@ -33,17 +29,26 @@ if not NADMOD then
 
 	function NADMOD.Load()
 
-		local config = q("SELECT * FROM nadmod")
+		local cfg1 = q("SELECT * FROM nadmod_users")
+		local cfg2 = q("SELECT * FROM nadmod_groups")
+		local cfg3 = q("SELECT * FROM nadmod_bans")
+		local cfg4 = q("SELECT * FROM nadmod_ppconfig")
 
-		if config == nil then
-			q("INSERT INTO nadmod ( Users ) VALUES ( '[]' ) ")
-			q("INSERT INTO nadmod ( Groups ) VALUES ( '[]' ) ")
-			q("INSERT INTO nadmod ( Bans ) VALUES ( '[]' ) ")
-			q("INSERT INTO nadmod ( PPConfig ) VALUES ( '[]' ) ")
+		if cfg1 == nil then
+			q("INSERT INTO nadmod_users ( Users ) VALUES ( '[]' ) ")
+			q("INSERT INTO nadmod_groups ( Groups ) VALUES ( '[]' ) ")
+			q("INSERT INTO nadmod_bans ( Bans ) VALUES ( '[]' ) ")
+			q("INSERT INTO nadmod_ppconfig ( PPConfig ) VALUES ( '[]' ) ")
 
-			config = JTT(q("SELECT * FROM nadmod")[1])
+			config["Users"] = JTT(q("SELECT * FROM nadmod_users")[1])
+			config["Groups"] = JTT(q("SELECT * FROM nadmod_groups")[1])
+			config["Bans"] = JTT(q("SELECT * FROM nadmod_bans")[1])
+			config["PPConfig"] = JTT(q("SELECT * FROM nadmod_ppconfig")[1])
 		else
-			config = config[1]
+			config["Users"]		= JTT(cfg1[1])
+			config["Groups"]	= JTT(cfg2[1])
+			config["Bans"]		= JTT(cfg3[1])
+			config["PPConfig"]	= JTT(cfg4[1])
 		end
 
 		PrintTable(config)
