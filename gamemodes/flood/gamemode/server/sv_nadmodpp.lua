@@ -41,7 +41,8 @@ if not NADMOD then
 			q("UPDATE nadmod SET Bans = '[]';")
 			q("UPDATE nadmod SET PPConfig = '[]';")
 
-			config = JTT(q("SELECT * FROM nadmod")[1])
+			print(q("SELECT * FROM nadmod"))
+			-- config = JTT(q("SELECT * FROM nadmod")[1])
 		else
 			config = config[1]
 		end
