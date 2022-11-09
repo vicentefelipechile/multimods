@@ -2,6 +2,9 @@
 include("shared.lua")
 AddCSLuaFile("shared.lua")
 
+include("flood/gamemode/custom/autorun.lua")
+AddCSLuaFile("flood/gamemode/custom/autorun.lua")
+
 MsgN("_-_-_-_- Flood Server Side -_-_-_-_")
 MsgN("Loading Server Files")
 for _, file in pairs (file.Find("flood/gamemode/server/*.lua", "LUA")) do
@@ -160,7 +163,3 @@ function GM:KeyPress(ply, key)
  		end 
  	end
 end
-
-
-include("custom/autorun.lua")
-AddCSLuaFile("custom/autorun.lua")
