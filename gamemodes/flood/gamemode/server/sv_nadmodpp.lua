@@ -21,11 +21,6 @@ if not NADMOD then
 	------- Setting Nadmod -------
 	------------------------------
 	NADMOD = {}
-	
-	concommand.Add("nadmod_reload", function(ply,cmd,args)	
-		NADMOD.Save()
-		NADMOD.Load()
-	end)
 
 	function NADMOD.Load()
 
@@ -72,6 +67,12 @@ if not NADMOD then
 
 		print("Ok!")
 	end
+	
+	concommand.Add("nadmod_reload", function(ply,cmd,args)	
+		NADMOD.Save()
+		NADMOD.Load()
+	end)
+
 	hook.Add("Shutdown", "NADMOD.Save", NADMOD.Save)
 	function NADMOD.FindPlayer(nick) 
 		if not nick or nick == "" then return end 
