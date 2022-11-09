@@ -3,6 +3,20 @@
 -- Inspired by Spacetech's Simple Prop Protection, <3's
 -- Bugs? Feature requests? "why are you using JSON?!"? Email me or poke the Facepunch http://www.facepunch.com/showthread.php?t=1221183
 
+if not sql.TableExists("nadmod") then
+	sql.Query([[CREATE TABLE IF NOT EXISTS nadmod (
+		Users TEXT,
+		Groups TEXT,
+		Bans TEXT,
+		PPConfig
+	)]])
+
+	sql.Query("UPDATE nadmod SET Users = '[]';")
+	sql.Query("UPDATE nadmod SET Groups = '[]';")
+	sql.Query("UPDATE nadmod SET Bans = '[]';")
+	sql.Query("UPDATE nadmod SET PPConfig = '[]';")
+end
+
 if not NADMOD then
 	-- User is running without my Admin mod NADMOD, lets just copy some required initialization stuff over here
 	concommand.Add("nadmod_reload", function(ply,cmd,args) 
@@ -12,6 +26,7 @@ if not NADMOD then
 	NADMOD = util.JSONToTable(file.Read("nadmod_config.txt","DATA") or "") or {Users = {}, Groups = {}, Bans = {}, PPConfig = {}}
 	function NADMOD.Save()
 		file.Write("nadmod_config.txt", util.TableToJSON({Users = NADMOD.Users, Groups = NADMOD.Groups, Bans = NADMOD.Bans, PPConfig = NADMOD.PPConfig}))
+		sql.Query("")
 	end
 	hook.Add("Shutdown","NADMOD.Save",NADMOD.Save)
 	function NADMOD.FindPlayer(nick) 
