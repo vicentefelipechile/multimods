@@ -33,15 +33,15 @@ if not NADMOD then
 
 	function NADMOD.Load()
 
-		local config = q("SELECT * FROM nadmod")
+		local config = q("SELECT * FROM nadmod;")
 
-		if not config then
-			q("UPDATE nadmod SET Users = '[]';")
-			q("UPDATE nadmod SET Groups = '[]';")
-			q("UPDATE nadmod SET Bans = '[]';")
-			q("UPDATE nadmod SET PPConfig = '[]';")
+		if config == nil then
+			q("UPDATE nadmod SET Users = '[]'")
+			q("UPDATE nadmod SET Groups = '[]'")
+			q("UPDATE nadmod SET Bans = '[]'")
+			q("UPDATE nadmod SET PPConfig = '[]'")
 
-			print(q("SELECT * FROM nadmod"))
+			print(q("SELECT * FROM nadmod;"))
 			-- config = JTT(q("SELECT * FROM nadmod")[1])
 		else
 			config = config[1]
