@@ -41,8 +41,7 @@ if not NADMOD then
 			q("INSERT INTO nadmod ( Bans ) VALUES ( '[]' ) ")
 			q("INSERT INTO nadmod ( PPConfig ) VALUES ( '[]' ) ")
 
-			print(q("SELECT * FROM nadmod;"))
-			-- config = JTT(q("SELECT * FROM nadmod")[1])
+			config = JTT(q("SELECT * FROM nadmod")[1])
 		else
 			config = config[1]
 		end
