@@ -15,7 +15,7 @@ function GM:PlayerInitialSpawn(ply)
 			table.insert(wpns, "weapon_pistol")
 		end
 
-		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. self:SteamID64() .. ", " .. sql.SQLStr(self:Nick()) .. ", " .. 5000 .. ", " .. util.TableToJSON(wpns) .. ", " .. 0 .. " )" )
+		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES ( " .. ply:SteamID64() .. ", " .. sql.SQLStr(ply:Nick()) .. ", " .. 5000 .. ", " .. util.TableToJSON(wpns) .. ", " .. 0 .. " )" )
 	end
  
 	local data = ply:LoadData()
