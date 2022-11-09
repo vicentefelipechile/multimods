@@ -75,6 +75,9 @@ function MetaPlayer:Save()
 		table.insert(self.Weapons, "weapon_pistol")
 	end
 
+	print(self.Weapons)
+	print(self:SteamID64())
+
 	local q = sql.Query
 	local qS = sql.SQLStr
 
