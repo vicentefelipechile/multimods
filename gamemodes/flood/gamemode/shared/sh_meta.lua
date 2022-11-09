@@ -79,10 +79,8 @@ function MetaPlayer:Save()
 		table.insert(self.Weapons, "weapon_pistol")
 	end
 
-	PrintTable(self.Weapons)
-
 	if data == nil then
-		q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES( " .. self:SteamID64() .. ", " .. self:Nick() .. ", " .. 5000 .. ", " .. util.TableToJSON(self.Weapons) .. ", " .. 0 .. " )" )
+		print(q("INSERT INTO flood ( steamid, name, cash, weapons, wins ) VALUES( " .. self:SteamID64() .. ", " .. self:Nick() .. ", " .. 5000 .. ", " .. util.TableToJSON(self.Weapons) .. ", " .. 0 .. " )" ))
 	end
 
 	q("UPDATE flood SET name = " .. self:Nick()					.. " WHERE steamid = " .. self:SteamID64() .. ";")
