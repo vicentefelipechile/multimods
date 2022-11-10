@@ -93,20 +93,19 @@ local function addWeapon(model, group, class, name, price, ammo, ammoclass, dama
 end
 
 --        "Modelo del arma"                     Grupo, "nombre_entidad",    "Nombre Arma", Precio, Ammo, Tipo de Ammo, Daño, Vip?
-addWeapon("models/weapons/w_crossbow.mdl",          1, "weapon_crossbow",   "Crossbow",     25000, 1000, "XBowBolt",    10, false)
+addWeapon("models/weapons/w_crossbow.mdl",          1, "weapon_crossbow",   "Crossbow",     10000,  30, "XBowBolt",     10, false)
 addWeapon("models/weapons/w_rocket_launcher.mdl",   1, "weapon_rpg",        "RPG",          37500,    3, "RPG_Round",   50, false)
 addWeapon("models/weapons/W_357.mdl",               1, "weapon_357",        "357 Magnum",   10000, 1000, "357",          4, false)
 addWeapon("models/weapons/w_grenade.mdl",           1, "weapon_frag",       "Frag Grenade", 11250,    3, "Grenade",     15, false)
-addWeapon("models/weapons/w_crowbar.mdl",           1, "weapon_crowbar",    "Crowbar",       5000,    0, "Pistol",      20, false)
-addWeapon("models/weapons/w_shotgun.mdl",           1, "weapon_shotgun",    "Shotgun",      20000,  100, "Buckshot",     8, false)
+addWeapon("models/weapons/w_crowbar.mdl",           1, "weapon_crowbar",    "Crowbar",        500,    0, "Pistol",      20, false)
+addWeapon("models/weapons/w_shotgun.mdl",           1, "weapon_shotgun",    "Shotgun",      15000,   30, "Buckshot",     8, false)
 addWeapon("models/weapons/w_slam.mdl",              1, "weapon_slam",       "SLAM",         12500,    2, "slam",        25, false)
-addWeapon("models/weapons/w_smg1.mdl",              1, "weapon_smg1",       "SMG",         250000,  500, "SMG1",         2, false)
-addWeapon("models/weapons/w_irifle.mdl",            1, "weapon_ar2",        "AR2",         750000, 1000, "AR2",          3, false)
+addWeapon("models/weapons/w_smg1.mdl",              1, "weapon_smg1",       "SMG",          20000,  500, "SMG1",         2, false)
+addWeapon("models/weapons/w_irifle.mdl",            1, "weapon_ar2",        "AR2",          50000, 1000, "AR2",          3, false)
 
 -- Custom Weapons
 addWeapon("models/weapons/tfa_cso2/w_pkm.mdl",      2, "tfa_cso2_pkm",      "Pkm",          80000, 1200, "AR2",          4, false)
 addWeapon("models/weapons/tfa_cso2/w_af2011a0.mdl", 2, "tfa_cso2_af2011a0", "AF2011a0",     15000,  700, "pistol",      12, false)
-addWeapon("models/weapons/tfa_cso2/w_m870.mdl",     2, "tfa_cso2_m870",     "m870",         50000, 1000, "buckshot",    15, false)
 addWeapon("models/weapons/tfa_cso2/w_m870.mdl",     2, "tfa_cso2_m870",     "m870",         50000, 1000, "buckshot",    15, false)
 addWeapon("models/weapons/tfa_cso2/w_m99.mdl",      2, "tfa_cso2_m99",      "m99",         200000,   15, "SniperPenetratedRound", 30, false)
 addWeapon("models/weapons/tfa_cso2/w_sg552.mdl",    2, "tfa_cso2_sg552",    "sg552",        75000,   45, "SniperPenetratedRound",  5, false)

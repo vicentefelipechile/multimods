@@ -114,7 +114,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			if attacker:IsPlayer() then
 				if attacker:GetActiveWeapon() ~= NULL then
 					if attacker:GetActiveWeapon():GetClass() == "weapon_pistol" then
-						ent:SetNWInt("CurrentPropHealth", ent:GetNWInt("CurrentPropHealth") - 1)
+						ent:SetNWInt("CurrentPropHealth", ent:GetNWInt("CurrentPropHealth") - 2)
 					else
 						for _, Weapon in pairs(Weapons) do
 							if attacker:GetActiveWeapon():GetClass() == Weapon.Class then
