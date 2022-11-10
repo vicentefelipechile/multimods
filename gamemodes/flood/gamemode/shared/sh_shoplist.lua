@@ -18,6 +18,7 @@ PropCategories[2] = "Armor "
 ----- Weapon Categories -----
 -----------------------------
 WeaponCategories[1] = "Basic Weapons"
+WeaponCategories[2] = "TFA Weapons"
 
 -----------------------------
 ----------- Props -----------
@@ -101,3 +102,11 @@ addWeapon("models/weapons/w_shotgun.mdl",           1, "weapon_shotgun",    "Sho
 addWeapon("models/weapons/w_slam.mdl",              1, "weapon_slam",       "SLAM",         12500,    2, "slam",        25, false)
 addWeapon("models/weapons/w_smg1.mdl",              1, "weapon_smg1",       "SMG",         250000,  500, "SMG1",         2, false)
 addWeapon("models/weapons/w_irifle.mdl",            1, "weapon_ar2",        "AR2",         750000, 1000, "AR2",          3, false)
+
+-- Custom Weapons
+addWeapon("models/weapons/tfa_cso2/w_pkm.mdl",      2, "tfa_cso2_pkm",      "Pkm",          80000, 1200, "AR2",          4, false)
+addWeapon("models/weapons/tfa_cso2/w_af2011a0.mdl", 2, "tfa_cso2_af2011a0", "AF2011a0",     15000,  700, "pistol",      12, false)
+addWeapon("models/weapons/tfa_cso2/w_m870.mdl",     2, "tfa_cso2_m870",     "m870",         50000, 1000, "buckshot",    15, false)
+addWeapon("models/weapons/tfa_cso2/w_m870.mdl",     2, "tfa_cso2_m870",     "m870",         50000, 1000, "buckshot",    15, false)
+addWeapon("models/weapons/tfa_cso2/w_m99.mdl",      2, "tfa_cso2_m99",      "m99",         200000,   15, "SniperPenetratedRound", 30, false)
+addWeapon("models/weapons/tfa_cso2/w_sg552.mdl",    2, "tfa_cso2_sg552",    "sg552",        75000,   45, "SniperPenetratedRound",  5, false)
