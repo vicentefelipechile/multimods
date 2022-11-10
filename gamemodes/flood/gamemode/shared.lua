@@ -19,3 +19,8 @@ function GM:FormatColor(col)
 	col = Color(col.r * 255, col.g * 255, col.b * 255)
 	return col
 end
+
+GM.VIP = {
+	["vip"] = true,
+	["donator"] = true,
+}

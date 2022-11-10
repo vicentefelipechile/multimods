@@ -72,8 +72,6 @@ if not NADMOD then
 	concommand.Add("nadmod_reload", function(ply,cmd,args)	
 		NADMOD.Save()
 
-		local config = {}
-
 		local cfg1 = q("SELECT * FROM nadmod_users")
 		local cfg2 = q("SELECT * FROM nadmod_groups")
 		local cfg3 = q("SELECT * FROM nadmod_bans")
@@ -88,33 +86,74 @@ if not NADMOD then
 
 	hook.Add("Shutdown", "NADMOD.Save", NADMOD.Save)
 	function NADMOD.FindPlayer(nick) 
-		if not nick or nick == "" then return end 
+
+		if not nick or nick == "" then
+			return
+		end 
+
 		nick = string.lower(nick)
+
 		local num = tonumber(nick)
-		for _,v in pairs(player.GetAll()) do
-			if string.lower(v:Nick()) == nick then return v -- Exact name match
-			elseif v:UserID() == num then return v 			-- UserID match (from status)
+
+		for _, ply in pairs(player.GetAll()) do
+			if string.lower(ply:Nick()) == nick then
+				return ply
+			elseif ply:UserID() == num then
+				return v
 			end
 		end
-		-- If the above two exact searches fail, try doing a partial search
-		for _,v in pairs(player.GetAll()) do
-			if string.find(string.lower(v:Nick()), nick) then return v end
+		
+		-- Error Prevention --
+		for _, ply in pairs(player.GetAll()) do
+			if string.find(string.lower(ply:Nick()), nick) then
+				return v
+			end
 		end
 	end
 end
 if not NADMOD.Props then
-	-- NADMOD PP Initialization
-	NADMOD.PPVersion = "1.2.6p"
-	NADMOD.Props = {} // {entid = {Ent = ent, Owner = ply, SteamID = ply:SteamID64(), Name = ply:Nick() or "W" or "O"}}
-	NADMOD.PropOwnersSmall = {} // A smaller buffer of PropOwner names to send to current players
+	------------------------------
+	----- Initialize Nadmod ------
+	------------------------------
+	NADMOD.PPVersion = "2.0.0"
+	NADMOD.Props = {}
+
+	--[[-----------------------------------
+	-------------- Structure --------------
+
+	NADMOD.Props = {
+		[entid] = {
+			["Ent"] = entity,
+			["Owner"] = ply,
+			["SteamID"] = ply:SteamID64(),
+			["Name"] = ply:Nick() or "W" or "O"
+		}
+	}
+
+	---------------------------------------
+	--]]-----------------------------------
+
+	NADMOD.PropOwnersSmall = {}
 	NADMOD.AutoCDPTimers = {}
 	
 	local oldCPPI = CPPI
 	CPPI = {}
 	
-	-- Copy over default settings if they aren't present in the disk's PPConfig
-	for k,v in pairs({toggle = true, use = true, adminall = true, autocdp = 0, autocdpadmins = false}) do
-		if NADMOD.PPConfig[k] == nil then NADMOD.PPConfig[k] = v end
+	------------------------------
+	------ Default Settings ------
+	------------------------------
+	local default = {
+		["toggle"]		= true,
+		["use"]			= true,
+		["adminall"]	= true,
+		["autocdp"]		= 0,
+		["autocdpadmins"] = false
+	}
+
+	for k,v in pairs(default) do
+		if NADMOD.PPConfig[k] == nil then
+			NADMOD.PPConfig[k] = v
+		end
 	end
 
 	util.AddNetworkString("nadmod_propowners")
@@ -126,21 +165,26 @@ if not NADMOD.Props then
 	timer.Create("WarnOtherPPs", 0, 1, function()
 		//Print a harmless error if we detect other PP's active, since this often leads to confusion. NPP'll still load fine
 		//Known CPPI plugins: FPP, SPP, NPP, ULX's UPS
-		if not oldCPPI or (oldCPPI.GetName and oldCPPI:GetName() == "Nadmod Prop Protection") then oldCPPI = CPPI end
-		if oldCPPI and (not oldCPPI.GetName or oldCPPI:GetName() ~= "Nadmod Prop Protection") then Error("NPP has detected "..(oldCPPI.GetName and oldCPPI:GetName() or "another CPPI PP").." is installed, you probably only want one PP active at a time!!\n")
-		elseif PP_Settings then Error("NPP has detected Evolve's PP plugin, you probably only want one PP active at a time!!\n")
+		if not oldCPPI or ( oldCPPI.GetName and oldCPPI:GetName() == "Nadmod Prop Protection" ) then
+			oldCPPI = CPPI
+		end
+
+		if oldCPPI and (not oldCPPI.GetName or oldCPPI:GetName() ~= "Nadmod Prop Protection") then
+			Error("NPP has detected "..(oldCPPI.GetName and oldCPPI:GetName() or "another CPPI PP").." is installed, you probably only want one PP active at a time!!\n")
+		elseif PP_Settings then
+			Error("NPP has detected Evolve's PP plugin, you probably only want one PP active at a time!!\n")
 		end
 	end)
 end
+
 local metaply = FindMetaTable("Player")
 local metaent = FindMetaTable("Entity")
 
--- Does your admin mod not seem to work with Nadmod PP? Try overriding this function!
+
 function NADMOD.IsPPAdmin(ply)
 	if NADMOD.HasPermission then
 		return NADMOD.HasPermission(ply, "PP_All")
 	else
-		-- If the admin mod NADMOD isn't present, just default to using IsAdmin
 		return ply:IsAdmin()
 	end
 end
@@ -167,12 +211,11 @@ hook.Add("PlayerInitialSpawn", "NADMOD.PPInitPlayer", NADMOD.PPInitPlayer)
 function NADMOD.RefreshOwners()
 	if next(NADMOD.PropOwnersSmall) then
 		net.Start("nadmod_propowners")
-			net.WriteUInt(table.Count(NADMOD.PropOwnersSmall),16)
-			for k,v in pairs(NADMOD.PropOwnersSmall) do
+			net.WriteUInt(table.Count(NADMOD.PropOwnersSmall), 16)
+			for k, v in pairs(NADMOD.PropOwnersSmall) do
 				net.WriteUInt(k,16)
 				net.WriteString(v)
 			end
-			//net.WriteTable(NADMOD.PropOwnersSmall)
 		net.Broadcast()
 		table.Empty(NADMOD.PropOwnersSmall)
 	end
@@ -180,21 +223,28 @@ end
 timer.Create("NADMOD.RefreshOwners", 1, 0, NADMOD.RefreshOwners)
 
 function NADMOD.IsFriendProp(ply, ent)
-	if IsValid(ent) && IsValid(ply) && ply:IsPlayer() && NADMOD.Props[ent:EntIndex()] then
-		local ownerSteamID = NADMOD.Props[ent:EntIndex()].SteamID
+	if IsValid(ent) and IsValid(ply) and ply:IsPlayer() and NADMOD.Props[ent:EntIndex()] then
+
+		local ownerSteamID = NADMOD.Props[ent:EntIndex()]["SteamID64"]
 		if NADMOD.Users[ownerSteamID] then
-			local friends = NADMOD.Users[ownerSteamID].Friends
-			return friends && friends[ply:SteamID64()]
+			local friends = NADMOD.Users[ownerSteamID]["Friends"]
+			return friends and friends[ply:SteamID64()]
 		end
+
 	end
+
 	return false
 end
 
 function NADMOD.PlayerCanTouch(ply, ent)
-	-- If PP is off or the ent is worldspawn, let them touch it
-	if not tobool(NADMOD.PPConfig["toggle"]) or ent:IsWorld() then return true end
+
+	if not tobool(NADMOD.PPConfig["toggle"]) or ent:IsWorld() then
+		return true
+	end
 	
-	if !IsValid(ent) or !IsValid(ply) or ent:IsPlayer() or !ply:IsPlayer() then return false end
+	if !IsValid(ent) or !IsValid(ply) or ent:IsPlayer() or !ply:IsPlayer() then
+		return false
+	end
 	
 	if not NADMOD.Props[ent:EntIndex()] then
 		local class = ent:GetClass()
@@ -206,24 +256,52 @@ function NADMOD.PlayerCanTouch(ply, ent)
 			return true
 		end
 	end
-	-- Ownerless props can be touched by all
+
+	---------------------------------
+	--------- Owneless Props --------
+	---------------------------------
 	if NADMOD.Props[ent:EntIndex()].Name == "O" then return true end 
-	-- Admins can touch anyones props + world
+
+	---------------------------------
+	-- Admin can touch World Props --
+	---------------------------------
 	if NADMOD.PPConfig["adminall"] and NADMOD.IsPPAdmin(ply) then return true end
-	-- Players can touch their own props and friends
-	if NADMOD.Props[ent:EntIndex()].SteamID64 == ply:SteamID64() or NADMOD.IsFriendProp(ply, ent) then return true end
+
+	---------------------------------
+	--- Player touch and Friends ----
+	---------------------------------
+	if NADMOD.Props[ent:EntIndex()]["SteamID64"] == ply:SteamID64() or NADMOD.IsFriendProp(ply, ent) then
+		return true
+	end
 	
 	return false
 end
 
--- We could hook directly to PlayerCanTouch, but returning true stops other hooks from being called
+
 function NADMOD.PlayerCanTouchSafe(ply, ent)
-	if !IsValid(ent) or ent:IsPlayer() then return end
-	if !NADMOD.PlayerCanTouch(ply,ent) then return false end
+
+	if !IsValid(ent) or ent:IsPlayer() then
+		return
+	end
+
+	if !NADMOD.PlayerCanTouch(ply,ent) then
+		return false
+	end
 end
+
+--------------------------------
+---------- Core Hooks ----------
+--------------------------------
+
 hook.Add("PhysgunPickup", "NADMOD.PhysgunPickup", NADMOD.PlayerCanTouchSafe)
-hook.Add("CanProperty", "NADMOD.CanProperty", function(ply, mode, ent) return NADMOD.PlayerCanTouchSafe(ply, ent) end)
-hook.Add("CanEditVariable", "NADMOD.CanEditVariable", function(ent, ply, key, val, editor) return NADMOD.PlayerCanTouchSafe(ply, ent) end)
+
+hook.Add("CanProperty", "NADMOD.CanProperty", function(ply, mode, ent)
+	return NADMOD.PlayerCanTouchSafe(ply, ent)
+end)
+
+hook.Add("CanEditVariable", "NADMOD.CanEditVariable", function(ent, ply)
+	return NADMOD.PlayerCanTouchSafe(ply, ent)
+end)
 
 function NADMOD.OnPhysgunReload(weapon, ply)
 	local tr = util.TraceLine(util.GetPlayerTrace(ply))
@@ -476,19 +554,38 @@ end
 concommand.Add("nadmod_cdp",NADMOD.CDP)
 
 function NADMOD.CleanClass(ply,cmd,args)
-	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then return end
-	if args[1] == "npc_*" then NADMOD.Notify("NPCs have been cleaned up")
-	elseif args[1] == "prop_ragdol*" then NADMOD.Notify("Ragdolls have been cleaned up")
-	else NADMOD.Notify(args[1].." have been cleaned up")
+
+	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then
+		return
 	end
+
+	if GAMEMODE:GetGameState() == ( 3 or 4) then
+		NADMOD.Notify("No puedes eliminar props durante una partida")
+		return
+	end
+
+	if args[1] == "npc_*" then
+		NADMOD.Notify("NPCs han sido borrados!")
+	elseif args[1] == "prop_ragdol*" then
+		NADMOD.Notify("Ragdoll han sido eliminados!")
+	else
+		NADMOD.Notify(args[1].." have been cleaned up")
+	end
+
 	for _,v in ipairs(ents.FindByClass(args[1])) do v:Remove() end
 end
 concommand.Add("nadmod_cleanclass", NADMOD.CleanClass)
 
 function NADMOD.CleanCLRagdolls(ply,cmd,args)
-	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then return end
+
+	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then
+		return
+	end
+
 	NADMOD.Notify("Clientside Ragdolls have been cleaned up")
-	net.Start("nadmod_cleanclragdolls") net.Broadcast()
+
+	net.Start("nadmod_cleanclragdolls")
+	net.Broadcast()
 end
 concommand.Add("nadmod_cleanclragdolls", NADMOD.CleanCLRagdolls)
 

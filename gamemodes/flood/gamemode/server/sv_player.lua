@@ -79,6 +79,45 @@ end
 function GM:PlayerDeathThink(ply)
 end
 
+------------------------------
+------- Shit Prevention ------
+------------------------------
+
+function GM:PlayerSpawnProp(ply, model)
+	local state = self:GetGameState()
+
+	if state == ( 2 or 3 or 4 ) then
+		return ply:IsSuperAdmin()
+	end
+
+end
+
+function GM:PlayerSpawnEffect(ply)
+	return ply:IsSuperAdmin()
+end
+
+function GM:PlayerSpawnNPC(ply)
+	return ply:IsSuperAdmin()
+end
+
+function GM:PlayerSpawnRagdoll(ply)
+	return ply:IsSuperAdmin()
+end
+
+function GM:PlayerSpawnSENT(ply)
+	return ply:IsSuperAdmin()
+end
+
+function GM:PlayerSpawnSWEP(ply)
+	return ply:IsSuperAdmin()
+end
+
+function GM:PlayerSpawnVehicle(ply)
+	return false
+end
+
+
+
 function GM:PlayerDeath(ply, inflictor, attacker )
 	ply.NextSpawnTime = CurTime() + 5
 	ply.SpectateTime = CurTime() + 2
