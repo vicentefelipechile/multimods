@@ -20,6 +20,8 @@ local function mSH(str)
 end
 
 
+CreateConVar("flood_lang", "es", {FCVAR_ARCHIVE}, "Set the language of the gamemode")
+
 print("-----------------------------------------")
 print("------------ Flood Gamemode -------------")
 print("-----------------------------------------\n")

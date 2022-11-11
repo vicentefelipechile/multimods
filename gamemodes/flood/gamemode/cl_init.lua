@@ -1,6 +1,8 @@
 -- Include everything
 include("shared.lua")
 
+CreateConVar("flood_lang", "es", {FCVAR_ARCHIVE}, "Set the language of the gamemode")
+
 FloodLang = {}
 
 local PREFIX = "[Flood]"

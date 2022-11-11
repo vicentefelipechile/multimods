@@ -24,5 +24,3 @@ function GM:FormatColor(col)
 	col = Color(col.r * 255, col.g * 255, col.b * 255)
 	return col
 end
-
-CreateConVar("flood_lang", "es", {FCVAR_ARCHIVE}, "Set the language of the gamemode")
