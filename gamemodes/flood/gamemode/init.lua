@@ -1,23 +1,9 @@
---------------------------------------
------------- Sending Core ------------
---------------------------------------
-
-local function add(s)
-	include(s)
-	AddCSLuaFile(s)
-end
 
 FloodLang = {}
 
-add("language/english.lua")
-add("language/spanish.lua")
-add("shared.lua")
-
 --------------------------------------
------------- Custom Script -----------
+------------ Sending Core ------------
 --------------------------------------
-
-add("flood/gamemode/custom/autorun.lua")
 
 local PREFIX = "[Flood]"
 
@@ -43,19 +29,27 @@ for _, file in pairs (file.Find("flood/gamemode/server/*.lua", "LUA")) do
 	include("flood/gamemode/server/"..file) 
 end
 
-MsgC( Color(56, 228, 255, 200), " - Loading Shared Files - \n")
+MsgC( Color(56, 228, 255, 200), "\n - Loading Shared Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
 	mSH(file)
 	AddCSLuaFile("flood/gamemode/shared/"..file)
 end
 
-MsgC( Color(56, 228, 255, 200), " - Loading Clientside Files - \n")
+mSH("english.lua")
+AddCSLuaFile("flood/gamemode/language/english.lua")
+include("flood/gamemode/language/english.lua")
+
+mSH("spanish.lua")
+AddCSLuaFile("flood/gamemode/language/spanish.lua")
+include("flood/gamemode/language/spanish.lua")
+
+MsgC( Color(56, 228, 255, 200), "\n - Loading Clientside Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/client/*.lua", "LUA")) do
 	mCL(file)
 	AddCSLuaFile("flood/gamemode/client/"..file)
 end
 
-MsgC( Color(56, 228, 255, 200), " - Loading Clientside VGUI Files - \n")
+MsgC( Color(56, 228, 255, 200), "\n - Loading Clientside VGUI Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/client/vgui/*.lua", "LUA")) do
 	mCL(file)
 	AddCSLuaFile("flood/gamemode/client/vgui/"..file)
