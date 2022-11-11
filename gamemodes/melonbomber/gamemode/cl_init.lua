@@ -17,6 +17,7 @@ include("cl_helpscreen.lua")
 include("cl_endroundboard.lua")
 include("cl_wraptext.lua")
 include("cl_hudhelp.lua")
+include("cl_voicepanels.lua")
 
 GM.FirstPerson = CreateClientConVar( "mb_firstperson", 0, true, true )
 
