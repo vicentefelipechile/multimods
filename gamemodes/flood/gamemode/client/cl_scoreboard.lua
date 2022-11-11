@@ -1,6 +1,10 @@
 local x = ScrW()
 local y = ScrH()
 
+local function L(val)
+	return FloodLang[GetConVar("flood_lang"):GetString()][val] or FloodLang["es"][val]
+end
+
 surface.CreateFont( "ScoreboardFont", {
 	font = "Tahoma",
 	size = 15,
@@ -105,16 +109,16 @@ function GM:HUDDrawScoreBoard()
 	ySpacing = ySpacing + 2
 
 	-- Titles
-	draw.SimpleText("Name", ScoreboardFont, xOffset + 16, ySpacing, color_black)
-	draw.SimpleText("Cash", ScoreboardFont, xOffset + boardWidth - (colWidth*3) + 8, ySpacing, color_black)
-	draw.SimpleText("Deaths", ScoreboardFont, xOffset + boardWidth - (colWidth*2) + 8, ySpacing, color_black)
-	draw.SimpleText("Ping", ScoreboardFont, xOffset + boardWidth - (colWidth*1) + 8, ySpacing, color_black)
+	draw.SimpleText(L"scoreboard_name", ScoreboardFont, xOffset + 16, ySpacing, color_black)
+	draw.SimpleText(L"scoreboard_cash", ScoreboardFont, xOffset + boardWidth - (colWidth*3) + 8, ySpacing, color_black)
+	draw.SimpleText(L"scoreboard_death", ScoreboardFont, xOffset + boardWidth - (colWidth*2) + 8, ySpacing, color_black)
+	draw.SimpleText(L"scoreboard_ping", ScoreboardFont, xOffset + boardWidth - (colWidth*1) + 8, ySpacing, color_black)
 
 	ySpacing = ySpacing + 22
 
 	local yPosition = ySpacing
 	for team,info in pairs(ScoreboardInfo) do
-		local teamText = info.TeamName .. "  (" .. #info.Players .. " Players)"
+		local teamText = info.TeamName .. "  (" .. #info.Players .. " " .. L"scoreboard_players" .. ")"
 		
 		draw.RoundedBox(0, xOffset + 5, yPosition, boardWidth - 10, 19, Color(info.Color.r, info.Color.g, info.Color.b, 255))
 		

@@ -33,6 +33,10 @@ local SE = draw.SimpleText
 local RB = draw.RoundedBox
 local RBE = draw.RoundedBoxEx
 
+local function L(val)
+	return FloodLang[GetConVar("flood_lang"):GetString()][val] or FloodLang["es"][val]
+end
+
 ------------------------------
 -------- Hud Settings --------
 ------------------------------
@@ -82,11 +86,11 @@ function GM:HUDPaint()
 		if GameState == 0 then
 			RBE(6, xPos, y * 0.005, x * 0.175,  x * 0.018, active_color, true, true, false, false)
 			
-			SE(FloodLang["state0"], "Flood_HUD", x * 0.01, y * 0.01, color_white, 0, 0)
-			SE(FloodLang["state1"], "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
-			SE(FloodLang["state2"], "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
-			SE(FloodLang["state3"], "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
-			SE(FloodLang["state4"], "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
+			SE(L"state0", "Flood_HUD", x * 0.01, y * 0.01, color_white, 0, 0)
+			SE(L"state1", "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
+			SE(L"state2", "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
+			SE(L"state3", "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
+			SE(L"state4", "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
 		else
 			RBE(6, xPos, y * 0.005, x * 0.175,  x * 0.018, color_grey, true, true, false, false)
 		end
@@ -95,11 +99,11 @@ function GM:HUDPaint()
 			RB(0, xPos, yPos + (Spacer * 6), x * 0.175,  x * 0.018, active_color)
 			SE(BuildTimer, "Flood_HUD", x * 0.15, y * 0.044, color_white, 0, 0)
 
-			SE(FloodLang["state0"], "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
-			SE(FloodLang["state1"], "Flood_HUD", x * 0.01, y * 0.044, color_white, 0, 0)
-			SE(FloodLang["state2"], "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
-			SE(FloodLang["state3"], "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
-			SE(FloodLang["state4"], "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
+			SE(L"state0", "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
+			SE(L"state1", "Flood_HUD", x * 0.01, y * 0.044, color_white, 0, 0)
+			SE(L"state2", "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
+			SE(L"state3", "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
+			SE(L"state4", "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
 		else
 			RB(0, xPos, yPos + (Spacer * 6), x * 0.175,  x * 0.018, color_grey)
 			SE(BuildTimer, "Flood_HUD", x * 0.15, y * 0.044, color_grey, 0, 0)
@@ -109,11 +113,11 @@ function GM:HUDPaint()
 			RB(0, xPos, yPos + (Spacer * 12), x * 0.175,  x * 0.018, active_color)
 			SE(FloodTimer, "Flood_HUD", x * 0.15, y * 0.078, color_white, 0, 0)
 
-			SE(FloodLang["state0"], "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
-			SE(FloodLang["state1"], "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
-			SE(FloodLang["state2"], "Flood_HUD", x * 0.01, y * 0.078, color_white, 0, 0)
-			SE(FloodLang["state3"], "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
-			SE(FloodLang["state4"], "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
+			SE(L"state0", "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
+			SE(L"state1", "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
+			SE(L"state2", "Flood_HUD", x * 0.01, y * 0.078, color_white, 0, 0)
+			SE(L"state3", "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
+			SE(L"state4", "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
 		else
 			RB(0, xPos, yPos + (Spacer * 12), x * 0.175,  x * 0.018, color_grey)
 			SE(FloodTimer, "Flood_HUD", x * 0.15, y * 0.078, color_grey, 0, 0)
@@ -123,11 +127,11 @@ function GM:HUDPaint()
 			RB(0, xPos, yPos + (Spacer * 18), x * 0.175,  x * 0.018, active_color)
 
 			SE(FightTimer, "Flood_HUD", x * 0.15, y * 0.115, color_white, 0, 0)
-			SE(FloodLang["state0"], "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
-			SE(FloodLang["state1"], "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
-			SE(FloodLang["state2"], "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
-			SE(FloodLang["state3"], "Flood_HUD", x * 0.01, y * 0.115, color_white, 0, 0)
-			SE(FloodLang["state4"], "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
+			SE(L"state0", "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
+			SE(L"state1", "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
+			SE(L"state2", "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
+			SE(L"state3", "Flood_HUD", x * 0.01, y * 0.115, color_white, 0, 0)
+			SE(L"state4", "Flood_HUD", x * 0.01, y * 0.151, color_grey, 0, 0)
 		else
 			RB(0, xPos, yPos + (Spacer * 18), x * 0.175,  x * 0.018, color_grey)
 			SE(FightTimer, "Flood_HUD", x * 0.15, y * 0.115, color_grey, 0, 0)
@@ -137,11 +141,11 @@ function GM:HUDPaint()
 			RBE(6, xPos, yPos + (Spacer * 24), x * 0.175,  x * 0.018, active_color, false, false, true, true)
 			
 			SE(ResetTimer, "Flood_HUD", x * 0.15, y * 0.151, color_white, 0, 0)
-			SE(FloodLang["state0"], "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
-			SE(FloodLang["state1"], "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
-			SE(FloodLang["state2"], "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
-			SE(FloodLang["state3"], "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
-			SE(FloodLang["state4"], "Flood_HUD", x * 0.01, y * 0.151, color_white, 0, 0)
+			SE(L"state0", "Flood_HUD", x * 0.01, y * 0.01, color_grey, 0, 0)
+			SE(L"state1", "Flood_HUD", x * 0.01, y * 0.044, color_grey, 0, 0)
+			SE(L"state2", "Flood_HUD", x * 0.01, y * 0.078, color_grey, 0, 0)
+			SE(L"state3", "Flood_HUD", x * 0.01, y * 0.115, color_grey, 0, 0)
+			SE(L"state4", "Flood_HUD", x * 0.01, y * 0.151, color_white, 0, 0)
 		else
 			RBE(6,xPos, yPos + (Spacer * 24), x * 0.175,  x * 0.018, color_grey, false, false, true, true)
 			SE(ResetTimer, "Flood_HUD", x * 0.15, y * 0.151, color_grey, 0, 0)
@@ -152,16 +156,16 @@ function GM:HUDPaint()
 	local tr = util.TraceLine(util.GetPlayerTrace(LocalPlayer()))
 	if tr.Entity:IsValid() and not tr.Entity:IsPlayer() then
 		if tr.Entity:GetNWInt("CurrentPropHealth") == "" or tr.Entity:GetNWInt("CurrentPropHealth") == nil or tr.Entity:GetNWInt("CurrentPropHealth") == NULL then
-			SE(FloodLang["health_fetch"], "Flood_HUD_Small", x * 0.5, y * 0.5 - 25, color_white, 1, 1)
+			SE(L"health_fetch", "Flood_HUD_Small", x * 0.5, y * 0.5 - 25, color_white, 1, 1)
 		else
-			SE(FloodLang["health"] .. tr.Entity:GetNWInt("CurrentPropHealth"), "Flood_HUD_Small", x * 0.5, y * 0.5 - 25, color_white, 1, 1)
+			SE(L"health" .. tr.Entity:GetNWInt("CurrentPropHealth"), "Flood_HUD_Small", x * 0.5, y * 0.5 - 25, color_white, 1, 1)
 		end
 	end
 
 	-- Display Player's Health and Name
 	if tr.Entity:IsValid() and tr.Entity:IsPlayer() then
-		SE(FloodLang["name"] .. tr.Entity:GetName(), "Flood_HUD_Small", x * 0.5, y * 0.5 - 75, color_white, 1, 1)
-		SE(FloodLang["health"] .. tr.Entity:Health(), "Flood_HUD_Small", x * 0.5, y * 0.5 - 60, color_white, 1, 1)
+		SE(L"name" .. tr.Entity:GetName(), "Flood_HUD_Small", x * 0.5, y * 0.5 - 75, color_white, 1, 1)
+		SE(L"health" .. tr.Entity:Health(), "Flood_HUD_Small", x * 0.5, y * 0.5 - 60, color_white, 1, 1)
 	end
 
 	-- Bottom left HUD Stuff
@@ -174,7 +178,7 @@ function GM:HUDPaint()
 		local pHealthWidth = (xSize - Spacer) * pHealthClamp
 
 		RBE(6, Spacer * 2, y - (Spacer * 4) - (ySize * 3), Spacer + pHealthWidth, ySize, Color(128, 28, 28, 255), true, true, false, false)
-		SE(math.Max(pHealth, 0) .. FloodLang["hp"],"Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - (ySize * 2.5) - (Spacer * 4), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		SE(math.Max(pHealth, 0) .. L"hp","Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - (ySize * 2.5) - (Spacer * 4), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	
 		-- Ammo
 		if IsValid(LocalPlayer():GetActiveWeapon()) then
@@ -184,14 +188,14 @@ function GM:HUDPaint()
 				local wBulletWidth = (xSize - bWidth) * wBulletClamp
 
 				RB(0, Spacer * 2, y - (ySize * 2) - (Spacer * 3), bWidth + wBulletWidth, ySize, Color(30, 105, 105, 255))
-				SE(wBulletCount .. FloodLang["ammo"], "Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - ySize - (ySize * 0.5) - (Spacer * 3), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				SE(wBulletCount .. L"ammo", "Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - ySize - (ySize * 0.5) - (Spacer * 3), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			else
 				RB(0, Spacer * 2, y - (ySize * 2) - (Spacer * 3), xSize, ySize, Color(30, 105, 105, 255))
-				SE(FloodLang["ammo_invalid"], "Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - ySize - (ySize * 0.5) - (Spacer * 3), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				SE(L"ammo_invalid", "Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - ySize - (ySize * 0.5) - (Spacer * 3), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			end
 		else
 			RB(0, Spacer * 2, y - (ySize * 2) - (Spacer * 3), xSize, ySize, Color(30, 105, 105, 255))
-			SE(FloodLang["ammo_empty"], "Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - ySize - (ySize * 0.5) - (Spacer * 3), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			SE(L"ammo_empty", "Flood_HUD_B", xSize * 0.5 + (Spacer * 2), y - ySize - (ySize * 0.5) - (Spacer * 3), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		-- Cash

@@ -3,6 +3,11 @@
 -- By Nebual@nebtown.info 2012
 -- Menus designed after SpaceTech's Simple Prop Protection
 -- =================================
+
+local function L(val)
+	return FloodLang[GetConVar("flood_lang"):GetString()][val] or FloodLang["es"][val]
+end
+
 if !NADMOD then 
 	NADMOD = {}
 	NADMOD.PropOwners = {}
@@ -29,7 +34,7 @@ hook.Add("HUDPaint", "NADMOD.HUDPaint", function()
 	if !tr.HitNonWorld then return end
 	local ent = tr.Entity
 	if ent:IsValid() && !ent:IsPlayer() then
-		local text = FloodLang["npp.owner"] .. (Props[ent:EntIndex()] or "N/A")
+		local text = L"npp.owner" .. (Props[ent:EntIndex()] or "N/A")
 		local text2 = "'"..string.sub(table.remove(string.Explode("/", ent:GetModel())), 1,-5).."' ["..ent:EntIndex().."]"
 		local text3 = ent:GetClass()
 		surface.SetFont(font)
@@ -87,27 +92,27 @@ function NADMOD.AdminPanel(Panel, runByNetReceive)
 		RunConsoleCommand("npp_refreshconfig")
 		timer.Create("NADMOD.AdminPanelCheckFail",0.75,1,function()
 			Panel:ClearControls()
-			Panel:Help(FloodLang["npp.admin_waiting"])
+			Panel:Help(L"npp.admin_waiting")
 		end)
 		return
 	end
 	
 	timer.Remove("NADMOD.AdminPanelCheckFail")
 	Panel:ClearControls()
-	Panel:SetName(FloodLang["npp.admin_panel"])
+	Panel:SetName( L"npp.admin_panel")
 	
-	Panel:CheckBox(	FloodLang["npp.admin_toggle"],		"npp_toggle")
-	Panel:CheckBox(	FloodLang["npp.admin_touchall"],	"npp_adminall")
-	Panel:CheckBox(	FloodLang["npp.admin_useprot"],		"npp_use")
+	Panel:CheckBox(	L"npp.admin_toggle",	"npp_toggle")
+	Panel:CheckBox(	L"npp.admin_touchall",	"npp_adminall")
+	Panel:CheckBox(	L"npp.admin_useprot",	"npp_use")
 	
 	local txt = Panel:Help(FloodLang["npp.admin_autoclean"])
 	txt:SetAutoStretchVertical(false)
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
-	Panel:CheckBox(	FloodLang["npp.admin_ac_admin"], "npp_autocdpadmins")
-	Panel:NumSlider(FloodLang["npp.admin_ac_admin_timer"], "npp_autocdp", 0, 1200, 0 )
-	Panel:Button(	FloodLang["npp.admin_apply"], "npp_apply") 
+	Panel:CheckBox(	L"npp.admin_ac_admin", "npp_autocdpadmins")
+	Panel:NumSlider(L"npp.admin_ac_admin_timer", "npp_autocdp", 0, 1200, 0 )
+	Panel:Button(	L"npp.admin_apply", "npp_apply") 
 	
-	local txt = Panel:Help("                   " .. FloodLang["npp.admin_panel_cleanup"])
+	local txt = Panel:Help("                   " .. L"npp.admin_panel_cleanup")
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
 	txt:SetFont("DermaDefaultBold")
 	txt:SetAutoStretchVertical(false)
@@ -128,9 +133,9 @@ function NADMOD.AdminPanel(Panel, runByNetReceive)
 	end
 	
 	Panel:Help(""):SetAutoStretchVertical(false)
-	Panel:Button(FloodLang["npp.admin_cleanup_disc"] .. " ("..dccount..")", "nadmod_cdp")
-	Panel:Button(FloodLang["npp.admin_cleanup_ragd"], 	"nadmod_cleanclass", "prop_ragdol*")
-	Panel:Button(FloodLang["npp.admin_cleanup_ragd_cl"], "nadmod_cleanclragdolls")
+	Panel:Button(L"npp.admin_cleanup_disc" .. " ("..dccount..")", "nadmod_cdp")
+	Panel:Button(L"npp.admin_cleanup_ragd", 	"nadmod_cleanclass", "prop_ragdol*")
+	Panel:Button(L"npp.admin_cleanup_ragd_cl", "nadmod_cleanclragdolls")
 end
 
 net.Receive("nadmod_ppfriends",function(len)
@@ -154,26 +159,26 @@ function NADMOD.ClientPanel(Panel)
 	RunConsoleCommand("npp_refreshfriends")
 	Panel:ClearControls()
 	if !NADMOD.ClientCPanel then NADMOD.ClientCPanel = Panel end
-	Panel:SetName(FloodLang["npp.panel"])
+	Panel:SetName(L"npp.panel")
 	
-	Panel:Button(FloodLang["npp.cleanup_prop"], "nadmod_cleanupprops")
-	Panel:Button(FloodLang["npp.cleanup_ragd"], "nadmod_cleanclragdolls")
+	Panel:Button(L"npp.cleanup_prop", "nadmod_cleanupprops")
+	Panel:Button(L"npp.cleanup_ragd", "nadmod_cleanclragdolls")
 	
-	local txt = Panel:Help("                  " .. FloodLang["npp.panel_friend"])
+	local txt = Panel:Help("                  " .. L"npp.panel_friend")
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
 	txt:SetFont("DermaDefaultBold")
 	txt:SetAutoStretchVertical(false)
 	
 	local Players = player.GetAll()
 	if(table.Count(Players) == 1) then
-		Panel:Help("No Other Players Are Online")
+		Panel:Help(L"npp.no_online")
 	else
 		for _, tar in pairs(Players) do
 			if(IsValid(tar) and tar != LocalPlayer()) then
 				Panel:CheckBox(tar:Nick(), "npp_friend_"..tar:SteamID64())
 			end
 		end
-		Panel:Button("Apply Friends", "npp_applyfriends")
+		Panel:Button(L"npp.apply", "npp_applyfriends")
 	end
 end
 
