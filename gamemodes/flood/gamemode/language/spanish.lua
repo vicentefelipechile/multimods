@@ -63,7 +63,7 @@ FloodLang["es"] = {
     ["command.set_succes_to"] = "'s cash to $",
     ["command.set_receive"] = "Your cash has been set to $",
 
-    ["command.take_success"] "You have taken $",
+    ["command.take_success"] = "You have taken $",
     ["command.take_receive"] = "You had $",
     ["command.take_receive_from"] = " taken by "
 

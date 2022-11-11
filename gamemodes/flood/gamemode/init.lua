@@ -35,13 +35,11 @@ for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
 	AddCSLuaFile("flood/gamemode/shared/"..file)
 end
 
-mSH("english.lua")
-AddCSLuaFile("flood/gamemode/language/english.lua")
-include("flood/gamemode/language/english.lua")
-
-mSH("spanish.lua")
-AddCSLuaFile("flood/gamemode/language/spanish.lua")
-include("flood/gamemode/language/spanish.lua")
+MsgC( Color(56, 228, 255, 200), " - Loading Language Files - \n")
+for_ file in pairs (file.Find("flood/gamemode/language/*lua", "LUA")) do
+	mSH(file)
+	AddCSLuaFile("flood/gamemode/language/"..file)
+end
 
 MsgC( Color(56, 228, 255, 200), "\n - Loading Clientside Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/client/*.lua", "LUA")) do
