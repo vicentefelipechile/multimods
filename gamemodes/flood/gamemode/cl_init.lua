@@ -1,16 +1,35 @@
 -- Include everything
 include("shared.lua")
+
+local PREFIX = "[Flood]"
+
+local function mCL(str)
+    MsgC( Color(255, 235, 56, 200), PREFIX, " ", Color(184, 246, 255, 200), tostring(str).."\n")
+end
+
+local function mSH(str)
+    MsgC( Color(167, 255, 167, 200), PREFIX, " ", Color(184, 246, 255, 200), tostring(str).."\n")
+end
  
-MsgN("_-_-_-_- Flood Client Side -_-_-_-_")
-MsgN("Loading Clientside Files")
-for _, file in pairs(file.Find("flood/gamemode/client/*.lua", "LUA")) do
-	MsgN("-> "..file)
+print("-----------------------------------------")
+print("------------ Flood Gamemode -------------")
+print("-----------------------------------------\n")
+
+MsgC( Color(56, 228, 255, 200), "\n - Loading Language Files - \n")
+for _, file in pairs (file.Find("flood/gamemode/language/*lua", "LUA")) do
+	mSH(file)
+	include("flood/gamemode/language/"..file)
+end
+
+MsgC( Color(56, 228, 255, 200), "\n - Loading Clientside Files - \n")
+for _, file in pairs (file.Find("flood/gamemode/client/*.lua", "LUA")) do
+	mCL(file)
 	include("flood/gamemode/client/"..file)
 end
 
-MsgN("Loading Clientside VGUI Files")
-for _, file in pairs(file.Find("flood/gamemode/client/vgui/*.lua", "LUA")) do
-	MsgN("-> "..file)
+MsgC( Color(56, 228, 255, 200), "\n - Loading Clientside VGUI Files - \n")
+for _, file in pairs (file.Find("flood/gamemode/client/vgui/*.lua", "LUA")) do
+	mCL(file)
 	include("flood/gamemode/client/vgui/"..file)
 end
 
