@@ -1,7 +1,6 @@
 function GetWaterControllers()
 	local controllers = {}
 	for k,v in pairs(ents.GetAll()) do
-		print(k, v)
 		if v:GetClass() == "func_water_analog" then
 			table.insert(controllers, v)
 		end
