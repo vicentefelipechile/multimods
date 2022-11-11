@@ -36,7 +36,7 @@ for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
 end
 
 MsgC( Color(56, 228, 255, 200), " - Loading Language Files - \n")
-for_ file in pairs (file.Find("flood/gamemode/language/*lua", "LUA")) do
+for _, file in pairs (file.Find("flood/gamemode/language/*lua", "LUA")) do
 	mSH(file)
 	AddCSLuaFile("flood/gamemode/language/"..file)
 end
