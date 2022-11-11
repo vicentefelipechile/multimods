@@ -1,6 +1,8 @@
 -- Include everything
 include("shared.lua")
 
+FloodLang = {}
+
 local PREFIX = "[Flood]"
 
 local function mCL(str)
