@@ -39,4 +39,10 @@ FloodLang = {
     ["npp.admin_ac_admin"] = "Autoclean Admins",
     ["npp.admin_ac_admin_timer"] = "Autoclean Timer",
 
+    ["npp.panel"] = "NADMOD - Client Panel",
+    ["npp.panel_friend"] = "Friends Panel",
+    ["npp.cleanup_prop"] = "Cleanup Props",
+    ["npp.cleanup_ragd"] = "Clear Clientside Ragdolls",
+    ["npp."]
+
 }

@@ -154,12 +154,12 @@ function NADMOD.ClientPanel(Panel)
 	RunConsoleCommand("npp_refreshfriends")
 	Panel:ClearControls()
 	if !NADMOD.ClientCPanel then NADMOD.ClientCPanel = Panel end
-	Panel:SetName("NADMOD - Client Panel")
+	Panel:SetName(FloodLang["npp.panel"])
 	
-	Panel:Button("Cleanup Props", "nadmod_cleanupprops")
-	Panel:Button("Clear Clientside Ragdolls", "nadmod_cleanclragdolls")
+	Panel:Button(FloodLang["npp.cleanup_prop"], "nadmod_cleanupprops")
+	Panel:Button(FloodLang["npp.cleanup_ragd"], "nadmod_cleanclragdolls")
 	
-	local txt = Panel:Help("                     Friends Panel")
+	local txt = Panel:Help("                  " .. FloodLang["npp.panel_friend"])
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
 	txt:SetFont("DermaDefaultBold")
 	txt:SetAutoStretchVertical(false)
