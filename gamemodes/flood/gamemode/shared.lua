@@ -5,6 +5,11 @@ GM.Author 	= "Mythikos & Freezebug"
 GM.Version  = "2.0.1"
 GM.Website 	= "www.mapping-latam.cl"
 
+GM.VIP = {
+	["vip"] = true,
+	["donator"] = true,
+}
+
 -- Include Shared files
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
    include("flood/gamemode/shared/"..file); 
@@ -19,8 +24,3 @@ function GM:FormatColor(col)
 	col = Color(col.r * 255, col.g * 255, col.b * 255)
 	return col
 end
-
-GM.VIP = {
-	["vip"] = true,
-	["donator"] = true,
-}

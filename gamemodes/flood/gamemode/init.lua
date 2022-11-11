@@ -1,32 +1,56 @@
--- Include and AddCSLua everything
+--------------------------------------
+------------ Sending Core ------------
+--------------------------------------
+
 include("shared.lua")
 AddCSLuaFile("shared.lua")
+
+--------------------------------------
+------------ Custom Script -----------
+--------------------------------------
 
 include("flood/gamemode/custom/autorun.lua")
 AddCSLuaFile("flood/gamemode/custom/autorun.lua")
 
-MsgN("_-_-_-_- Flood Server Side -_-_-_-_")
-MsgN("Loading Server Files")
+local PREFIX = "[Flood]"
+
+local function mSV(str)
+    MsgC( Color(56, 228, 255, 200), PREFIX, " ", Color(184, 246, 255, 200), tostring(str).."\n")
+end
+
+local function mCL(str)
+    MsgC( Color(255, 235, 56, 200), PREFIX, " ", Color(184, 246, 255, 200), tostring(str).."\n")
+end
+
+local function mSH(str)
+    MsgC( Color(167, 255, 167, 200), PREFIX, " ", Color(184, 246, 255, 200), tostring(str).."\n")
+end
+
+
+print("-----------------------------------------")
+print("------------ Flood Gamemode -------------")
+print("-----------------------------------------\n")
+MsgC( Color(56, 228, 255, 200), " - Loading Server Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/server/*.lua", "LUA")) do
-	MsgN("-> "..file)
+	mSV(file)
 	include("flood/gamemode/server/"..file) 
 end
 
-MsgN("Loading Shared Files")
+MsgC( Color(56, 228, 255, 200), " - Loading Shared Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
-	MsgN("-> "..file)
+	mSH(file)
 	AddCSLuaFile("flood/gamemode/shared/"..file)
 end
 
-MsgN("Loading Clientside Files")
+MsgC( Color(56, 228, 255, 200), " - Loading Clientside Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/client/*.lua", "LUA")) do
-	MsgN("-> "..file)
+	mCL(file)
 	AddCSLuaFile("flood/gamemode/client/"..file)
 end
 
-MsgN("Loading Clientside VGUI Files")
+MsgC( Color(56, 228, 255, 200), " - Loading Clientside VGUI Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/client/vgui/*.lua", "LUA")) do
-	MsgN("-> "..file)
+	mCL(file)
 	AddCSLuaFile("flood/gamemode/client/vgui/"..file)
 end
 

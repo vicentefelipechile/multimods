@@ -1,9 +1,9 @@
-AddCSLuaFile();
+AddCSLuaFile()
 
 SWEP.PrintName			= "Prop Seller"
 SWEP.DrawAmmo			= false
 SWEP.DrawCrosshair		= true
-SWEP.ViewModelFOV		= 55
+SWEP.ViewModelFOV		= 70
 SWEP.ViewModelFlip		= false
 SWEP.CSMuzzleFlashes	= true
 SWEP.Slot 				= 5
@@ -12,8 +12,8 @@ SWEP.SlotPos			= 1
 
 SWEP.Author			= "Mythikos"
 SWEP.Contact		= "n/a"
-SWEP.Purpose		= "Selling Props back to the shop"
-SWEP.Instructions	= "Primary fire: Sell the prop you are aiming at"
+SWEP.Purpose		= "Vende los props devuelta a la tienda"
+SWEP.Instructions	= "Primer Click: Vende el prop que estes mirando"
 
 SWEP.Weight				= 3
 SWEP.AutoSwitchTo		= false
