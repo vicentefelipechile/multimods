@@ -3,7 +3,7 @@
 ------ Database Creation -----
 ------------------------------
 
-sql.Query("CREATE TABLE IF NOT EXISTS nadmod_users ( Users MEDIUMTEXT )")
+sql.Query("CREATE TABLE IF NOT EXISTS nadmod_users ( Users LONGTEXT )")
 sql.Query("CREATE TABLE IF NOT EXISTS nadmod_groups ( Groups TEXT )")
 sql.Query("CREATE TABLE IF NOT EXISTS nadmod_bans ( Bans TEXT )")
 sql.Query("CREATE TABLE IF NOT EXISTS nadmod_ppconfig ( PPConfig TEXT )")
