@@ -1,5 +1,5 @@
-map.name = "Rings"
-map.description = "Rings of walls with a 2 wide gap in between"
+map.name = "Anillos"
+map.description = "Anilos de paredes, no se que es esto"
 
 local s = 3
 function map:generateMap(grid)

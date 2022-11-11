@@ -1,5 +1,5 @@
-map.name = "Box paradise"
-map.description = "Lots of boxes with little amount of walls"
+map.name = "Paraiso de Cajas"
+map.description = "Demasiadas cajas con pocas paredes"
 
 function map:generateMap(grid)
 	for x = grid.minx, grid.maxx do

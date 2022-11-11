@@ -1,16 +1,16 @@
 local helpKeysProps = {
-	{"attack", "Place bomb"},
-	{"attack2", "Use special action"},
+	{"attack", "Coloca una bomba"},
+	{"attack2", "Usa una accion especial"},
 }
 
 local function keyName(str)
 	str = input.LookupBinding(str) or ""
 	if str == "MOUSE1" then
-		str = "Left Click"
+		str = "Click Izquierdo"
 	elseif str == "MOUSE2" then
-		str = "Right Click"
+		str = "Click Derecho"
 	elseif str == "CTRL" then
-		str = "Left CTRL"
+		str = "CTRL Izquierdo"
 	end
 	return str:upper()
 end

@@ -1,5 +1,5 @@
-map.name = "Fragile walls"
-map.description = "Every wall is destructible"
+map.name = "Paredes Fragiles"
+map.description = "Cada pared es destructible"
 
 function map:generateMap(grid)
 	for x = grid.minx, grid.maxx do

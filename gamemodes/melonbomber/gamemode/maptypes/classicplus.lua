@@ -1,5 +1,5 @@
-map.name = "Classic + Special"
-map.description = "The classic map plus special boxes"
+map.name = "Clasico Especial"
+map.description = "El mismo mapa pero con cajas especiales"
 
 function map:generateMap(grid)
 	for x = grid.minx, grid.maxx do

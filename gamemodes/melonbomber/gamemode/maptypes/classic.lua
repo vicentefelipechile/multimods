@@ -1,5 +1,5 @@
-map.name = "Classic"
-map.description = "The classic map"
+map.name = "Clasico"
+map.description = "El mapa clasico pero en gmod"
 
 function map:generateMap(grid)
 	for x = grid.minx, grid.maxx do

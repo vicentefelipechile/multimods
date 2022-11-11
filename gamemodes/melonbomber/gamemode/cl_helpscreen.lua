@@ -13,21 +13,22 @@ local function addHelpText(heading, size, text, color)
 end
 
 addHelpText("Intro", 1, [[
-Melonbomber is a game where you try to elimate the other players with explosive melons while grabbing upgrades to increase your power
+Melonbomber es un juego donde intentas eliminar a los otros jugadores con sandias explosiva, puedes obtener mejoras para incrementar tu poder
 
 
-Based on the game Bomberman, Melonbomber brings the same hectic, fast paced gameplay to GMod. Players can place explosive melons and use them to kill other players or destroy wooden crates around the map. Inside the crates can be found powerups that can give you an edge on other players.
+Coloca sandias explosivas y explota cajas, dentro de algunas cajas existen mejoras que puedes usar a tu beneficio contra otros jugadores-
 
-==CONTROLS==
-WASD to move around
-LEFT CLICK to place a bomb
+== CONTROLES ==
+WASD para moverte
+
+DISPARAR para colocar una bomba
 
 ==OBJECTIVES==
-The aim of the game is to take out the other players by blowing them up with your bombs
+El objetivo del juego es explotar al jugador con una de tus bombas (y nos referimos a las sandias)
 ]])
 
-addHelpText("Powerups", 1, [[
-Powerups can be found inside crates on the map. Blow up the crates to reveal powerups. Walk over the powerup to pick it up.
+addHelpText("Mejoras", 1, [[
+Las mejoras las puedes encontrar explotando las cajas esparcidas sobre el mapa.
 ]])
 
 local function colMul(color, mul)
@@ -65,7 +66,7 @@ local function openHelpScreen()
 			local tw,th = surface.GetTextSize(t)
 			draw.ShadowText(t, "RobotoHUD-25", 8, 2, Color(132, 199, 29), 0)
 
-			draw.ShadowText("learn about the gamemode", "RobotoHUD-L15", 8 + tw + 16, 2 + th * 0.90, Color(220, 220, 220), 0, 4)
+			draw.ShadowText("Aprender sobre el modo de juego", "RobotoHUD-L15", 8 + tw + 16, 2 + th * 0.90, Color(220, 220, 220), 0, 4)
 		end
 
 		local catlist = vgui.Create("DScrollPanel", menu)

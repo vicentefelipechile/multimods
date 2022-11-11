@@ -13,50 +13,50 @@ local function addPickup(id, name, color, model)
 	return tab
 end
 
-local pick = addPickup(1, "Speed Up", Color(0, 150, 255), "models/props_junk/Shoe001a.mdl")
+local pick = addPickup(1, "Velocidad", Color(0, 150, 255), "models/props_junk/Shoe001a.mdl")
 pick.AddScale = 1.3
 pick.NoList = true
 pick.Chance = 10
-pick.Description = "Increases your speed"
+pick.Description = "Aumenta tu velocidad"
 function pick:OnPickup(ply)
 	ply:SetRunningBoots(ply:GetRunningBoots() + 1)
 end
 
-local pick = addPickup(2, "Power Up", Color(220,50,50), "models/props_junk/gascan001a.mdl")
+local pick = addPickup(2, "Explosion", Color(220,50,50), "models/props_junk/gascan001a.mdl")
 pick.NoList = true
 pick.Chance = 10
-pick.Description = "Increases your bomb's power"
+pick.Description = "Aumenta el poder de tu explosion"
 function pick:OnPickup(ply)
 	ply:SetBombPower(ply:GetBombPower() + 1)
 end
 
 
-local pick = addPickup(3, "Bomb Up", Color(50,255,50), "models/props_junk/watermelon01.mdl")
+local pick = addPickup(3, "Sandias", Color(50,255,50), "models/props_junk/watermelon01.mdl")
 pick.NoList = true
 pick.Chance = 10
-pick.Description = "Increases your max bombs"
+pick.Description = "Aumenta la cantidad de Sandias"
 function pick:OnPickup(ply)
 	ply:SetMaxBombs(ply:GetMaxBombs() + 1)
 end
 
-local pick = addPickup(4, "Piercing", Color(0, 70, 220), "models/props_junk/sawblade001a.mdl")
+local pick = addPickup(4, "Perforador", Color(0, 70, 220), "models/props_junk/sawblade001a.mdl")
 pick.AddScale = 0.6
 pick.Chance = 1
-pick.Description = "Bombs pierce through crates"
+pick.Description = "Las explosiones atraviesan las cajas"
 function pick:OnPickup(ply)
 end
 
-local pick = addPickup(5, "Power Bomb", Color(155, 20, 80), "models/props_junk/watermelon01.mdl")
+local pick = addPickup(5, "Super Sandia", Color(155, 20, 80), "models/props_junk/watermelon01.mdl")
 pick.ModelMaterial = "models/weapons/v_crowbar/crowbar_cyl"
 pick.Chance = 1
-pick.Description = "A special bomb with max power"
+pick.Description = "Una Super Sandia especial con poder maximo"
 function pick:OnPickup(ply)
 end
 
 
-local pick = addPickup(6, "Line Bomb", Color(150, 0, 180), "models/props_junk/watermelon01.mdl")
+local pick = addPickup(6, "Sandia Linea", Color(150, 0, 180), "models/props_junk/watermelon01.mdl")
 pick.Chance = 1
-pick.Description = "Place a line of bombs"
+pick.Description = "Coloca una linea de Sandias"
 function pick:OnPickup(ply)
 end
 function pick:DrawDecor(ent)
@@ -84,18 +84,18 @@ function pick:DrawDecor(ent)
 	end
 end
 
-local pick = addPickup(7, "Remote control", Color(220, 190, 0), "models/props_rooftop/roof_dish001.mdl")
+local pick = addPickup(7, "Control Remoto", Color(220, 190, 0), "models/props_rooftop/roof_dish001.mdl")
 pick.AddScale = 0.4
 pick.Chance = 1
-pick.Description = "Choose when your bombs explode"
+pick.Description = "Controla cuando quieres explotarlas"
 function pick:OnPickup(ply)
 end
 
 
-local pick = addPickup(8, "Bomb Kick", Color(250, 100, 0), "models/props_junk/Shoe001a.mdl")
+local pick = addPickup(8, "Zapatos Duros", Color(250, 100, 0), "models/props_junk/Shoe001a.mdl")
 pick.AddScale = 1.3
 pick.Chance = 3
-pick.Description = "Push bombs around"
+pick.Description = "Empuja las sandias con tus zapatos"
 function pick:OnPickup(ply)
 end
 

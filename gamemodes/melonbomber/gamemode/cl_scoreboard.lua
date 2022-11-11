@@ -146,9 +146,9 @@ local function makeTeamList(parent)
 	head:SetTall(draw.GetFontHeight("RobotoHUD-20"))
 	head.perm = true
 	function head:Paint(w, h)
-		draw.ShadowText("Name", "RobotoHUD-20", 4, 0, color_white, 0)
+		draw.ShadowText("Nombre", "RobotoHUD-20", 4, 0, color_white, 0)
 
-		draw.ShadowText("Score", "RobotoHUD-20", w / 2, 0, color_white, 0)
+		draw.ShadowText("Puntaje", "RobotoHUD-20", w / 2, 0, color_white, 0)
 
 		draw.ShadowText("Ping", "RobotoHUD-20", w - 4, 0, color_white, 2)
 	end
@@ -205,7 +205,7 @@ function GM:ScoreboardShow()
 			local tw,th = surface.GetTextSize(t)
 			draw.ShadowText(t, "RobotoHUD-25", 4, 0, Color(132, 199, 29), 0)
 
-			draw.ShadowText("by Mechanical Mind, version " .. tostring(GAMEMODE.Version or "error"), "RobotoHUD-15", 4 + tw + 24, h  * 0.9, Color(220, 220, 220), 0, 4)
+			draw.ShadowText("por Mechanical Mind, version " .. tostring(GAMEMODE.Version or "error"), "RobotoHUD-15", 4 + tw + 24, h  * 0.9, Color(220, 220, 220), 0, 4)
 		end
 
 		function menu.Credits:PerformLayout()
@@ -225,10 +225,10 @@ function GM:ScoreboardShow()
 
 			if self.Results then
 				if self.Results.reason == 1 then
-					draw.ShadowText("Round tied", "RobotoHUD-20", 4, 4, color_white, 0)
+					draw.ShadowText("Empate!", "RobotoHUD-20", 4, 4, color_white, 0)
 
 					local f20 = draw.GetFontHeight("RobotoHUD-20")
-					draw.ShadowText("Everyone loses", "RobotoHUD-50", f20 + 4, f20 + 4, color_white, 0)
+					draw.ShadowText("Todos pierden", "RobotoHUD-50", f20 + 4, f20 + 4, color_white, 0)
 				elseif self.Results.reason == 2 then
 					local col = self.Results.winnerColor
 					col = Color(col.x * 255, col.y * 255, col.z * 255)
@@ -240,7 +240,7 @@ function GM:ScoreboardShow()
 					surface.DrawRect(0, h / 2, w, h / 2)
 
 					local f20 = draw.GetFontHeight("RobotoHUD-20")
-					draw.ShadowText("The winner is", "RobotoHUD-20", 4, 4, color_white, 0)
+					draw.ShadowText("Ha ganado", "RobotoHUD-20", 4, 4, color_white, 0)
 
 					surface.SetFont("RobotoHUD-50")
 					local tw, th = surface.GetTextSize(self.Results.winnerName)
@@ -284,14 +284,14 @@ function GM:DoScoreboardActionPopup(ply)
 	local actions = DermaMenu()
 
 	if ply:IsAdmin() then
-		local admin = actions:AddOption("Is an Admin")
+		local admin = actions:AddOption("Es un Admin")
 		admin:SetIcon("icon16/shield.png")
 	end
 
 	if ply != LocalPlayer() then
-		local t = "Mute"
+		local t = "Silenciar"
 		if ply:IsMuted() then
-			t = "Unmute"
+			t = "Escuchar"
 		end
 		local mute = actions:AddOption( t )
 		mute:SetIcon("icon16/sound_mute.png")
