@@ -23,7 +23,7 @@ timer.Create("NConstraint",0.3,0,function()
 						cdata.Constraint:Remove()
 						ent:EmitSound("buttons/button2.wav")
 						if own then 
-							own:ChatPrint("Your " .. cdata.Type .. " constraint on " .. tostring(ent) .. " was removed because it was constrainted to the world.")
+							own:ChatPrint("Tu " .. cdata.Type .. " restringido en " .. tostring(ent) .. " se elimino, porque estaba asociada o parentada al mundo.")
 						end
 
 					end
@@ -51,7 +51,7 @@ function GM:CanTool(ply, tr, tool)
 					else
 						local ct = ChatText()
 						ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-						ct:AddText(tool.." is a donator only tool!")
+						ct:AddText(tool .. FloodLang["tool_donator"])
 						ct:Send(ply)
 						return false
 					end

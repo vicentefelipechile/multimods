@@ -29,7 +29,7 @@ hook.Add("HUDPaint", "NADMOD.HUDPaint", function()
 	if !tr.HitNonWorld then return end
 	local ent = tr.Entity
 	if ent:IsValid() && !ent:IsPlayer() then
-		local text = "Owner: " .. (Props[ent:EntIndex()] or "N/A")
+		local text = FloodLang["npp.owner"] .. (Props[ent:EntIndex()] or "N/A")
 		local text2 = "'"..string.sub(table.remove(string.Explode("/", ent:GetModel())), 1,-5).."' ["..ent:EntIndex().."]"
 		local text3 = ent:GetClass()
 		surface.SetFont(font)
@@ -87,27 +87,27 @@ function NADMOD.AdminPanel(Panel, runByNetReceive)
 		RunConsoleCommand("npp_refreshconfig")
 		timer.Create("NADMOD.AdminPanelCheckFail",0.75,1,function()
 			Panel:ClearControls()
-			Panel:Help("Waiting for the server to say you're an admin...")
+			Panel:Help(FloodLang["npp.admin_waiting"])
 		end)
 		return
 	end
 	
 	timer.Remove("NADMOD.AdminPanelCheckFail")
 	Panel:ClearControls()
-	Panel:SetName("NADMOD PP Admin Panel")
+	Panel:SetName(FloodLang["npp.admin_panel"])
 	
-	Panel:CheckBox(	"Main PP Power Switch", "npp_toggle")
-	Panel:CheckBox(	"Admins can touch anything", "npp_adminall")
-	Panel:CheckBox(	"Use Protection", "npp_use")
+	Panel:CheckBox(	FloodLang["npp.admin_toggle"],		"npp_toggle")
+	Panel:CheckBox(	FloodLang["npp.admin_touchall"],	"npp_adminall")
+	Panel:CheckBox(	FloodLang["npp.admin_useprot"],		"npp_use")
 	
-	local txt = Panel:Help("Autoclean Disconnected Players?")
+	local txt = Panel:Help(FloodLang["npp.admin_autoclean"])
 	txt:SetAutoStretchVertical(false)
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
-	Panel:CheckBox(	"Autoclean Admins", "npp_autocdpadmins")
-	Panel:NumSlider("Autoclean Timer", "npp_autocdp", 0, 1200, 0 )
-	Panel:Button(	"Apply Settings", "npp_apply") 
+	Panel:CheckBox(	FloodLang["npp.admin_ac_admin"], "npp_autocdpadmins")
+	Panel:NumSlider(FloodLang["npp.admin_ac_admin_timer"], "npp_autocdp", 0, 1200, 0 )
+	Panel:Button(	FloodLang["npp.admin_apply"], "npp_apply") 
 	
-	local txt = Panel:Help("                     Cleanup Panel")
+	local txt = Panel:Help("                   " .. FloodLang["npp.admin_panel_cleanup"])
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
 	txt:SetFont("DermaDefaultBold")
 	txt:SetAutoStretchVertical(false)
@@ -127,11 +127,10 @@ function NADMOD.AdminPanel(Panel, runByNetReceive)
 		end
 	end
 	
-	Panel:Help(""):SetAutoStretchVertical(false) -- Spacer
-	Panel:Button("Cleanup Disconnected Players Props ("..dccount..")", "nadmod_cdp")
-	Panel:Button("Cleanup All NPCs", 			"nadmod_cleanclass", "npc_*")
-	Panel:Button("Cleanup All Ragdolls", 		"nadmod_cleanclass", "prop_ragdol*")
-	Panel:Button("Cleanup Clientside Ragdolls", "nadmod_cleanclragdolls")
+	Panel:Help(""):SetAutoStretchVertical(false)
+	Panel:Button(FloodLang["npp.admin_cleanup_disc"] .. " ("..dccount..")", "nadmod_cdp")
+	Panel:Button(FloodLang["npp.admin_cleanup_ragd"], 	"nadmod_cleanclass", "prop_ragdol*")
+	Panel:Button(FloodLang["npp.admin_cleanup_ragd_cl"], "nadmod_cleanclragdolls")
 end
 
 net.Receive("nadmod_ppfriends",function(len)

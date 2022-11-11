@@ -61,7 +61,7 @@ function FLOOD_PANEL:AddIcon( txt )
 		icon:SizeToContents()
 		self:AddItem( icon )
 	else
-		self:AddText( "killed" )
+		self:AddText( "mato a" )
 	end
 end
 

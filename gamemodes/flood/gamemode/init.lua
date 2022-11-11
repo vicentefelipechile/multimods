@@ -5,6 +5,9 @@
 include("shared.lua")
 AddCSLuaFile("shared.lua")
 
+include("config.lua")
+AddCSLuaFile("config.lua")
+
 --------------------------------------
 ------------ Custom Script -----------
 --------------------------------------

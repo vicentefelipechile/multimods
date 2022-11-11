@@ -12,7 +12,7 @@ GM.VIP = {
 
 -- Include Shared files
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
-   include("flood/gamemode/shared/"..file); 
+   include("flood/gamemode/shared/"..file)
 end
 
 TEAM_PLAYER = 2
