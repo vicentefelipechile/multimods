@@ -2,18 +2,22 @@
 ------------ Sending Core ------------
 --------------------------------------
 
-include("shared.lua")
-AddCSLuaFile("shared.lua")
+local function add(s)
+	include(s)
+	AddCSLuaFile(s)
+end
 
-include("config.lua")
-AddCSLuaFile("config.lua")
+FloodLang = {}
+
+add("language/english.lua")
+add("language/spanish.lua")
+add("shared.lua")
 
 --------------------------------------
 ------------ Custom Script -----------
 --------------------------------------
 
-include("flood/gamemode/custom/autorun.lua")
-AddCSLuaFile("flood/gamemode/custom/autorun.lua")
+add("flood/gamemode/custom/autorun.lua")
 
 local PREFIX = "[Flood]"
 
