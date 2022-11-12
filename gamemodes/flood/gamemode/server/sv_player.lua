@@ -3,6 +3,10 @@ local PlayerMeta = FindMetaTable("Player")
 local q = sql.Query
 local qS = sql.SQLStr
 
+local function L(val)
+	return FloodLang[GetConVar("flood_lang"):GetString()][val] or FloodLang["es"][val]
+end
+
 function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
 
@@ -277,7 +281,7 @@ function GM:PurchaseProp(ply, cmd, args)
 
 	if ply.Allow and Prop and self:GetGameState() <= 1 then
 		if Prop.DonatorOnly and not ply:IsDonator() then 
-			ct:AddText("[Flood] ", Color(158, 49, 49, 255))
+			ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
 			ct:AddText(Prop.Description.." is a donator only item!")
 			ct:Send(ply)
 			return 
@@ -287,22 +291,22 @@ function GM:PurchaseProp(ply, cmd, args)
 				-- Checking to see if they can even spawn props.
 				if ply:IsAdmin() then
 					if ply:GetCount("flood_props") >= GetConVar("flood_max_admin_props"):GetInt() then
-						ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-						ct:AddText("You have reached the admin's prop spawning limit!")
+						ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+						ct:AddText(L"buy.max1" .. L"buy.admin" .. L"buy.max2")
 						ct:Send(ply)
 						return
 					end 
 				elseif ply:IsDonator() then
 					if ply:GetCount("flood_props") >= GetConVar("flood_max_donator_props"):GetInt() then
-						ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-						ct:AddText("You have reached the donator's prop spawning limit!")
+						ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+						ct:AddText(L"buy.max1" .. L"buy.donator" .. L"buy.max2")
 						ct:Send(ply)
 						return
 					end
 				else
 					if ply:GetCount("flood_props") >= GetConVar("flood_max_player_props"):GetInt() then 
-						ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-						ct:AddText("You have reached the player's prop spawning limit!")
+						ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+						ct:AddText(L"buy.max1" .. L"buy.player" .. L"buy.max2")
 						ct:Send(ply)
 						return
 					end
@@ -321,27 +325,27 @@ function GM:PurchaseProp(ply, cmd, args)
 					ent:SetNWInt("CurrentPropHealth", math.floor(Prop.Health))
 					ent:SetNWInt("BasePropHealth", math.floor(Prop.Health))
 
-					ct:AddText("[Flood] ", Color(132, 199, 29, 255))
-					ct:AddText("You have purchased a(n) "..Prop.Description..".")
+					ct:AddText(L"cmd.prefix", Color(132, 199, 29, 255))
+					ct:AddText(L"buy.success" .. Prop.Description)
 					ct:Send(ply)
 						
 					hook.Call("PlayerSpawnedProp", gmod.GetGamemode(), ply, ent:GetModel(), ent)
 					ply:AddCount("flood_props", ent)
 				else
-					ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-					ct:AddText("You do not have enough cash to purchase a(n) ".. Prop["Description"] ..".")
+					ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+					ct:AddText(L"buy.no_money" .. Prop["Description"])
 					ct:Send(ply)
 				end
 			else
-				ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-				ct:AddText("You are attempting to spawn props too quickly.")
+				ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+				ct:AddText(L"buy.no_fast")
 				ct:Send(ply)
 			end
 			ply.PropSpawnDelay = CurTime() + 0.25
 		end
 	else
-		ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-		ct:AddText("You can not purcahse a(n) ".. Prop["Description"] .." at this time.")
+		ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+		ct:AddText(L"buy.not_now1" .. Prop["Description"] .. L"buy.not_now2")
 		ct:Send(ply)
 	end
 end
@@ -358,13 +362,13 @@ function GM:PurchaseWeapon(ply, cmd, args)
 
 	if ply.Allow and Weapon and self:GetGameState() <= 1 then
 		if table.HasValue(ply.Weapons, Weapon.Class) then
-			ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-			ct:AddText("You already own a(n) "..Weapon.Name.."!")
+			ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+			ct:AddText(L"buy.already" .. Weapon.Name)
 			ct:Send(ply)
 			return
 		else
 			if Weapon.DonatorOnly == true and not ply:IsDonator() then 
-				ct:AddText("[Flood] ", Color(158, 49, 49, 255))
+				ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
 				ct:AddText(Weapon.Name.." is a donator only item!")
 				ct:Send(ply)
 				return 
@@ -375,20 +379,22 @@ function GM:PurchaseWeapon(ply, cmd, args)
 					ply:Save()
 					ply:SaveWeapons()
 
-					ct:AddText("[Flood] ", Color(132, 199, 29, 255))
-					ct:AddText("You have purchased a(n) "..Weapon.Name..".")
+					ct:AddText(L"cmd.prefix", Color(132, 199, 29, 255))
+					ct:AddText(L"buy.success"..Weapon.Name..".")
 					ct:Send(ply)
 				else
-					ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-					ct:AddText("You do not have enough cash to purchase a(n) "..Weapon.Name..".")
+					ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+					ct:AddText(L"buy.no_money"..Weapon.Name..".")
 					ct:Send(ply)
 				end
 			end
 		end
 	else
-		ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-		ct:AddText("You can not purcahse a(n) "..Weapon.Name.." at this time.")
+		ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+		ct:AddText(L"buy.not_now1" .. Weapon.Name .. L"buy.not_now2")
 		ct:Send(ply)
 	end
 end
-concommand.Add("FloodPurchaseWeapon", function(ply, cmd, args) hook.Call("PurchaseWeapon", GAMEMODE, ply, cmd, args) end)
+concommand.Add("FloodPurchaseWeapon", function(ply, cmd, args)
+	hook.Call("PurchaseWeapon", GAMEMODE, ply, cmd, args)
+end)

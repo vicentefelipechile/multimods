@@ -1,6 +1,8 @@
 -- Translate made by Vicentefelipechile and Lugent
 
 FloodLang["es"] = {
+    ["cmd.prefix"] = "[Flood] ",
+
 	["state0"] = "Esperando jugadores...",
 	["state1"] = "Construye un bote",
 	["state2"] = "Sube a tu bote!",
@@ -54,8 +56,6 @@ FloodLang["es"] = {
     ["scoreboard_ping"] = "Ping",
     ["scoreboard_players"] = "Jugadores",
 
-    ["cmd.prefix"] = "[Flood] ",
-
     ["command.give_success"] = "Tu diste ",
     ["command.give_receive"] = "Has recibido $",
 
@@ -82,4 +82,17 @@ FloodLang["es"] = {
     ["fight"] = "Pelea",
     ["reset"] = "Reinicio",
 
+    ["buy.max1"] = "has alcanzado el limite de props ",
+    ["buy.max2"] = " que puedes spawnear",
+    ["buy.admin"] = "admin",
+    ["buy.vip"] = "vip",
+    ["buy.player"] = "usuario",
+
+    ["buy.success"] = "Has comprado un ",
+    ["buy.no_money"] = "No tienes dinero suficiente para comprar un ",
+    ["buy.no_fast"] = "Estas intentando comprar props demasiado rapido, espera un poco.",
+    ["buy.not_now1"] = "No puedes comprar un ",
+    ["buy.not_now2"] = " ahora mismo.",
+    ["buy.already"] = "Actualmente ya posees un ",
+    ["buy.only_donator"] = " es un objeto VIP",
 }

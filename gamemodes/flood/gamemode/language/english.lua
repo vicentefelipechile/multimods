@@ -1,4 +1,6 @@
 FloodLang["en"] = {
+    ["cmd.prefix"] = "[Flood] ",
+
 	["state0"] = "Waiting for players",
 	["state1"] = "Build a boat.",
 	["state2"] = "Get on your boat!",
@@ -11,7 +13,6 @@ FloodLang["en"] = {
     ["hp"] = " HP",
     ["health"] = "Health: ",
     ["health_fetch"] = "Fetching Health",
-
     ["name"] = "Name: ",
 
     ["ammo_invalid"] = "Doesn't Use Ammo",
@@ -52,8 +53,6 @@ FloodLang["en"] = {
     ["scoreboard_ping"] = "Ping",
     ["scoreboard_players"] = "Players",
 
-    ["cmd.prefix"] = "[Flood] ",
-
     ["command.give_success"] = "You gave ",
     ["command.give_receive"] = "You were given $",
 
@@ -79,4 +78,18 @@ FloodLang["en"] = {
     ["flood"] = "Flood",
     ["fight"] = "Fight",
     ["reset"] = "Reset",
+
+    ["buy.max1"] = "You have reached the ",
+    ["buy.max2"] = "'s prop spawning limit!",
+    ["buy.admin"] = "admin",
+    ["buy.vip"] = "donator",
+    ["buy.player"] = "player",
+
+    ["buy.success"] = "You have purchased a(n) ",
+    ["buy.no_money"] = "You do not have enough cash to purchase a(n) ",
+    ["buy.no_fast"] = "You are attempting to spawn props too quickly.",
+    ["buy.not_now1"] = "You can not purcahse a(n) ",
+    ["buy.not_now2"] = " at this time.",
+    ["buy.already"] = "You already own a(n) ",
+    ["buy.only_donator"] = L" is a donator only item!",
 }
