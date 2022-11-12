@@ -24,7 +24,7 @@ CreateConVar("flood_lang", "es", {FCVAR_ARCHIVE}, "Set the language of the gamem
 
 print("-----------------------------------------")
 print("------------ Flood Gamemode -------------")
-print("-----------------------------------------\n")
+print("-----------------------------------------")
 MsgC( Color(56, 228, 255, 200), " - Loading Server Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/server/*.lua", "LUA")) do
 	mSV(file)

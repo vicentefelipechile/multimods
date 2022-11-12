@@ -17,7 +17,7 @@ end
  
 print("-----------------------------------------")
 print("------------ Flood Gamemode -------------")
-print("-----------------------------------------\n")
+print("-----------------------------------------")
 
 MsgC( Color(56, 228, 255, 200), "\n - Loading Language Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/language/*lua", "LUA")) do

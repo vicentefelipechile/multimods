@@ -1,13 +1,17 @@
 local MetaPlayer = FindMetaTable("Player")
 local EntityMeta = FindMetaTable("Entity")
-local Donators = { 
-	["vip"] = true
-}
 
 local q = sql.Query
 local qS = sql.SQLStr
 local TTJ = util.TableToJSON
 local JTT = util.JSONToTable
+
+
+local Donators = { 
+	["vip"] = true,
+	["admin"] = true,
+	["superadmin"] = true,
+}
 
 function MetaPlayer:IsDonator()
 	return Donators[self:GetUserGroup()] or false
@@ -43,7 +47,7 @@ end
 -- Currency 
 function MetaPlayer:AddCash(amount)
 	if amount then
-		self:SetNetworkedInt("flood_cash", self:GetNetworkedInt("flood_cash") + tonumber(amount))
+		self:SetNWInt("flood_cash", self:GetNWInt("flood_cash") + tonumber(amount))
 		self:Save()
 	else
 		print("Flood: Error occured in AddCash function - No amount was passed.")
@@ -53,7 +57,7 @@ end
 
 function MetaPlayer:SubCash(amount)
 	if amount then 
-		self:SetNetworkedInt("flood_cash", self:GetNetworkedInt("flood_cash") - tonumber(amount))
+		self:SetNWInt("flood_cash", self:GetNWInt("flood_cash") - tonumber(amount))
 		self:Save()
 	else
 		print("Flood: Error occured in SubCash function - No amount was passed.")
@@ -62,15 +66,15 @@ function MetaPlayer:SubCash(amount)
 end
 
 function MetaPlayer:SetCash(amount)
-	self:SetNetworkedInt("flood_cash", tonumber(amount))
+	self:SetNWInt("flood_cash", tonumber(amount))
 end
 
 function MetaPlayer:GetCash()
-	return tonumber(self:GetNetworkedInt("flood_cash"))
+	return tonumber(self:GetNWInt("flood_cash"))
 end
 
 function MetaPlayer:CanAfford(price)
-	return tonumber(self:GetNetworkedInt("flood_cash")) >= tonumber(price)
+	return tonumber(self:GetNWInt("flood_cash")) >= tonumber(price)
 end
 
 function MetaPlayer:Save()
