@@ -115,7 +115,7 @@ if not NADMOD.Props then
 	------------------------------
 	----- Initialize Nadmod ------
 	------------------------------
-	NADMOD.PPVersion = "2.0.0"
+	NADMOD.PPVersion = "2.0.1"
 	NADMOD.Props = {}
 
 	--[[-----------------------------------
