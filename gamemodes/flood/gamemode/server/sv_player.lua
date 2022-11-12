@@ -13,7 +13,7 @@ function GM:PlayerInitialSpawn(ply)
 	if not query then
 		q("INSERT INTO flood ( steamid, name, weapons ) VALUES ( " .. ply:SteamID64() .. ", " .. qS(ply:Nick()) .. ", " .. qS(util.TableToJSON({"weapon_pistol"})) .. " );")
 	else
-		q("UPDATE flood SET name = " .. qS(ply:Nick()) .. " ;")
+		q("UPDATE flood SET name = " .. qS(ply:Nick()) .. " WHERE steamid = " .. ply:SteamID64() .. " ;")
 	end
  
 	local data = ply:LoadData()
