@@ -63,7 +63,7 @@ FloodLang["en"] = {
 
     ["command.take_success"] = "You have taken $",
     ["command.take_receive"] = "You had $",
-    ["command.take_receive_from"] = " taken by "
+    ["command.take_receive_from"] = " taken by ",
 
     ["command.not_found"] = "Target player could not be found",
     ["command.not_permission"] = "You don't have permission to use this command",
