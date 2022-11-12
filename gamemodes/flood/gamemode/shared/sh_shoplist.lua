@@ -12,6 +12,7 @@ Weapons = {}
 -----------------------------
 PropCategories[1] = "Bouyant "
 PropCategories[2] = "Armor "
+PropCategories[3] = "Decoracion "
 
 
 -----------------------------
@@ -68,6 +69,17 @@ addProp("models/props_interiors/VendingMachineSoda01a.mdl",     1,1200, 800, fal
 addProp("models/props_interiors/VendingMachineSoda01a_door.mdl",            1, 600, 400, false, "Vending Machine Door")
 addProp("models/props_building_details/Storefront_Template001a_Bars.mdl",   2, 220, 110, false, "Window Bars")
 addProp("models/props_borealis/bluebarrel001.mdl",              1,  50,  25, false, "Gravestone")
+addProp("models/props_c17/FurnitureCouch001a.mdl",              3, 100, 100, false, "Sillon Verde")
+addProp("models/props_c17/FurnitureFridge001a.mdl",             3, 100, 100, false, "Refrigerador")
+addProp("models/props_combine/breenchair.mdl",                  3, 100, 100, false, "Sillon")
+addProp("models/props_combine/breendesk.mdl",                   3, 100, 100, false, "Escritorio")
+addProp("models/props_lab/kennel_physics.mdl",                  3, 100, 100, false, "Casa para Gatos")
+addProp("models/props_wasteland/controlroom_chair001a.mdl",     3, 100, 100, false, "Silla Cientifica")
+addProp("models/props_trainstation/TrackSign02.mdl",            3, 100, 100, false, "Señaletica")
+addProp("models/props_combine/breenglobe.mdl",                  3, 100, 100, false, "Globo Terraqueo")
+addProp("models/props_trainstation/payphone001a.mdl",           3, 100, 100, false, "Telefono ase Ring")
+addProp("models/props_phx/games/chess/black_knight.mdl",        3, 100, 100, false, "Caballo Negro")
+addProp("models/props_phx/games/chess/white_knight.mdl",        3, 100, 100, false, "Caballo Blanco")
 
 
 -----------------------------
