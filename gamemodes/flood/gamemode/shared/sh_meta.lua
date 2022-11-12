@@ -78,7 +78,7 @@ function MetaPlayer:CanAfford(price)
 end
 
 function MetaPlayer:Save()
-	q("UPDATE flood SET cash = " .. self:GetNWInt("flood_cash") .. " WHERE steamid = " .. self:SteamID64() .. ";")
+	q("UPDATE flood SET cash = " .. self:GetCash() .. " WHERE steamid = " .. self:SteamID64() .. ";")
 end
 
 function MetaPlayer:SaveWeapons()
