@@ -91,5 +91,5 @@ FloodLang["en"] = {
     ["buy.not_now1"] = "You can not purcahse a(n) ",
     ["buy.not_now2"] = " at this time.",
     ["buy.already"] = "You already own a(n) ",
-    ["buy.only_donator"] = L" is a donator only item!",
+    ["buy.only_donator"] = " is a donator only item!",
 }
