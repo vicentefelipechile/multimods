@@ -18,8 +18,6 @@ function GM:PlayerInitialSpawn(ply)
  
 	local data = ply:LoadData()
 
-	PrintTable(data)
-
 	ply:SetCash(data["cash"])
 	ply.Weapons = util.JSONToTable(data["weapons"])
 	
