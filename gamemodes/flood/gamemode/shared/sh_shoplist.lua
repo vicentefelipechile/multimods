@@ -124,6 +124,6 @@ addWeapon("models/weapons/tfa_cso2/w_sg552.mdl",    2, "tfa_cso2_sg552",    "sg5
 addWeapon("models/weapons/tfa_cso2/w_elites.mdl",   2, "tfa_cso2_elites",   "Dual Elites",   5000,  100, "pistol",       2, false)
 addWeapon("models/weapons/tfa_cso2/w_galil.mdl",    2, "tfa_cso2_galil",    "Galil",        10000,  200, "AR2",          2, false)
 addWeapon("models/weapons/tfa_cso2/w_knife.mdl",    2, "tfa_cso2_knife",    "Chuchillo Tactico",    15000, 0, "Pistol", 35, false)
-addWeapon("models/weapons/tfa_cso2/w_m107a1.mdl",   2, "tfa_cso2_m107a1",   "M107a1"        25000,   50, "SniperPenetratedRound", 35, false)
+addWeapon("models/weapons/tfa_cso2/w_m107a1.mdl",   2, "tfa_cso2_m107a1",   "M107a1",        25000,   50, "SniperPenetratedRound", 35, false)
 addWeapon("models/weapons/tfa_cso2/w_mac10.mdl",    2, "tfa_cso2_mac10",    "MAC-10",        7000,  300, "smg1",         3, false)
 addWeapon("models/weapons/tfa_cso2/w_dp12.mdl",     2, "tfa_cso2_dp12",     "DP-12",         9000,  100, "buckshot",    15, false)
