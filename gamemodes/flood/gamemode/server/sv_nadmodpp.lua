@@ -691,23 +691,57 @@ net.Receive("nadmod_ppfriends",function(len,ply)
 	NADMOD.Save()
 	NADMOD.Notify(ply, "Friends received!")
 end)
+------------------------------
+------- Meta Functions -------
+------------------------------
 
-function CPPI:GetName() return "Nadmod Prop Protection" end
-function CPPI:GetVersion() return NADMOD.PPVersion end
+function CPPI:GetName()
+	return "Nadmod Prop Protection"
+end
+
+function CPPI:GetVersion()
+	return NADMOD.PPVersion
+end
+
 function metaply:CPPIGetFriends()
-	if not self:IsValid() then return {} end
+	if not self:IsValid() then
+		return {}
+	end
+
 	local ret = {}
 	local friends = (NADMOD.Users[self:SteamID64()] or {Friends={}}).Friends or {}
-	for _,v in pairs(player.GetAll()) do
-		if NADMOD.IsPPAdmin(v) or friends[v:SteamID64()] then table.insert(ret,v) end
+
+	for _, v in pairs(player.GetAll()) do
+		if NADMOD.IsPPAdmin(v) or friends[v:SteamID64()] then
+			table.insert(ret,v)
+		end
 	end
+
 	return ret
 end
-function metaent:CPPIGetOwner() return self.Owner end
-function metaent:CPPISetOwner(ply) return NADMOD.PlayerMakePropOwner(ply, self) end
-function metaent:CPPICanTool(ply,mode) return NADMOD.CanTool(ply,{Entity=self},mode) != false end
-function metaent:CPPICanPhysgun(ply) return NADMOD.PlayerCanTouchSafe(ply,self) != false end
-function metaent:CPPICanPickup(ply) return NADMOD.GravGunPickup(ply, self) != false end
-function metaent:CPPICanPunt(ply) return NADMOD.GravGunPickup(ply, self) != false end
 
-print("-> [NADMOD PP - NADMOD Prop Protection Module v"..NADMOD.PPVersion.." Loaded]")
+function metaent:CPPIGetOwner()
+	return self.Owner
+end
+
+function metaent:CPPISetOwner(ply)
+	return NADMOD.PlayerMakePropOwner(ply, self)
+end
+
+function metaent:CPPICanTool(ply, mode)
+	return NADMOD.CanTool(ply,{Entity=self},mode) != false
+end
+
+function metaent:CPPICanPhysgun(ply)
+	return NADMOD.PlayerCanTouchSafe(ply,self) != false
+end
+
+function metaent:CPPICanPickup(ply)
+	return NADMOD.GravGunPickup(ply, self) != false
+end
+
+function metaent:CPPICanPunt(ply)
+	return NADMOD.GravGunPickup(ply, self) != false
+end
+
+MsgC( Color(56, 228, 255, 200), "[Flood] ", Color(184, 246, 255, 200), tostring("[NADMOD PP - NADMOD Prop Protection Module v" .. NADMOD.PPVersion .. " Loaded]") .. "\n")
