@@ -32,7 +32,7 @@ for _, file in pairs (file.Find("flood/gamemode/server/*.lua", "LUA")) do
 end
 
 MsgC( Color(56, 228, 255, 200), "\n - Loading Shared Files - \n")
-include("flood/gamemode/shared.lua") mSH("shared.lua")
+include("flood/gamemode/shared.lua") AddCSLuaFile("flood/gamemodoe/shared.lua") mSH("shared.lua")
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
 	mSH(file)
 	AddCSLuaFile("flood/gamemode/shared/"..file)
