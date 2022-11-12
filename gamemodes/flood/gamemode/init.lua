@@ -35,12 +35,14 @@ MsgC( Color(56, 228, 255, 200), "\n - Loading Shared Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/shared/*.lua", "LUA")) do
 	mSH(file)
 	AddCSLuaFile("flood/gamemode/shared/"..file)
+	include("flood/gamemode/shared/"..file)
 end
 
 MsgC( Color(56, 228, 255, 200), "\n - Loading Language Files - \n")
 for _, file in pairs (file.Find("flood/gamemode/language/*lua", "LUA")) do
 	mSH(file)
 	AddCSLuaFile("flood/gamemode/language/"..file)
+	include("flood/gamemode/language/"..file)
 end
 
 MsgC( Color(56, 228, 255, 200), "\n - Loading Clientside Files - \n")

@@ -20,7 +20,7 @@ function GM:PlayerInitialSpawn(ply)
 
 	PrintTable(data)
 
-	ply:SetCash(data["cash"])
+	ply:SetNWInt("flood_cash", tonumber(data["cash"]))
 	ply.Weapons = util.JSONToTable(data["weapons"])
 	
 	ply:SetTeam(TEAM_PLAYER)
