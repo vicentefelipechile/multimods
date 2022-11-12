@@ -105,7 +105,7 @@ function NADMOD.AdminPanel(Panel, runByNetReceive)
 	Panel:CheckBox(	L"npp.admin_touchall",	"npp_adminall")
 	Panel:CheckBox(	L"npp.admin_useprot",	"npp_use")
 	
-	local txt = Panel:Help(FloodLang["npp.admin_autoclean"])
+	local txt = Panel:Help(L"npp.admin_autoclean")
 	txt:SetAutoStretchVertical(false)
 	txt:SetContentAlignment( TEXT_ALIGN_CENTER )
 	Panel:CheckBox(	L"npp.admin_ac_admin", "npp_autocdpadmins")

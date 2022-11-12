@@ -50,8 +50,8 @@ function GM:CanTool(ply, tr, tool)
 						return true
 					else
 						local ct = ChatText()
-						ct:AddText("[Flood] ", Color(158, 49, 49, 255))
-						ct:AddText(tool .. FloodLang["tool_donator"])
+						ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
+						ct:AddText(tool .. L"tool_donator")
 						ct:Send(ply)
 						return false
 					end
