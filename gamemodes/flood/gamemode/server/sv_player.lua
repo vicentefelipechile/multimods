@@ -369,7 +369,7 @@ function GM:PurchaseWeapon(ply, cmd, args)
 		else
 			if Weapon.DonatorOnly == true and not ply:IsDonator() then 
 				ct:AddText(L"cmd.prefix", Color(158, 49, 49, 255))
-				ct:AddText(Weapon.Name.." is a donator only item!")
+				ct:AddText(Weapon.Name .. L"buy.only_donator")
 				ct:Send(ply)
 				return 
 			else
