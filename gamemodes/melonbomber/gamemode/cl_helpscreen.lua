@@ -62,7 +62,7 @@ local function openHelpScreen()
 			surface.DrawRect(0, 0, w, h)
 
 			surface.SetFont("RobotoHUD-25")
-			local t = "Help"
+			local t = "Ayuda"
 			local tw,th = surface.GetTextSize(t)
 			draw.ShadowText(t, "RobotoHUD-25", 8, 2, Color(132, 199, 29), 0)
 

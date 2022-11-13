@@ -84,7 +84,7 @@ function GM:DrawKillFeed()
 				local col = color_white
 				for k, v in pairs(t.text) do
 					if type(v) == "string" then
-						local killed = " killed "
+						local killed = " mato a "
 						local tw, th = surface.GetTextSize(v)
 						draw.ShadowText(v, "RobotoHUD-15", ScrW() - 4 - t.textWidth + x, 4 + down * gap, col, 0)
 						x = x + tw

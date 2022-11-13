@@ -294,7 +294,7 @@ function GM:DrawRoundTimer()
 		end
 	elseif self:GetGameState() == 2 then
 		if self:GetStateRunningTime() < 2 then
-			draw.ShadowText("GO!", "RobotoHUD-50", ScrW() / 2, ScrH() / 3, color_white, 1, 1)
+			draw.ShadowText("Vamos!", "RobotoHUD-50", ScrW() / 2, ScrH() / 3, color_white, 1, 1)
 		end
 	end
 end
