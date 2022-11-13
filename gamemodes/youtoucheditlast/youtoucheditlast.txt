@@ -1,0 +1,69 @@
+"youtoucheditlast"
+{
+	"base"		"base"
+	"title"		"You Touched it Last"
+	"maps"		""
+	"menusystem"	"1"
+	"workshopid"	"447829341"
+	
+		"settings"
+	{
+		1
+		{
+			"name"		"ytil_startgametype"
+			"text"		"Starting Gametype"
+			"help"		"Choses which gametype to start the server as"
+			"type"		"Numeric"
+			"default"	"1"
+		}
+
+		
+		4
+		{
+			"name"		"ytil_bombmintime"
+			"text"		"Min Bomb time (seconds)"
+			"help"		"The minimum range the Bomb can set its timer to."
+			"type"		"Numeric"
+			"default"	"60"
+		}
+		
+		2
+		{
+			"name"		"ytil_bombmaxtime"
+			"text"		"Max Bomb time (seconds)"
+			"help"		"The maximum range the Bomb can set its timer to."
+			"type"		"Numeric"
+			"default"	"180"
+		}
+
+		5
+		{
+			"name"		"ytil_bombshowtime"	
+			"text"		"Show Bomb time on HUD?"
+			"help"		"Sets whether the bomb's timer should be shown or hidden"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		3
+		{
+			"name"		"ytil_runnermagic"
+			"text"		"Can Runners use magic?"
+			"help"		"Whether Runners can hold Right click to see all the balls' locations"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+		
+		6
+		{
+			"name"		"ytil_postroundtime"
+			"text"		"Post-Round Time"
+			"help"		"The time after a round is over before a new one starts."
+			"type"		"Numeric"
+			"default"	"10"
+		}
+
+
+	}
+}
+
