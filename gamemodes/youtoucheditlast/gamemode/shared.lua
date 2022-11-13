@@ -60,23 +60,10 @@ function GM:PlayerInitialSpawn(ply)
 
 	player_manager.SetPlayerClass( ply, "ytil_playerclass" )
 	
-	-- Hey there! If you are here, that means you have found a way to extract .gma's! Feel free to modify all you want, even add your own gametypes!
-	-- However I ask of you that you do not remove the below part. I, the creator of this mode, have made this as a reward for being part of my Steam Group.
-	-- Since this reward is to be used universally on all servers, I ask of you that you do not remove it. Thank you :)
-	http.Fetch( "http://steamcommunity.com/groups/the_banter_brigade/memberslistxml/?xml=1",
-		function(body) -- On Success
-			local playerIDStartIndex = string.find( tostring(body), "<steamID64>"..ply:SteamID64().."</steamID64>" )
-				if playerIDStartIndex == nil then return else
-					ply:ChatPrint("You are part of The Banter Brigade and have access to Pixel Illusion Bouncy Balls! Reload with your ball to toggle!")
-					ply.inYTLGroup = true
-					ply:GetActiveWeapon():CheckUnlockedBalls()
-				end
-		end,
-		function() -- On fail
-			print("Couldn't get it the data from the Banter Brigade Steam Group. Pixel Bouncy Ball are unavailable!")
-		end
-	)
-	
+	ply:ChatPrint("You are part of The Banter Brigade and have access to Pixel Illusion Bouncy Balls! Reload with your ball to toggle!")
+	ply.inYTLGroup = true
+	ply:GetActiveWeapon():CheckUnlockedBalls()
+
 	if ytil_specialrewards[ply:SteamID()] then net.Start("YTILThanks") net.Send(ply) end
 
 	ply:SetModel( playermodels[math.random(1, table.Count(playermodels))] )
@@ -183,7 +170,7 @@ function RoundRestart(mode)
 	if timer.Exists("ytil_HuntTime") then timer.Remove("ytil_HuntTime") end
 	ytil_Variables.postround = false
 	game.CleanUpMap()
-	print("Mode: ["..mode.."] ["..ytil_GametypeRules[mode].name.."]")
+	print("Modo: ["..mode.."] ["..ytil_GametypeRules[mode].name.."]")
 	hook.Remove("Tick", "CheckBombTime")
 	
 	if #player.GetAll() <= 0 then return end	-- Prevent the rest from running if there are no players on

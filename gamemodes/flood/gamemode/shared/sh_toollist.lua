@@ -34,6 +34,10 @@ GM.RenderTools = {
 	{"trails", false, true}
 }
 
+GM.CustomTools = {
+	{"streamradio", true, true}
+}
+
 function GM:CompileToolTable()
 	local tools = {}
 
@@ -50,6 +54,10 @@ function GM:CompileToolTable()
 	end
 
 	for _, v in pairs(self.RenderTools) do
+		table.insert(tools, v)
+	end
+
+	for _, v in pairs(self.CustomTools) do
 		table.insert(tools, v)
 	end
 

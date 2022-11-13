@@ -16,10 +16,10 @@ local ManualBombEnable = false
 function CheckGametype(mode, bomb)
 	if mode then 
 		ytil_Variables.gametype = mode 
-		print("Gametype set to "..ytil_Variables.gametype)
+		print("Juego establecido a "..ytil_Variables.gametype)
 	else
 		ytil_Variables.gametype = GetGlobalInt("ytil_Gametype", false) or 1
-		print("Gametype set to "..ytil_Variables.gametype)
+		print("Juego establecido a "..ytil_Variables.gametype)
 	end
 	
 	if bomb then 
