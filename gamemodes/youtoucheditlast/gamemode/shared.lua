@@ -3,12 +3,18 @@ GM.Author = "Zet0r"
 GM.Email = "N/A"
 GM.Website = "https://youtube.com/Zet0r"
 
-if not ConVarExists( "ytil_bombmanualenable" ) then CreateConVar( "ytil_bombmanualenable", 0, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED } ) end
-if not ConVarExists( "ytil_bombshowtime" ) then CreateConVar( "ytil_bombshowtime", 0, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_ARCHIVE } ) end
-if not ConVarExists( "ytil_runnermagic" ) then CreateConVar( "ytil_runnermagic", 0, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_ARCHIVE } ) end
-if not ConVarExists( "ytil_voteallowed" ) then CreateConVar( "ytil_voteallowed", 1, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_ARCHIVE } ) end
-if not ConVarExists( "ytil_ballteletime" ) then CreateConVar( "ytil_ballteletime", 5, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED } ) end
-if not ConVarExists( "ytil_ballsize" ) then CreateConVar( "ytil_ballsize", 20, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED } ) end
+local CE = ConVarExists
+local CC = CreateConVar
+
+local FCVAR = { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_ARCHIVE }
+local P = "ytil_"
+
+if not CE( P.."bombmanualenable" ) then CE( P.."bombmanualenable", 0, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED } ) end
+if not CE( P.."bombshowtime" ) then CE( P.."bombshowtime", 0, FCVAR ) end
+if not CE( P.."runnermagic" ) then CE( P.."runnermagic", 0, FCVAR ) end
+if not CE( P.."voteallowed" ) then CE( P.."voteallowed", 1, FCVAR ) end
+if not CE( P.."ballteletime" ) then CE( P.."ballteletime", 5, FCVAR ) end
+if not CE( P.."ballsize" ) then CE( P.."ballsize", 20, FCVAR ) end
 
 ytil_Variables = {
 	throwPower = 20,
@@ -23,8 +29,8 @@ ytil_Variables = {
 }
 local usingmanualbomb = 0
 
-team.SetUp(1, "Runners", Color(100,125,255), true)
-team.SetUp(2, "Ball Owners", Color(255,100,100), true)
+team.SetUp(1, "Jugadores", Color(100,125,255), true)
+team.SetUp(2, "Arabes", Color(255,100,100), true)
 team.SetUp(3, "Spectators", Color(150,150,150), true)
 
 local playermodels = {

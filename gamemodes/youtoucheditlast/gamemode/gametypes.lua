@@ -1,13 +1,13 @@
 ytil_GametypeRules = {
 	
 	[0] = { -- Used for the F1 menu when no type is marked
-		name = "Select a Gametype!",
-		desc = "Click on any gametype above to read a short description or cast your vote on which one to play! (Requires that the server allows gametype voting)"
+		name = "Selecciona un tipo de juego!",
+		desc = "¡Haz clic en cualquier tipo de juego de arriba para leer una breve descripción o votar sobre cuál jugar!"
 	},
 	
 	[1] = {
-		name = "Free for All",
-		desc = "The classic experience. Infinite time, 1 ball, don't touch it! Every time a person touches the ball, the ball will become his, and it will be his job to hit other players with it. A point is given to every player who is NOT hit by the ball whenever someone is hit.",
+		name = "Todos Contra Todos",
+		desc = "La experiencia clásica. ¡Tiempo infinito, 1 bola, no la toques! Cada vez que una persona toque la pelota, la pelota se volverá suya y será su trabajo golpear a otros jugadores con ella. Se otorga un punto a cada jugador que NO es golpeado por la pelota cada vez que alguien es golpeado.",
 		texture = Material("youtoucheditlast/freeforall.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
@@ -57,8 +57,8 @@ ytil_GametypeRules = {
 	},
 	
 	[2] = {
-		name = "Bomb",
-		desc = "The ball is dangerous! After an unknown time it will explode, taking its owner down with it! Make sure you do not own it when that happens! If you do end up getting it when time runs out, try to take others down with you! A point is given to every player NOT hit by the ball when it changes hands, and 3 points are lost upon exploding. Every player killed in the explosion also loses 1 point.",
+		name = "Papa Caliente",
+		desc = "¡La Papa es peligrosa! ¡Después de un tiempo indeterminado, explotará, llevándose a su dueño con él! ¡Asegúrate de no tenerla cuando eso suceda! Si terminas consiguiéndola cuando se acabe el tiempo, ¡intenta llevartelos contigo! Se otorga un punto a todo jugador que NO toque la pelota cuando ésta cambie de dueño, y se pierden 3 puntos al explotar. Cada jugador muerto en la explosión también pierde 1 punto.",
 		texture = Material("youtoucheditlast/timerbomb.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
@@ -105,8 +105,8 @@ ytil_GametypeRules = {
 	},
 	
 	[3] = {
-		name = "Infection",
-		desc = "The ball is infectious! Getting hit by the ball means that you will be infected! If you infect someone you will get a new ball as a reward, while the newly infected player has to fetch the one that hit him. A point is given to every survivor when someone is infected.",
+		name = "Infeccion",
+		desc = "¡La pelota es contagiosa! ¡Ser golpeado por la pelota significa que estarás infectado! Si infectas a alguien, obtendrás una nueva bola como recompensa, mientras que el jugador recién infectado tiene que buscar la que le golpeó. Se otorga un punto a cada sobreviviente cuando alguien se infecta.",
 		texture = Material("youtoucheditlast/infection.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
@@ -125,7 +125,7 @@ ytil_GametypeRules = {
 				if team.NumPlayers(1) <= 0 then
 					hook.Call("ytil_RoundEnd")
 					for k,v in pairs(player.GetAll()) do
-						v:ChatPrint("Everyone was infected! Restarting round ...")
+						v:ChatPrint("Todos fueron infectados! Reiniciando juego...")
 					end
 				end
 			end
@@ -166,8 +166,8 @@ ytil_GametypeRules = {
 	},
 	
 	[4] = {
-		name = "Infected Bomb",
-		desc = "Now the ball is infectious AND dangerous! Getting infected means you're doomed to explode at the end of an unknown timer! Survive until the very end at all costs! A point is given to every survivor upon infection, and 3 points are lost upon explosion. Every player killed in the explosions also lose 1 point.",
+		name = "Bomba infectada",
+		desc = "¡Ahora la pelota es infecciosa Y peligrosa! ¡Infectarse significa que estás condenado a explotar al final de un tiempo desconocido! ¡Sobrevive hasta el final a toda costa! Se otorga un punto a cada superviviente tras la infección y se pierden 3 puntos tras la explosión. Cada jugador muerto en las explosiones también pierde 1 punto.",
 		texture = Material("youtoucheditlast/infectionbomb.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
@@ -186,7 +186,7 @@ ytil_GametypeRules = {
 				if team.NumPlayers(1) <= 0 then
 					hook.Call("ytil_RoundEnd")
 					for k,v in pairs(player.GetAll()) do
-						v:ChatPrint("Everyone was infected! Restarting round ...")
+						v:ChatPrint("Todos fueron infectados! Reiniciando juego...")
 					end
 					BlowUpBalls() -- End Infected Bomb with everyone blowing up!
 				end
@@ -225,8 +225,8 @@ ytil_GametypeRules = {
 	},
 	
 	[5] = {
-		name = "Hunt",
-		desc = "The opposite of Free for All. 1 player gets marked as the Hunted, and he will be the only player WITHOUT a ball! Hunt him down to acquire his role! Stay in this role for as long as you can! But there is no end to the hunting ... A point is given to the hunted every 10 seconds.",
+		name = "Cazeria",
+		desc = "Lo contrario de Todos contra Todos. 1 jugador se marca como el \"Cazado\", ¡y será el único jugador SIN balón! ¡Cázalo para adquirir su rol y estar todo lo que puedas! Pero la caza no tiene fin... Se otorga un punto al cazado cada 10 segundos.",
 		texture = Material("youtoucheditlast/hunt.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
@@ -274,8 +274,8 @@ ytil_GametypeRules = {
 	},
 	
 	[6] = {
-		name = "Death",
-		desc = "The ball is now lethal! 1 player gets the role as Death, turning black and getting lethal powers! If that's you, use your new deadly ball to kill all survivors! If it's not, you better find a good place to hide! A point is given to every survivor when someone is killed.",
+		name = "Muerte",
+		desc = "¡La pelota ahora es letal! ¡1 jugador es la Parca, se vuelve negro y obtiene poderes letales! ¡Si ese eres tú, usa tu nueva Bola Letal para matar a todos los jugadores! ¡Si no es así, será mejor que encuentres un buen lugar para esconderte! Se otorga un punto a cada sobreviviente cuando alguien muere.",
 		texture = Material("youtoucheditlast/death.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
@@ -291,7 +291,7 @@ ytil_GametypeRules = {
 				if ytil_BallList[ball:GetTextureId()].killSound != nil then ball:EmitSound( ytil_BallList[ball:GetTextureId()].killSound, 75, 100 ) end
 				if team.NumPlayers(1) <= 0 then
 					for k,v in pairs(player.GetAll()) do
-						v:ChatPrint("Death has killed every Runner!")
+						v:ChatPrint("La muerte ha matado a todos los jugadores!")
 					end
 					hook.Call("ytil_RoundEnd")
 					for k,v in pairs(team.GetPlayers(2)) do
@@ -337,8 +337,8 @@ ytil_GametypeRules = {
 	},
 	
 	[7] = {
-		name = "Angelic",
-		desc = "Two balls are at play here, a black and a white. The black can only be used by the black player, and will freeze any other player it hits! The white can be used to rescue your teammates and unfreeze them, and can be passed around between you! A point is given to every other Runner when one is frozen, a point for unfreezing a teammate, and a point to Death when he wins.",
+		name = "Atrapa uno Atrapa todos",
+		desc = "Dos bolas están en juego aquí, una negra y una blanca. ¡El negro solo puede ser usado por el jugador negro y congelará a cualquier otro jugador que golpee! ¡El blanco se puede usar para rescatar a tus compañeros de equipo y descongelarlos, y se puede pasar entre ustedes! Se otorga un punto a todos los demás Corredores cuando uno está congelado, un punto por descongelar a un compañero de equipo y un punto a la Muerte cuando gana.",
 		texture = Material("youtoucheditlast/angelic.png"),
 		
 		OnPlayerHit = function(ball, owner, ply) -- ply = player that was hit
