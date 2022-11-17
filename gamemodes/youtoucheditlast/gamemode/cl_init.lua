@@ -448,44 +448,6 @@ function ShowGametypePopup(admin)
 	alwaysopen:SetPos( Frame:GetWide()/2 - 65, Frame:GetTall() - 85 )
 	alwaysopen:SetColor( Color( 100, 255, 255, 255 ) )
 	
-	local promobackground = vgui.Create( "DImage", Frame )
-	promobackground:SetImage("youtoucheditlast/zetbackground.png")
-	promobackground:SetSize(280,100)
-	promobackground:SetPos(-10, Frame:GetTall() - 85)
-	
-	local promoicon = vgui.Create( "DImage", Frame )
-	promoicon:SetImage("youtoucheditlast/zeticon.png")
-	promoicon:SetSize(80,80)
-	promoicon:SetPos(5, Frame:GetTall() - 85)
-	
-	local promotitle = vgui.Create( "DLabel", Frame )
-	promotitle:SetFont("Promo")
-	promotitle:SetText(" Like the gamemode?")
-	promotitle:SetPos(87, Frame:GetTall() - 52)					-- Server owners: I ask of you that you do not remove this promotional content, thank you :)
-	promotitle:SetSize(200, 20)
-	
-	local promodesc = vgui.Create( "DLabel", Frame )
-	promodesc:SetFont("Promo2")
-	promodesc:SetText(" Visit the creators channel!")
-	promodesc:SetPos(87, Frame:GetTall() - 40)
-	promodesc:SetSize(200, 20)
-	
-	local promonote = vgui.Create( "DLabel", Frame )
-	promonote:SetFont("Promo3")
-	promonote:SetText(" (youtube.com/Zet0r)")
-	promonote:SetPos(87, Frame:GetTall() - 30)
-	promonote:SetSize(200, 20)
-	
-	local promobut = vgui.Create("DButton", Frame)
-	promobut:SetSize(270, 100)
-	promobut:SetPos(0, Frame:GetTall() - 85)
-	promobut:SetText("")
-	promobut:SetToolTip("Opens in Steam Overlay")
-	promobut.Paint = function() return end
-	promobut.DoClick = function()
-		gui.OpenURL("https://youtube.com/Zet0r")
-	end
-	
 	Frame:SizeToContents()
 	
 	Frame:SetPos( ScrW()/2 - (Frame:GetWide()/2), ScrH()/2 - (Frame:GetTall()/2) )
