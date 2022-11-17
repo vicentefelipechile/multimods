@@ -59,10 +59,6 @@ end
 function GM:PlayerInitialSpawn(ply)
 
 	player_manager.SetPlayerClass( ply, "ytil_playerclass" )
-	
-	ply:ChatPrint("You are part of The Banter Brigade and have access to Pixel Illusion Bouncy Balls! Reload with your ball to toggle!")
-	ply.inYTLGroup = true
-	ply:GetActiveWeapon():CheckUnlockedBalls()
 
 	if ytil_specialrewards[ply:SteamID()] then net.Start("YTILThanks") net.Send(ply) end
 
