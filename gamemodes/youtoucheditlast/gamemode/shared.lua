@@ -7,14 +7,13 @@ local CE = ConVarExists
 local CC = CreateConVar
 
 local FCVAR = { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED, FCVAR_ARCHIVE }
-local P = "ytil_"
 
-if not CE( P.."bombmanualenable" ) then CE( P.."bombmanualenable", 0, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED } ) end
-if not CE( P.."bombshowtime" ) then CE( P.."bombshowtime", 0, FCVAR ) end
-if not CE( P.."runnermagic" ) then CE( P.."runnermagic", 0, FCVAR ) end
-if not CE( P.."voteallowed" ) then CE( P.."voteallowed", 1, FCVAR ) end
-if not CE( P.."ballteletime" ) then CE( P.."ballteletime", 5, FCVAR ) end
-if not CE( P.."ballsize" ) then CE( P.."ballsize", 20, FCVAR ) end
+if not CE( "ytil_bombmanualenable" ) then CE( "ytil_bombmanualenable", 0, { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_REPLICATED } ) end
+if not CE( "ytil_bombshowtime" ) then CE( "ytil_bombshowtime", 0, FCVAR ) end
+if not CE( "ytil_runnermagic" ) then CE( "ytil_runnermagic", 0, FCVAR ) end
+if not CE( "ytil_voteallowed" ) then CE( "ytil_voteallowed", 1, FCVAR ) end
+if not CE( "ytil_ballteletime" ) then CE( "ytil_ballteletime", 5, FCVAR ) end
+if not CE( "ytil_ballsize" ) then CE( "ytil_ballsize", 20, FCVAR ) end
 
 ytil_Variables = {
 	throwPower = 20,
