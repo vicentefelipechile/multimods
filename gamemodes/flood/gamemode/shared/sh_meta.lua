@@ -78,7 +78,7 @@ function MetaPlayer:CanAfford(price)
 end
 
 function MetaPlayer:Save()
-	sql.Query( string.format([["UPDATE flood SET cash = %i WHERE steamid = "%s"]], self:GetCash(), self:SteamID()) )
+	sql.Query( string.format([[UPDATE flood SET cash = %s WHERE steamid = "%s"]], self:GetCash(), self:SteamID()) )
 end
 
 function MetaPlayer:SaveWeapons()
@@ -88,5 +88,5 @@ function MetaPlayer:SaveWeapons()
 		table.insert(self.Weapons, "weapon_pistol")
 	end
 
-	sql.Query( string.format([["UPDATE flood SET weapons = "%s" WHERE steamid = "%s"]], TTJ(self.Weapons), self:SteamID()) )
+	sql.Query( string.format([[UPDATE flood SET weapons = "%s" WHERE steamid = "%s"]], TTJ(self.Weapons), self:SteamID()) )
 end

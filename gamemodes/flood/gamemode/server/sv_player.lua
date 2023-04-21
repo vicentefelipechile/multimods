@@ -18,6 +18,9 @@ local function L(val)
 end
 
 
+
+
+
 --[[----------------------------------------------------
                 \/ Weapons Database \/
 ----------------------------------------------------]]--
@@ -27,6 +30,14 @@ local BLACKLIST_WPN = {
     ["manhack_welder"] = true,
 }
 
+local DEFAULT_WPN = {
+	["weapon_pistol"]=true, ["weapon_357"]=true, ["weapon_bugbait"]=true,
+	["weapon_crossbow"]=true, ["weapon_crowbar"]=true, ["weapon_frag"]=true,
+	["weapon_physcannon"]=true, ["weapon_ar2"]=true, ["weapon_rpg"]=true,
+	["weapon_slam"]=true, ["weapon_shotgun"]=true, ["weapon_smg1"]=true,
+	["weapon_stunstick"]=true, ["non_exists_weapon"]=false
+}
+
 function GM:WeaponExists(str)
 	if !str then
 		error("bad argument #1 to 'GM:WeaponExists' (string expected, got )" .. type(str) .. ")")
@@ -34,13 +45,29 @@ function GM:WeaponExists(str)
 		error("bad argument #1 to 'GM:WeaponExists' (string cannot be empty)")
 	end
 
-	return weapons.Get(str) ~= nil
+	return DEFAULT_WPN[str] and true or weapons.Get(str) and true
 end
+
+
 
 function GM:WeaponExistsDatabase(str)
 	local response = sql.Query( string.format([[SELECT * FROM flood_weapons WHERE class = "%s"]], str) )
-	return response ~= false
+	return !(response == nil)
 end
+
+
+
+function GM:WeaponFromID(id)
+	local class = sql.QueryValue( string.format([[SELECT class FROM flood_weapons WHERE class_id = %i]], id) )
+	return class
+end
+
+
+function GM:WeaponToID(class)
+	local id = sql.QueryValue( string.format([[SELECT class_id FROM flood_weapons WHERE class = "%s"]], class) )
+	return id
+end
+
 
 
 function GM:CreateWeaponsDatabase()
@@ -49,7 +76,10 @@ function GM:CreateWeaponsDatabase()
 		sql.Query([[ CREATE TABLE IF NOT EXISTS flood_weapons ( class_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, class TEXT NOT NULL ) ]])
 	end
 
-	local a = 1
+	for wpn, _ in pairs(DEFAULT_WPN) do
+		sql.Query( string.format([[INSERT INTO flood_weapons ( class ) VALUES ( "%s" )]], wpn) )
+	end
+
     for k, v in ipairs( weapons.GetList() ) do
 
         local class = v["ClassName"]
@@ -73,8 +103,9 @@ function GM:CreateWeaponsDatabase()
 end
 
 
+
 function GM:ResetWeaponsDatabase()
-    if sql.TableExists("flood_weapons") and sql.TableExists("flood_weapons") then
+    if sql.TableExists("flood_weapons") and sql.TableExists("flood_weapons_players") then
         sql.Query("DROP TABLE IF EXISTS flood_weapons_players")
         sql.Query("DROP TABLE IF EXISTS flood_weapons")
     end
@@ -83,16 +114,70 @@ function GM:ResetWeaponsDatabase()
 end
 
 
-function GM:GetPlayerWeapons(ply)
+
+function GM:GetPlayerWeapon(ply)
+	local tbl = {}
     local wpns = sql.Query( string.format([[
-        SELECT flood.steamid, flood_weapons.class
-        FROM flood
-        LEFT JOIN flood_weapons_players ON flood_weapons_players.steam_id = flood.steamid
-        LEFT JOIN flood_weapons.class ON flood_weapons_players.class_id = flood_weapons.class_id
-        WHERE flood.steamid = "%s"
+        SELECT
+			class_id
+        FROM
+			flood_weapons_players
+        WHERE
+			steam_id = "%s"
     ]], ply:SteamID()))
 
-	return wpns
+	for _, v in ipairs(wpns) do
+		local wpn = self:WeaponFromID(v["class_id"])
+		if not self:WeaponExists(wpn) then continue end
+
+		table.insert(tbl, wpn)
+	end
+
+	return tbl
+end
+
+
+
+function GM:AddPlayerWeapon(ply, class)
+	if not self:WeaponExistsDatabase(class) then
+		error( string.format("the weapon (%s) doesn't exists in the database", class) )
+	end
+
+	local db_class = tonumber( sql.QueryValue( string.format([[SELECT class_id FROM flood_weapons WHERE class = "%s"]], class) ) )
+	local exists = sql.QueryValue( string.format([[ SELECT class_id FROM flood_weapons_players WHERE class_id = %i ]], db_class) )
+
+	if db_class	== exists then
+		MsgC("The weapon already exists in the player's inventory")
+		return
+	end
+
+	sql.Query( string.format([[
+	INSERT INTO
+		flood_weapons_players ( steam_id, class_id )
+	VALUES
+		( "%s", %i )
+	]], ply:SteamID(), db_class) )
+end
+
+
+
+function GM:RemovePlayerWeapon(ply, class)
+	if not self:WeaponExistsDatabase(class) then
+		error( string.format("the weapon (%s) doesn't exists in the database", class) )
+	end
+
+	local db_class = tonumber( sql.QueryValue( string.format([[SELECT class_id FROM flood_weapons WHERE class = "%s"]], class) ) )
+
+	sql.Query( string.format([[
+	DELETE FROM
+		flood_weapons_players
+	WHERE
+		steam_id = "%s"
+	AND
+		class_id = %i
+	LIMIT
+		1
+	]], ply:SteamID(), db_class) )
 end
 
 
@@ -100,6 +185,10 @@ end
 --[[----------------------------------------------------
                 /\  Weapons Database  /\
 ----------------------------------------------------]]--
+
+
+
+
 
 
 function GM:PlayerInitialSpawn(ply)
@@ -110,6 +199,7 @@ function GM:PlayerInitialSpawn(ply)
 	local query = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]], ply:SteamID()) )
 	if not query then
         sql.Query( string.format([[INSERT INTO flood ( steamid, name ) VALUES ( "%s", "%s" )]], ply:SteamID(), ply:Nick()) )
+		self:AddPlayerWeapon(ply, "weapon_pistol")
 	else
         sql.Query( string.format([[UPDATE flood SET name = "%s" WHERE steamid = "%s"]], ply:Nick(), ply:SteamID()) )
 	end
@@ -117,7 +207,7 @@ function GM:PlayerInitialSpawn(ply)
 	local data = ply:LoadData()
 
 	ply:SetNWInt("flood_cash", data["cash"])
-	ply.Weapons = data["weapons"]
+	ply.Weapons = self:GetPlayerWeapon(ply)
 	
 	ply:SetTeam(TEAM_PLAYER)
 
@@ -309,7 +399,6 @@ function GM:GivePlayerWeapons()
 			v:GiveAmmo(9999, "Pistol") 
 		end)
 
-
 		if v.Weapons and Weapons then
 			for __, pWeapon in pairs(v.Weapons) do
 				for ___, Weapon in pairs(Weapons) do
@@ -469,7 +558,10 @@ function GM:PurchaseWeapon(ply, cmd, args)
 			else
 				if ply:CanAfford(Weapon.Price) then
 					ply:SubCash(Weapon.Price)
+
 					table.insert(ply.Weapons, Weapon.Class)
+					self:AddPlayerWeapon( ply, Weapon.Class )
+
 					ply:Save()
 					ply:SaveWeapons()
 
