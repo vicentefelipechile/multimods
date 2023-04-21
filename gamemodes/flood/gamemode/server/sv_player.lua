@@ -24,7 +24,7 @@ function GM:WeaponExists(str)
 		error("bad argument #1 to 'GM:WeaponExists' (string cannot be empty)")
 	end
 
-	return weapons.Get(str) and true or false
+	return weapons.Get(str) ~= nil
 end
 
 
@@ -35,12 +35,10 @@ function GM:CreateWeaponsDatabase()
 	end
 
     for k, v in ipairs( weapons.GetList() ) do
-
         local class = v["ClassName"]
         if BLACKLIST_WPN[class] then continue end
 
         sql.Query( string.format("INSER INTO flood_weapons ( classname ) VALUES ( %s )", class) )
-
     end
 
 	if not sql.TableExists("flood_weapons_players") then
@@ -59,12 +57,13 @@ end
 
 function GM:ResetWeaponsDatabase()
     if sql.TableExists("flood_weapons") or sql.TableExists("flood_weapons") then
-        sql.Query("DROP TABLE IF EXISTS flood_weapons")
         sql.Query("DROP TABLE IF EXISTS flood_weapons_players")
+        sql.Query("DROP TABLE IF EXISTS flood_weapons")
     end
 
     self:CreateWeaponsDatabase()
 end
+
 
 function GM:GetPlayerWeapons(ply)
     local wpns = sql.Query( string.format([[
@@ -74,8 +73,11 @@ function GM:GetPlayerWeapons(ply)
         LEFT JOIN class ON flood_weapons_players.class_id = flood_weapons.class_id
         WHERE flood.steamid = "%s"
     ]], ply:SteamID()))
+
+	return wpns
 end
 
+GAMEMODE:CreateWeaponsDatabase()
 
 --[[----------------------------------------------------
                 /\  Weapons Database  /\
@@ -311,7 +313,7 @@ end
 function PlayerMeta:LoadData()
 	local data = {}
 
-	local query = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")
+	local query = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]], self:SteamID()) )
 
 	if query then
 		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")[1]

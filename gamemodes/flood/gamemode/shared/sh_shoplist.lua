@@ -69,6 +69,7 @@ addProp("models/props_interiors/VendingMachineSoda01a.mdl",     1,1200, 800, fal
 addProp("models/props_interiors/VendingMachineSoda01a_door.mdl",            1, 600, 400, false, "Vending Machine Door")
 addProp("models/props_building_details/Storefront_Template001a_Bars.mdl",   2, 220, 110, false, "Window Bars")
 addProp("models/props_borealis/bluebarrel001.mdl",              1,  50,  25, false, "Gravestone")
+--[[
 addProp("models/props_c17/FurnitureCouch001a.mdl",              3, 100, 100, false, "Sillon Verde")
 addProp("models/props_c17/FurnitureFridge001a.mdl",             3, 100, 100, false, "Refrigerador")
 addProp("models/props_combine/breenchair.mdl",                  3, 100, 100, false, "Sillon")
@@ -80,6 +81,7 @@ addProp("models/props_combine/breenglobe.mdl",                  3, 100, 100, fal
 addProp("models/props_trainstation/payphone001a.mdl",           3, 100, 100, false, "Telefono ase Ring")
 addProp("models/props_phx/games/chess/black_knight.mdl",        3, 100, 100, false, "Caballo Negro")
 addProp("models/props_phx/games/chess/white_knight.mdl",        3, 100, 100, false, "Caballo Blanco")
+--]]
 
 
 -----------------------------
@@ -114,16 +116,3 @@ addWeapon("models/weapons/w_shotgun.mdl",           1, "weapon_shotgun",    "Sho
 addWeapon("models/weapons/w_slam.mdl",              1, "weapon_slam",       "SLAM",         12500,    2, "slam",        25, false)
 addWeapon("models/weapons/w_smg1.mdl",              1, "weapon_smg1",       "SMG",          20000,  500, "SMG1",         2, false)
 addWeapon("models/weapons/w_irifle.mdl",            1, "weapon_ar2",        "AR2",          20000, 1000, "AR2",          3, false)
-
--- Custom Weapons
-addWeapon("models/weapons/tfa_cso2/w_pkm.mdl",      2, "tfa_cso2_pkm",      "Pkm",          25000, 1200, "AR2",          4, false)
-addWeapon("models/weapons/tfa_cso2/w_af2011a0.mdl", 2, "tfa_cso2_af2011a0", "AF2011a0",     15000,  700, "pistol",      12, false)
-addWeapon("models/weapons/tfa_cso2/w_m870.mdl",     2, "tfa_cso2_m870",     "m870",         10000, 1000, "buckshot",    15, false)
-addWeapon("models/weapons/tfa_cso2/w_m99.mdl",      2, "tfa_cso2_m99",      "m99",          20000,   15, "SniperPenetratedRound", 30, false)
-addWeapon("models/weapons/tfa_cso2/w_sg552.mdl",    2, "tfa_cso2_sg552",    "sg552",        25000,   45, "SniperPenetratedRound",  5, false)
-addWeapon("models/weapons/tfa_cso2/w_elites.mdl",   2, "tfa_cso2_elites",   "Dual Elites",   5000,  100, "pistol",       2, false)
-addWeapon("models/weapons/tfa_cso2/w_galil.mdl",    2, "tfa_cso2_galil",    "Galil",        10000,  200, "AR2",          2, false)
-addWeapon("models/weapons/tfa_cso2/w_knife.mdl",    2, "tfa_cso2_knife",    "Chuchillo Tactico",    15000, 0, "Pistol", 35, false)
-addWeapon("models/weapons/tfa_cso2/w_m107a1.mdl",   2, "tfa_cso2_m107a1",   "M107a1",        25000,   50, "SniperPenetratedRound", 35, false)
-addWeapon("models/weapons/tfa_cso2/w_mac10.mdl",    2, "tfa_cso2_mac10",    "MAC-10",        7000,  300, "smg1",         3, false)
-addWeapon("models/weapons/tfa_cso2/w_dp12.mdl",     2, "tfa_cso2_dp12",     "DP-12",         9000,  100, "buckshot",    15, false)

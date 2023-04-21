@@ -14,7 +14,7 @@ local Donators = {
 }
 
 function MetaPlayer:IsDonator()
-	return Donators[self:GetUserGroup()] or false
+	return Donators[self:GetUserGroup()] == true
 end
 
 -- Player Scores
@@ -78,7 +78,7 @@ function MetaPlayer:CanAfford(price)
 end
 
 function MetaPlayer:Save()
-	q("UPDATE flood SET cash = " .. self:GetCash() .. " WHERE steamid = " .. self:SteamID() .. ";")
+	sql.Query( string.format([["UPDATE flood SET cash = %i WHERE steamid = "%s"]], self:GetCash(), self:SteamID()) )
 end
 
 function MetaPlayer:SaveWeapons()
@@ -88,5 +88,5 @@ function MetaPlayer:SaveWeapons()
 		table.insert(self.Weapons, "weapon_pistol")
 	end
 
-	q("UPDATE flood SET weapons = " .. qS(TTJ(self.Weapons)) .. " WHERE steamid = " .. self:SteamID() .. ";")
+	sql.Query( string.format([["UPDATE flood SET weapons = "%s" WHERE steamid = "%s"]], TTJ(self.Weapons), self:SteamID()) )
 end
