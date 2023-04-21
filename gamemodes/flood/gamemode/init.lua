@@ -58,6 +58,7 @@ for _, file in pairs (file.Find("flood/gamemode/client/vgui/*.lua", "LUA")) do
 	AddCSLuaFile("flood/gamemode/client/vgui/"..file)
 end
 
+
 -- Timer ConVars! Yay!
 CreateConVar("flood_build_time", 240, FCVAR_NOTIFY, "Time allowed for building (def: 240)")
 CreateConVar("flood_flood_time", 20, FCVAR_NOTIFY, "Time between build phase and fight phase (def: 20)")
@@ -78,6 +79,7 @@ CreateConVar("flood_max_donator_props", 30, FCVAR_NOTIFY, "How many props a dona
 CreateConVar("flood_max_admin_props", 40, FCVAR_NOTIFY, "How many props an admin can spawn (def: 40)")
 
 function GM:Initialize()
+	self:CreateWeaponsDatabase()
 	self.ShouldHaltGamemode = false
 	self:InitializeRoundController()
 

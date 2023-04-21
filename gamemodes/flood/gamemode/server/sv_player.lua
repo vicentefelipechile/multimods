@@ -56,7 +56,7 @@ end
 
 
 function GM:ResetWeaponsDatabase()
-    if sql.TableExists("flood_weapons") or sql.TableExists("flood_weapons") then
+    if sql.TableExists("flood_weapons") and sql.TableExists("flood_weapons") then
         sql.Query("DROP TABLE IF EXISTS flood_weapons_players")
         sql.Query("DROP TABLE IF EXISTS flood_weapons")
     end
@@ -77,7 +77,7 @@ function GM:GetPlayerWeapons(ply)
 	return wpns
 end
 
-GAMEMODE:CreateWeaponsDatabase()
+
 
 --[[----------------------------------------------------
                 /\  Weapons Database  /\
@@ -89,7 +89,7 @@ function GM:PlayerInitialSpawn(ply)
 	ply.Allow = false
 	ply.Weapons = {}
 
-	local query = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]]), ply:SteamID() )
+	local query = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]], ply:SteamID()) )
 	if not query then
         sql.Query( string.format([[INSERT INTO flood ( steamid, name ) VALUES ( "%s", "%s" )]], ply:SteamID(), ply:Nick()) )
 	else
@@ -316,12 +316,12 @@ function PlayerMeta:LoadData()
 	local query = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]], self:SteamID()) )
 
 	if query then
-		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")[1]
+		data = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]], self:SteamID()) )[1]
 		self.Allow = true
 		return data
 	else
 		self:Save()
-		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")[1]
+		data = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]], self:SteamID()) )[1]
 
 		data["cash"] = 5000
 
