@@ -12,14 +12,14 @@ Weapons = {}
 -----------------------------
 PropCategories[1] = "Bouyant "
 PropCategories[2] = "Armor "
-PropCategories[3] = "Decoracion "
+--PropCategories[3] = "Decoracion "
 
 
 -----------------------------
 ----- Weapon Categories -----
 -----------------------------
 WeaponCategories[1] = "Basic Weapons"
-WeaponCategories[2] = "TFA Weapons"
+--WeaponCategories[2] = "TFA Weapons"
 
 -----------------------------
 ----------- Props -----------
