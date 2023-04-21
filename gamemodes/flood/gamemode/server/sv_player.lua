@@ -1,3 +1,13 @@
+sql.m_strError = nil -- This is required to invoke __newindex
+
+setmetatable(sql, { __newindex = function( table, k, v )
+	if k == "m_strError" and v then
+		print("[SQL Error] " .. v )
+	end
+end } )
+
+
+
 local PlayerMeta = FindMetaTable("Player")
 
 local q = sql.Query
@@ -27,18 +37,26 @@ function GM:WeaponExists(str)
 	return weapons.Get(str) ~= nil
 end
 
+function GM:WeaponExistsDatabase(str)
+	local response = sql.Query( string.format([[SELECT * FROM flood_weapons WHERE class = "%s"]], str) )
+	return response ~= false
+end
+
 
 function GM:CreateWeaponsDatabase()
 
 	if not sql.TableExists("flood_weapons") then
-		sql.Query([[ CREATE TABLE IF NOT EXISTS flood_weapons ( class_id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT PRIMARY KEY ) ]])
+		sql.Query([[ CREATE TABLE IF NOT EXISTS flood_weapons ( class_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, class TEXT NOT NULL ) ]])
 	end
 
+	local a = 1
     for k, v in ipairs( weapons.GetList() ) do
+
         local class = v["ClassName"]
         if BLACKLIST_WPN[class] then continue end
+		if self:WeaponExistsDatabase(class) then continue end
 
-        sql.Query( string.format("INSER INTO flood_weapons ( classname ) VALUES ( %s )", class) )
+        sql.Query( string.format([[INSERT INTO flood_weapons ( class ) VALUES ( "%s" )]], class) )
     end
 
 	if not sql.TableExists("flood_weapons_players") then
@@ -67,10 +85,10 @@ end
 
 function GM:GetPlayerWeapons(ply)
     local wpns = sql.Query( string.format([[
-        SELECT flood.steamid, flood_weapons.class AS class
+        SELECT flood.steamid, flood_weapons.class
         FROM flood
         LEFT JOIN flood_weapons_players ON flood_weapons_players.steam_id = flood.steamid
-        LEFT JOIN class ON flood_weapons_players.class_id = flood_weapons.class_id
+        LEFT JOIN flood_weapons.class ON flood_weapons_players.class_id = flood_weapons.class_id
         WHERE flood.steamid = "%s"
     ]], ply:SteamID()))
 
