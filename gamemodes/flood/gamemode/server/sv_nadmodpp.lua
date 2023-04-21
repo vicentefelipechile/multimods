@@ -182,12 +182,6 @@ local metaent = FindMetaTable("Entity")
 
 
 
-function NADMOD.GetOwner()
-	NADMOD.Props[ent:EntIndex()]
-end
-
-
-
 function NADMOD.IsPPAdmin(ply)
 	if NADMOD.HasPermission then
 		return NADMOD.HasPermission(ply, "PP_All")
