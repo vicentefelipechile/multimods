@@ -125,7 +125,7 @@ if not NADMOD.Props then
 		[entid] = {
 			["Ent"] = entity,
 			["Owner"] = ply,
-			["SteamID"] = ply:SteamID64(),
+			["SteamID"] = ply:SteamID(),
 			["Name"] = ply:Nick() or "W" or "O"
 		}
 	}
@@ -181,6 +181,13 @@ local metaply = FindMetaTable("Player")
 local metaent = FindMetaTable("Entity")
 
 
+
+function NADMOD.GetOwner()
+	NADMOD.Props[ent:EntIndex()]
+end
+
+
+
 function NADMOD.IsPPAdmin(ply)
 	if NADMOD.HasPermission then
 		return NADMOD.HasPermission(ply, "PP_All")
@@ -189,8 +196,10 @@ function NADMOD.IsPPAdmin(ply)
 	end
 end
 
+
+
 function NADMOD.PPInitPlayer(ply)
-	local steamid = ply:SteamID64()
+	local steamid = ply:SteamID()
 	for _,v in pairs(NADMOD.Props) do
 		if v.SteamID == steamid then 
 			v.Owner = ply
@@ -199,42 +208,58 @@ function NADMOD.PPInitPlayer(ply)
 		end
 	end
 	net.Start("nadmod_propowners")
-		net.WriteUInt(table.Count(NADMOD.Props),16)
+
+		--[[
+		net.WriteUInt(table.Count(NADMOD.Props), 16)
 		for k,v in pairs(NADMOD.Props) do
 			net.WriteUInt(k,16)
 			net.WriteString(v.Name)
 		end
+		--]]
+
+		net.WriteTable( NADMOD.Props )
 	net.Send(ply)
 end
 hook.Add("PlayerInitialSpawn", "NADMOD.PPInitPlayer", NADMOD.PPInitPlayer)
 
+
+
 function NADMOD.RefreshOwners()
 	if next(NADMOD.PropOwnersSmall) then
 		net.Start("nadmod_propowners")
+
+			--[[
 			net.WriteUInt(table.Count(NADMOD.PropOwnersSmall), 16)
 			for k, v in pairs(NADMOD.PropOwnersSmall) do
 				net.WriteUInt(k,16)
 				net.WriteString(v)
 			end
+			--]]
+
+			net.WriteTable( NADMOD.PropOwnersSmall )
 		net.Broadcast()
 		table.Empty(NADMOD.PropOwnersSmall)
 	end
 end
 timer.Create("NADMOD.RefreshOwners", 1, 0, NADMOD.RefreshOwners)
 
+
+
 function NADMOD.IsFriendProp(ply, ent)
 	if IsValid(ent) and IsValid(ply) and ply:IsPlayer() and NADMOD.Props[ent:EntIndex()] then
 
-		local ownerSteamID = NADMOD.Props[ent:EntIndex()]["SteamID64"]
-		if NADMOD.Users[ownerSteamID] then
+		local ownerSteamID = NADMOD.Props[ent:EntIndex()]["SteamID"]
+		if NADMOD.Users[ ownerSteamID ] then
 			local friends = NADMOD.Users[ownerSteamID]["Friends"]
-			return friends and friends[ply:SteamID64()]
+			return friends and friends[ply:SteamID()]
 		end
 
 	end
 
 	return false
 end
+
+
 
 function NADMOD.PlayerCanTouch(ply, ent)
 
@@ -248,7 +273,9 @@ function NADMOD.PlayerCanTouch(ply, ent)
 	
 	if not NADMOD.Props[ent:EntIndex()] then
 		local class = ent:GetClass()
-		if(string.find(class, "stone_") == 1 or string.find(class, "rock_") == 1 or string.find(class, "stargate_") == 0 or string.find(class, "dhd_") == 0 or class == "flag" or class == "item") then
+
+		--if(string.find(class, "stone_") == 1 or string.find(class, "rock_") == 1 or string.find(class, "stargate_") == 0 or string.find(class, "dhd_") == 0 or class == "flag" or class == "item") then
+		if string.match(class, "^(stone_|rock_|flag|item)") or (string.match(class, "^stargate_") and not string.match(class, "^stargate_dhd_")) then
 			NADMOD.SetOwnerWorld(ent)
 		else
 			NADMOD.PlayerMakePropOwner(ply, ent)
@@ -274,12 +301,13 @@ function NADMOD.PlayerCanTouch(ply, ent)
 	---------------------------------
 	--- Player touch and Friends ----
 	---------------------------------
-	if NADMOD.Props[ent:EntIndex()]["SteamID64"] == ply:SteamID64() or NADMOD.IsFriendProp(ply, ent) then
+	if NADMOD.Props[ent:EntIndex()]["SteamID"] == ply:SteamID() or NADMOD.IsFriendProp(ply, ent) then
 		return true
 	end
 	
 	return false
 end
+
 
 
 function NADMOD.PlayerCanTouchSafe(ply, ent)
@@ -314,14 +342,15 @@ function NADMOD.OnPhysgunReload(weapon, ply)
 end
 hook.Add("OnPhysgunReload", "NADMOD.OnPhysgunReload", NADMOD.OnPhysgunReload)
 
--- Basically just PlayerCanTouchSafe, but world props are fine to gravgun
+
+
 function NADMOD.GravGunPickup(ply, ent)
 
 	if !IsValid(ent) or ent:IsPlayer() then
 		return
 	end
 
-	if NADMOD.Props[ent:EntIndex()] and NADMOD.Props[ent:EntIndex()].Name == "W" then
+	if NADMOD.Props[ent:EntIndex()] and NADMOD.Props[ent:EntIndex()]["Name"] == "W" then
 		return
 	end
 
@@ -332,6 +361,8 @@ function NADMOD.GravGunPickup(ply, ent)
 end
 hook.Add("GravGunPunt", "NADMOD.GravGunPunt", NADMOD.GravGunPickup)
 hook.Add("GravGunPickupAllowed", "NADMOD.GravGunPickupAllowed", NADMOD.GravGunPickup)
+
+
 
 NADMOD.PPWeirdTraces = {"wire_winch","wire_hydraulic","slider","hydraulic","winch","muscle"}
 function NADMOD.CanTool(ply, tr, mode)
@@ -380,6 +411,8 @@ function NADMOD.CanTool(ply, tr, mode)
 end
 hook.Add("CanTool", "NADMOD.CanTool", NADMOD.CanTool)
 
+
+
 function NADMOD.PlayerUse(ply, ent)
 	if !NADMOD.PPConfig["use"] or NADMOD.PlayerCanTouch(ply, ent) or ( ent:IsValid() and NADMOD.Props[ent:EntIndex()]["Name"] == "W" ) then
 		return
@@ -387,6 +420,8 @@ function NADMOD.PlayerUse(ply, ent)
 	return false
 end
 hook.Add("PlayerUse", "NADMOD.PlayerUse", NADMOD.PlayerUse)
+
+
 
 --==========================================================--
 --				Ownership Setting Functions					--
@@ -401,7 +436,7 @@ function NADMOD.PlayerMakePropOwner(ply, ent)
 	NADMOD.Props[ent:EntIndex()] = {
 		["Ent"]		= ent,
 		["Owner"]	= ply,
-		["SteamID64"] = ply:SteamID64(),
+		["SteamID"] = ply:SteamID(),
 		["Name"]	= ply:Nick()
 	}
 
@@ -431,13 +466,16 @@ hook.Add("PlayerSpawnedSENT", "NADMOD.PlayerSpawnedSENT", NADMOD.PlayerMakePropO
 hook.Add("PlayerSpawnedVehicle", "NADMOD.PlayerSpawnedVehicle", NADMOD.PlayerMakePropOwner)
 hook.Add("PlayerSpawnedSWEP", "NADMOD.PlayerSpawnedSWEP", NADMOD.PlayerMakePropOwner)
 
+
+
+
 function metaent:CPPISetOwnerless(bool)
 	if !IsValid(self) or self:IsPlayer() then return end
 	if(bool) then
 		NADMOD.Props[self:EntIndex()] = {
 			["Ent"] = self,
 			["Owner"] = game.GetWorld(),
-			["SteamID64"] = "O",
+			["SteamID"] = "O",
 			["Name"] = "O"
 		}
 		NADMOD.PropOwnersSmall[self:EntIndex()] = "O"
@@ -448,18 +486,21 @@ function metaent:CPPISetOwnerless(bool)
 	end
 end
 
+
+
 function NADMOD.SetOwnerWorld(ent)
 	NADMOD.Props[ent:EntIndex()] = {
 		["Ent"] = ent,
 		["Owner"] = game.GetWorld(),
-		["SteamID64"] = "W",
+		["SteamID"] = "W",
 		["Name"] = "W"
 	}
 	ent.SPPOwner = game.GetWorld()
 	ent.Owner = game.GetWorld()
 end
 
--- Loop through all entities that exist when the map is loaded, these are all "world owned" entities
+
+
 function NADMOD.WorldOwner()
 	local WorldEnts = 0
 	for k,v in pairs(ents.FindByClass("*")) do
@@ -477,12 +518,13 @@ end
 if CurTime() < 5 then timer.Create("NADMOD.PPFindWorldProps",7,1,NADMOD.WorldOwner) end
 
 
+
 function NADMOD.EntityRemoved(ent)
 	NADMOD.Props[ent:EntIndex()] = nil
 	NADMOD.PropOwnersSmall[ent:EntIndex()] = "-"
 	if ent:IsValid() and ent:IsPlayer() and not ent:IsBot() then
 		-- This is more reliable than PlayerDisconnect
-		local steamid, nick = ent:SteamID64(), ent:Nick()
+		local steamid, nick = ent:SteamID(), ent:Nick()
 		if NADMOD.PPConfig.autocdp > 0 and (NADMOD.PPConfig.autocdpadmins or not NADMOD.IsPPAdmin(ent)) then 
 			timer.Create("NADMOD.AutoCDP_"..steamid, NADMOD.PPConfig.autocdp, 1, function() 
 				local count = NADMOD.CleanupPlayerProps(steamid)
@@ -493,10 +535,15 @@ function NADMOD.EntityRemoved(ent)
 	end
 end
 hook.Add("EntityRemoved", "NADMOD.EntityRemoved", NADMOD.EntityRemoved)
--- AutoCDP timer removal
+
+
+
 function NADMOD.ClearAutoCDP( ply, steamid )
 	timer.Remove("NADMOD.AutoCDP_"..steamid)
 end
+
+
+
 hook.Add( "PlayerAuthed", "NADMOD.ClearAutoCDP", NADMOD.ClearAutoCDP ) -- This occurs at PlayerInitialSpawn, late
 hook.Add( "PlayerConnect", "NADMOD.ClearAutoCDP", function(nick, address) -- This occurs early but is unreliable
 	NADMOD.ClearAutoCDP(nil, NADMOD.AutoCDPTimers[nick] or "")
@@ -523,17 +570,21 @@ function NADMOD.CleanupPlayerProps(steamid)
 	return count
 end
 
+
+
 function NADMOD.CleanPlayer(tar)
 	if IsValid(tar) and tar:IsPlayer() then 
-		local count = NADMOD.CleanupPlayerProps(tar:SteamID64())
+		local count = NADMOD.CleanupPlayerProps(tar:SteamID())
 		NADMOD.Notify(tar:Nick().."'s props have been cleaned up ("..count..")")
 	end
 end
 
+
+
 function NADMOD.CleanupProps(ply, cmd, args)
 	local EntIndex = args[1]
 	if not EntIndex or EntIndex == "" then
-		local count = NADMOD.CleanupPlayerProps(ply:SteamID64())
+		local count = NADMOD.CleanupPlayerProps(ply:SteamID())
 		NADMOD.Notify(ply,"Your props have been cleaned up ("..count..")")
 	elseif !ply:IsValid() or NADMOD.IsPPAdmin(ply) then
 		NADMOD.CleanPlayer(Entity(EntIndex))
@@ -541,11 +592,15 @@ function NADMOD.CleanupProps(ply, cmd, args)
 end
 concommand.Add("nadmod_cleanupprops", NADMOD.CleanupProps)
 
+
+
 function NADMOD.CleanPlayerConCommand(ply, cmd, args, fullstr)
 	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then return end
 	NADMOD.CleanPlayer(NADMOD.FindPlayer(fullstr))
 end
 concommand.Add("nadmod_cleanplayer", NADMOD.CleanPlayerConCommand)
+
+
 
 -- Cleans all props whose owner's name contained arg1. nadmod_cleanplayer is better, but only works on online players
 function NADMOD.CleanName(ply, cmd, args, fullstr)
@@ -563,6 +618,8 @@ function NADMOD.CleanName(ply, cmd, args, fullstr)
 end
 concommand.Add("nadmod_cleanname",NADMOD.CleanName)
 
+
+
 function NADMOD.CDP(ply, cmd, args)
 	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then return end
 	local count = 0
@@ -577,6 +634,8 @@ function NADMOD.CDP(ply, cmd, args)
 	NADMOD.Notify("Disconnected players props ("..count..") have been cleaned up")
 end
 concommand.Add("nadmod_cdp",NADMOD.CDP)
+
+
 
 function NADMOD.CleanClass(ply,cmd,args)
 
@@ -601,6 +660,8 @@ function NADMOD.CleanClass(ply,cmd,args)
 end
 concommand.Add("nadmod_cleanclass", NADMOD.CleanClass)
 
+
+
 function NADMOD.CleanCLRagdolls(ply,cmd,args)
 
 	if ply:IsValid() and not NADMOD.IsPPAdmin(ply) then
@@ -613,6 +674,8 @@ function NADMOD.CleanCLRagdolls(ply,cmd,args)
 	net.Broadcast()
 end
 concommand.Add("nadmod_cleanclragdolls", NADMOD.CleanCLRagdolls)
+
+
 
 -- Sends a Hint to the player specified
 -- If only one argument, broadcast to all players
@@ -627,6 +690,8 @@ function NADMOD.Notify(ply, text)
 		net.Send(ply)
 	end
 end
+
+
 
 function NADMOD.DebugTotals(ply,cmd,args)
 	-- Prints out a list of how many props are owned by each player.
@@ -646,6 +711,7 @@ end
 concommand.Add("nadmod_totals", NADMOD.DebugTotals)
 
 
+
 --=========================================================--
 --   Clientside Callbacks for the Friends/Options panels   --
 --=========================================================--
@@ -655,33 +721,39 @@ concommand.Add("npp_refreshconfig",function(ply,cmd,args)
 		net.WriteTable(NADMOD.PPConfig)
 	net.Send(ply)
 end)
+
+
 net.Receive("nadmod_ppconfig",function(len,ply)
 	if not ply:IsValid() or not NADMOD.IsPPAdmin(ply) then return end
 	NADMOD.PPConfig = net.ReadTable()
 	NADMOD.Save()
 	NADMOD.Notify(ply, "Settings received!")
 end)
+
+
 concommand.Add("npp_refreshfriends",function(ply,cmd,args)
 	if not ply:IsValid() then return end
 	local friends = {}
-	if NADMOD.Users[ply:SteamID64()] then friends = table.Copy(NADMOD.Users[ply:SteamID64()].Friends) or {} end
+	if NADMOD.Users[ply:SteamID()] then friends = table.Copy(NADMOD.Users[ply:SteamID()].Friends) or {} end
 	if NADMOD.PPConfig["adminall"] then
 		for _,v in pairs(player.GetAll()) do
-			if NADMOD.IsPPAdmin(v) then friends[v:SteamID64()] = true end
+			if NADMOD.IsPPAdmin(v) then friends[v:SteamID()] = true end
 		end
 	end
 	net.Start("nadmod_ppfriends")
 		net.WriteTable(friends)
 	net.Send(ply)
 end)
+
+
 net.Receive("nadmod_ppfriends",function(len,ply)
 	if not ply:IsValid() then return end
-	if !NADMOD.Users[ply:SteamID64()] then NADMOD.Users[ply:SteamID64()] = {Rank = 1} end
-	NADMOD.Users[ply:SteamID64()].Friends = NADMOD.Users[ply:SteamID64()].Friends or {}
-	local outtab = NADMOD.Users[ply:SteamID64()].Friends
+	if !NADMOD.Users[ply:SteamID()] then NADMOD.Users[ply:SteamID()] = {Rank = 1} end
+	NADMOD.Users[ply:SteamID()].Friends = NADMOD.Users[ply:SteamID()].Friends or {}
+	local outtab = NADMOD.Users[ply:SteamID()].Friends
 	
 	local players = {}
-	for _,v in pairs(player.GetAll()) do players[v:SteamID64()] = v end
+	for _,v in pairs(player.GetAll()) do players[v:SteamID()] = v end
 	
 	for steamid,bool in pairs(net.ReadTable()) do
 		if players[steamid] and (not bool or not (NADMOD.IsPPAdmin(players[steamid]) and NADMOD.PPConfig["adminall"])) then -- Users may not add admins to their friends list
@@ -691,6 +763,9 @@ net.Receive("nadmod_ppfriends",function(len,ply)
 	NADMOD.Save()
 	NADMOD.Notify(ply, "Friends received!")
 end)
+
+
+
 ------------------------------
 ------- Meta Functions -------
 ------------------------------
@@ -699,9 +774,13 @@ function CPPI:GetName()
 	return "Nadmod Prop Protection"
 end
 
+
+
 function CPPI:GetVersion()
 	return NADMOD.PPVersion
 end
+
+
 
 function metaply:CPPIGetFriends()
 	if not self:IsValid() then
@@ -709,16 +788,18 @@ function metaply:CPPIGetFriends()
 	end
 
 	local ret = {}
-	local friends = (NADMOD.Users[self:SteamID64()] or {Friends={}}).Friends or {}
+	local friends = (NADMOD.Users[self:SteamID()] or {Friends={}}).Friends or {}
 
 	for _, v in pairs(player.GetAll()) do
-		if NADMOD.IsPPAdmin(v) or friends[v:SteamID64()] then
+		if NADMOD.IsPPAdmin(v) or friends[v:SteamID()] then
 			table.insert(ret,v)
 		end
 	end
 
 	return ret
 end
+
+
 
 function metaent:CPPIGetOwner()
 	return self.Owner
