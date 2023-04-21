@@ -17,8 +17,22 @@ local BLACKLIST_WPN = {
     ["manhack_welder"] = true,
 }
 
+function GM:WeaponExists(str)
+	if !str then
+		error("bad argument #1 to 'GM:WeaponExists' (string expected, got )" .. type(str) .. ")")
+	elseif #str == 0 then
+		error("bad argument #1 to 'GM:WeaponExists' (string cannot be empty)")
+	end
+
+	return weapons.Get(str) and true or false
+end
+
+
 function GM:CreateWeaponsDatabase()
-    sql.Query([[ CREATE TABLE IF NOT EXISTS flood_weapons ( class_id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT PRIMARY KEY ) ]])
+
+	if not sql.TableExists("flood_weapons") then
+		sql.Query([[ CREATE TABLE IF NOT EXISTS flood_weapons ( class_id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT PRIMARY KEY ) ]])
+	end
 
     for k, v in ipairs( weapons.GetList() ) do
 
@@ -29,15 +43,17 @@ function GM:CreateWeaponsDatabase()
 
     end
 
-    sql.Query([[
-        CREATE TABLE IF NOT EXISTS flood_weapons_players (
-            steam_id TEXT NOT NULL,
-            class_id TEXT NOT NULL,
-            FOREIGN KEY (steam_id) REFERENCES flood(steamid),
-            FOREIGN KEY (class_id) REFERENCES flood_weapons(class_id),
-            PRIMARY KEY (steam_id, class_id)
-        )
-    ]])
+	if not sql.TableExists("flood_weapons_players") then
+		sql.Query([[
+			CREATE TABLE IF NOT EXISTS flood_weapons_players (
+				steam_id TEXT NOT NULL,
+				class_id TEXT NOT NULL,
+				FOREIGN KEY (steam_id) REFERENCES flood(steamid),
+				FOREIGN KEY (class_id) REFERENCES flood_weapons(class_id),
+				PRIMARY KEY (steam_id, class_id)
+			)
+		]])
+	end
 end
 
 
