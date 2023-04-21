@@ -78,7 +78,7 @@ function MetaPlayer:CanAfford(price)
 end
 
 function MetaPlayer:Save()
-	q("UPDATE flood SET cash = " .. self:GetCash() .. " WHERE steamid = " .. self:SteamID64() .. ";")
+	q("UPDATE flood SET cash = " .. self:GetCash() .. " WHERE steamid = " .. self:SteamID() .. ";")
 end
 
 function MetaPlayer:SaveWeapons()
@@ -88,5 +88,5 @@ function MetaPlayer:SaveWeapons()
 		table.insert(self.Weapons, "weapon_pistol")
 	end
 
-	q("UPDATE flood SET weapons = " .. qS(TTJ(self.Weapons)) .. " WHERE steamid = " .. self:SteamID64() .. ";")
+	q("UPDATE flood SET weapons = " .. qS(TTJ(self.Weapons)) .. " WHERE steamid = " .. self:SteamID() .. ";")
 end

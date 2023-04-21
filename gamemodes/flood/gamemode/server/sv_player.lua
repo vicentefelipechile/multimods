@@ -7,23 +7,81 @@ local function L(val)
 	return FloodLang[GetConVar("flood_lang"):GetString()][val] or FloodLang["es"][val]
 end
 
-function GM:PlayerInitialSpawn(ply)
-	ply.Allow = false
 
+--[[----------------------------------------------------
+                \/ Weapons Database \/
+----------------------------------------------------]]--
+
+local BLACKLIST_WPN = {
+    ["flood_propseller"] = true,
+    ["manhack_welder"] = true,
+}
+
+function GM:CreateWeaponsDatabase()
+    sql.Query([[ CREATE TABLE IF NOT EXISTS flood_weapons ( class_id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT PRIMARY KEY ) ]])
+
+    for k, v in ipairs( weapons.GetList() ) do
+
+        local class = v["ClassName"]
+        if BLACKLIST_WPN[class] then continue end
+
+        sql.Query( string.format("INSER INTO flood_weapons ( classname ) VALUES ( %s )", class) )
+
+    end
+
+    sql.Query([[
+        CREATE TABLE IF NOT EXISTS flood_weapons_players (
+            steam_id TEXT NOT NULL,
+            class_id TEXT NOT NULL,
+            FOREIGN KEY (steam_id) REFERENCES flood(steamid),
+            FOREIGN KEY (class_id) REFERENCES flood_weapons(class_id),
+            PRIMARY KEY (steam_id, class_id)
+        )
+    ]])
+end
+
+
+function GM:ResetWeaponsDatabase()
+    if sql.TableExists("flood_weapons") or sql.TableExists("flood_weapons") then
+        sql.Query("DROP TABLE IF EXISTS flood_weapons")
+        sql.Query("DROP TABLE IF EXISTS flood_weapons_players")
+    end
+
+    self:CreateWeaponsDatabase()
+end
+
+function GM:GetPlayerWeapons(ply)
+    local wpns = sql.Query( string.format([[
+        SELECT flood.steamid, flood_weapons.class AS class
+        FROM flood
+        LEFT JOIN flood_weapons_players ON flood_weapons_players.steam_id = flood.steamid
+        LEFT JOIN class ON flood_weapons_players.class_id = flood_weapons.class_id
+        WHERE flood.steamid = "%s"
+    ]], ply:SteamID()))
+end
+
+
+--[[----------------------------------------------------
+                /\  Weapons Database  /\
+----------------------------------------------------]]--
+
+
+function GM:PlayerInitialSpawn(ply)
+
+	ply.Allow = false
 	ply.Weapons = {}
 
-	local query = q("SELECT * FROM flood WHERE steamid = " .. ply:SteamID64())
-
+	local query = sql.Query( string.format([[SELECT * FROM flood WHERE steamid = "%s"]]), ply:SteamID() )
 	if not query then
-		q("INSERT INTO flood ( steamid, name, weapons ) VALUES ( " .. ply:SteamID64() .. ", " .. qS(ply:Nick()) .. ", " .. qS(util.TableToJSON({"weapon_pistol"})) .. " );")
+        sql.Query( string.format([[INSERT INTO flood ( steamid, name ) VALUES ( "%s", "%s" )]], ply:SteamID(), ply:Nick()) )
 	else
-		q("UPDATE flood SET name = " .. qS(ply:Nick()) .. " WHERE steamid = " .. ply:SteamID64() .. " ;")
+        sql.Query( string.format([[UPDATE flood SET name = "%s" WHERE steamid = "%s"]], ply:Nick(), ply:SteamID()) )
 	end
  
 	local data = ply:LoadData()
 
-	ply:SetNWInt("flood_cash", tonumber(data["cash"]))
-	ply.Weapons = util.JSONToTable(data["weapons"])
+	ply:SetNWInt("flood_cash", data["cash"])
+	ply.Weapons = data["weapons"]
 	
 	ply:SetTeam(TEAM_PLAYER)
 
@@ -237,15 +295,15 @@ end
 function PlayerMeta:LoadData()
 	local data = {}
 
-	local query = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")
+	local query = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")
 
 	if query then
-		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
+		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")[1]
 		self.Allow = true
 		return data
 	else
 		self:Save()
-		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID64() .. ";")[1]
+		data = q("SELECT * FROM flood WHERE steamid = " .. self:SteamID() .. ";")[1]
 
 		data["cash"] = 5000
 

@@ -11,7 +11,7 @@ El flood de este repositorio cuenta con las siguientes caracteristicas:
 
 - Se reemplazo el guardado de datos de los jugadores de texto a base de datos (flood)
 - Se reemplazo el guardado de configuración de NADMOD de texto a base de datos (nadmod_users, nadmod_groups, nadmod_bans, nadmod_ppconfig)
-- Se reemplazo todo el sistema de SteamID() por SteamID64()
+- ~Se reemplazo todo el sistema de SteamID() por SteamID64()~ Devuelto el sistema SteamID
 - Se añadio soporte multilenguaje
 - Se rediseño ciertas partes del codigo del juego original
 

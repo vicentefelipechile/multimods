@@ -455,7 +455,7 @@ if ( cleanup ) then
 		backupcleanupAdd(ply, enttype, ent)
 	end
 end
-if(metaply.AddCount) then
+if (metaply.AddCount) then
 	local backupAddCount = metaply.AddCount
 	function metaply:AddCount(enttype, ent)
 		NADMOD.PlayerMakePropOwner(self, ent)
